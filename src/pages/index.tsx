@@ -12,7 +12,7 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="flex min-h-screen max-w-6xl flex-col items-center justify-center px-4">
-        <header className=" flex w-full items-center justify-between border-b-2 border-b-gray-400 pb-3 pl-2">
+        <header className=" border-b-gray-400 flex w-full items-center justify-between border-b-2 pb-3 pl-2">
           <h1 className="ml-4 inline-block text-3xl">Quiz</h1>
           <div className="flex items-center gap-7">
             <Link href={""} className=" text-black text-opacity-50">
@@ -22,7 +22,7 @@ const Home: NextPage = () => {
             <select
               name="lang"
               id="lang"
-              className="rounded-sm bg-[#9BA4B5] p-1 px-4 text-white"
+              className="rounded-sm bg-my_grey p-1 px-4 text-white"
             >
               <option value="english">English</option>
             </select>
@@ -33,7 +33,7 @@ const Home: NextPage = () => {
             <SignedOut>
               {/* Signed out users get sign in button */}
               <SignInButton>
-                <span className="rounded-sm bg-[#1B9C85] p-1 px-4 text-white">
+                <span className="bg-mygreen text- rounded-sm p-1 px-4">
                   Login
                 </span>
               </SignInButton>
@@ -70,7 +70,7 @@ const Home: NextPage = () => {
             Purchase Subscription
           </span>
         </article>
-        <footer className="mt-16 rounded-md bg-[#9BA4B5] p-3 text-sm text-white shadow-xl shadow-slate-300">
+        <footer className="shadow-slate-300 mt-16 rounded-md bg-[#9BA4B5] p-3 text-sm text-white shadow-xl">
           © 2023 DriveSmart. All rights reserved. |{" "}
           <Link href={""}>Privacy Policy</Link> |{" "}
           <Link href={""}>Terms of Service</Link>|{" "}

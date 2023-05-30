@@ -10,6 +10,7 @@ export default {
       my_green: "#1B9C85",
       my_red: "#EA5455",
       my_grey: "#9BA4B5",
+      white:"#EEEEEE"
     },
   },
   plugins: [],
