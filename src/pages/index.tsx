@@ -33,7 +33,7 @@ const Home: NextPage = () => {
             <SignedOut>
               {/* Signed out users get sign in button */}
               <SignInButton>
-                <span className="bg-mygreen text- rounded-sm p-1 px-4">
+                <span className=" rounded-sm bg-my_green p-1 px-4 text-white">
                   Login
                 </span>
               </SignInButton>
