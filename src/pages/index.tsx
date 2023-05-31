@@ -15,6 +15,7 @@ const Home: NextPage = () => {
         <header className=" flex w-full items-center justify-between border-b-2 border-my_grey pb-3 pl-2">
           <h1 className="ml-4 inline-block text-3xl">Quiz</h1>
           <div className="flex items-center gap-7">
+            <Link href={"/home"}>Home</Link>
             <Link href={""} className=" text-black opacity-50">
               {" "}
               Purchase Subscription
