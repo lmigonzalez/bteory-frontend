@@ -12,10 +12,10 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="flex min-h-screen max-w-6xl flex-col items-center justify-center px-4">
-        <header className=" border-b-gray-400 flex w-full items-center justify-between border-b-2 pb-3 pl-2">
+        <header className=" flex w-full items-center justify-between border-b-2 border-my_grey pb-3 pl-2">
           <h1 className="ml-4 inline-block text-3xl">Quiz</h1>
           <div className="flex items-center gap-7">
-            <Link href={""} className=" text-black text-opacity-50">
+            <Link href={""} className=" text-black opacity-50">
               {" "}
               Purchase Subscription
             </Link>
@@ -33,7 +33,7 @@ const Home: NextPage = () => {
             <SignedOut>
               {/* Signed out users get sign in button */}
               <SignInButton>
-                <span className=" rounded-sm bg-my_green p-1 px-4 text-white">
+                <span className=" cursor-pointer rounded-sm bg-my_green p-1 px-4 text-white">
                   Login
                 </span>
               </SignInButton>
