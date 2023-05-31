@@ -30,7 +30,12 @@ const Questions = () => {
             {data.map((item, index) => {
               return (
                 <li className="list-inside list-disc text-my_blue" key={index}>
-                  <Link href={`/${item}`}>{item}</Link>
+                  <Link
+                    href={`/admin-question/[questionid]?id=${item}`}
+                    as={`/admin-question/${item}`}
+                  >
+                    {item}
+                  </Link>
                 </li>
               );
             })}
@@ -42,7 +47,12 @@ const Questions = () => {
             {data.map((item, index) => {
               return (
                 <li className="list-inside list-disc text-my_blue" key={index}>
-                  <Link href={`/${item}`}>{item}</Link>
+                  <Link
+                    href={`/admin-question/[questionid]?id=${item}`}
+                    as={`/admin-question/${item}`}
+                  >
+                    {item}
+                  </Link>
                 </li>
               );
             })}

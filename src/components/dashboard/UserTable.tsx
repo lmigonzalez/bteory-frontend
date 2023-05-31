@@ -4,8 +4,8 @@ const UserTable = () => {
   return (
     <div>
       <div className="">
-        <div className=" my-10 flex items-center justify-end">
-          <select className="select-bordered select w-40 rounded-none border-my_black bg-white">
+        <div className="my-10 flex items-center justify-end">
+          <select className="h-10 w-40 border-[1px] border-my_black bg-white px-2">
             <option>Who shot first?</option>
             <option>Han Solo</option>
             <option>Greedo</option>
@@ -13,7 +13,7 @@ const UserTable = () => {
           <input
             type="text"
             placeholder="Type here"
-            className="input-bordered input w-96 rounded-none border-my_black bg-white"
+            className="k h-10 w-96 rounded-none border-[1px] border-my_black bg-white px-2"
           />
         </div>
       </div>
