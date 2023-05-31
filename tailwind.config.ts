@@ -1,7 +1,14 @@
-import { type Config } from "tailwindcss";
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  content: [
+    "./app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/**/*.{js,ts,jsx,tsx,mdx}",
+    "./pages/**/*.{js,ts,jsx,tsx,mdx}",
+    "./components/**/*.{js,ts,jsx,tsx,mdx}",
 
-export default {
-  content: ["./src/**/*.{js,ts,jsx,tsx}"],
+    // Or if using `src` directory:
+    "./src/**/*.{js,ts,jsx,tsx,mdx}",
+  ],
   theme: {
     extend: {},
     colors: {
@@ -10,8 +17,8 @@ export default {
       my_green: "#1B9C85",
       my_red: "#EA5455",
       my_grey: "#9BA4B5",
-      white:"#EEEEEE"
+      white: "#EEEEEE",
     },
   },
-  plugins: [],
-} satisfies Config;
+  plugins: [require("daisyui")],
+};
