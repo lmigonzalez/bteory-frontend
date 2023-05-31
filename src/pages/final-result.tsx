@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import Layout from "~/components/Layout";
 import { AiFillExclamationCircle } from "react-icons/ai";
 
-const finalResult = () => {
+const FinalResult = () => {
   const router = useRouter();
   const numbersArray = Array.from({ length: 76 }, (_, index) => index);
   const [isHovered, setIsHovered] = useState(false);
@@ -74,4 +74,4 @@ const finalResult = () => {
   );
 };
 
-export default finalResult;
+export default FinalResult;
