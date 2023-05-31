@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { AiOutlineLogin, AiFillFlag } from "react-icons/ai";
 import { useRouter } from "next/router";
+import { UserButton } from "@clerk/nextjs";
 const Navbar = () => {
   const router = useRouter();
   const [isTimer, setIsTimer] = useState(false);
@@ -39,7 +40,7 @@ const Navbar = () => {
               <Link href={"/home"}>Home</Link>{" "}
             </li>
             <li>
-              <Link href={"/account"}>Account</Link>
+              <UserButton afterSignOutUrl="/" />
             </li>
             <li>
               <Link href={"/"}>

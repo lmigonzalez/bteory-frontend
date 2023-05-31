@@ -28,11 +28,11 @@ const Home: NextPage = () => {
             </select>
             <SignedIn>
               {/* Mount the UserButton component */}
-              <UserButton />
+              <UserButton afterSignOutUrl="/" />
             </SignedIn>
             <SignedOut>
               {/* Signed out users get sign in button */}
-              <SignInButton>
+              <SignInButton afterSignInUrl="/home">
                 <span className=" cursor-pointer rounded-sm bg-my_green p-1 px-4 text-white">
                   Login
                 </span>
@@ -70,7 +70,7 @@ const Home: NextPage = () => {
             Purchase Subscription
           </span>
         </article>
-        <footer className="shadow-slate-300 mt-16 rounded-md bg-[#9BA4B5] p-3 text-sm text-white shadow-xl">
+        <footer className="mt-16 rounded-md bg-[#9BA4B5] p-3 text-sm text-white shadow-xl shadow-slate-300">
           © 2023 DriveSmart. All rights reserved. |{" "}
           <Link href={""}>Privacy Policy</Link> |{" "}
           <Link href={""}>Terms of Service</Link>|{" "}
