@@ -24,6 +24,7 @@ const Results = () => {
         {numbersArray.map((item, index) => {
           return (
             <div
+              key={index}
               className={`${
                 item % 3 === 0 ? "bg-my_grey" : "bg-my_black"
               } relative flex h-[70px] w-[70px] items-center justify-center rounded text-center text-white`}
