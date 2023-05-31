@@ -172,7 +172,7 @@ const AddNewQuestion: React.FC<QuestionProps> = ({ closeNewQuestionForm }) => {
             ))}
             <div>
               <button
-                className="flex items-center gap-1 text-my_blue"
+                className="flex items-center gap-1 text-my_blue my-2"
                 onClick={handleAddOption}
               >
                 new option <AiOutlinePlus />{" "}
