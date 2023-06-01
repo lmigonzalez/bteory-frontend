@@ -14,18 +14,21 @@ const Home: NextPage = () => {
       </Head>
       <main className="m-auto min-h-screen max-w-6xl">
         <div className="flex flex-col items-center justify-center px-4">
-          <header className=" flex w-full items-center justify-between border-b-2 border-my_grey px-2 pb-3">
-            <h1 className="ml-4 inline-block text-3xl">Quiz</h1>
-            <div className="hidden items-center gap-7 md:flex">
+          <header className=" flex w-full items-center justify-between border-b-2 border-my_grey px-2 pb-3 pt-3">
+            <h1 className="ml-4 inline-block text-xl md:text-3xl">Quiz</h1>
+            <div className="flex items-center gap-4 text-sm  md:gap-7 md:text-base">
               <Link href={"/home"}>Home</Link>
-              <Link href={""} className=" text-black opacity-50">
+              <Link
+                href={""}
+                className=" hidden text-black opacity-50 md:block"
+              >
                 {" "}
                 Purchase Subscription
               </Link>
               <select
                 name="lang"
                 id="lang"
-                className="rounded-sm bg-my_grey p-1 px-4 text-white"
+                className="rounded-sm bg-my_grey p-1 px-2 text-white"
               >
                 <option value="english">English</option>
               </select>
