@@ -2,7 +2,9 @@ import React, { useState } from "react";
 import Layout from "~/components/Layout";
 import { AiOutlineArrowLeft } from "react-icons/ai";
 import AddNewQuestion from "~/components/dashboard/AddNewQuestion";
+import { useRouter } from "next/router";
 const Question = () => {
+  const router = useRouter();
   const [showNewQuestion, setShowNewQuestion] = useState(false);
   const data = [
     "What is the value of π (pi) to two decimal places?",
@@ -24,7 +26,10 @@ const Question = () => {
   return (
     <Layout>
       <div className="flex items-center justify-between border-b-2 border-my_black pb-3">
-        <button className="flex items-center justify-between text-xl text-my_blue ">
+        <button
+          onClick={() => router.back()}
+          className="flex items-center justify-between text-xl text-my_blue "
+        >
           {" "}
           <AiOutlineArrowLeft /> Back
         </button>

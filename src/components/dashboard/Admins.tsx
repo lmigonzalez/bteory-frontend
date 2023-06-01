@@ -1,12 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
 import { admins } from "../../data/userData";
+import AddNewAdmin from "./AddNewAdmin";
 const Admins = () => {
+  const [showNewAdmin, setShowNewAdmin] = useState(false);
+
+  function closeNewQuestionForm() {
+    setShowNewAdmin(false);
+  }
   return (
     <div>
       <div className="my-10 flex items-center justify-end gap-4">
-        <button className=" bg-my_green px-6 py-1 text-white">New Admin</button>
+        <button
+          onClick={() => setShowNewAdmin(!showNewAdmin)}
+          className=" bg-my_green px-6 py-1 text-white"
+        >
+          New Admin
+        </button>
       </div>
-
+      {showNewAdmin && (
+        <AddNewAdmin closeNewQuestionForm={closeNewQuestionForm} />
+      )}
       <div className="">
         <table className="min-w-full divide-y divide-gray-200">
           <thead className="bg-my_black text-white">

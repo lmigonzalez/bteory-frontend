@@ -1,14 +1,18 @@
 import React, { useState } from "react";
 import Layout from "~/components/Layout";
 import { AiOutlineMinus, AiOutlineArrowLeft } from "react-icons/ai";
-
+import { useRouter } from "next/router";
 import { drivingQuestion } from "../data/userData";
 const createTest = () => {
+  const router = useRouter();
   const [currentTab, setCurrentTab] = useState(1);
   return (
     <Layout>
       <div className="flex items-center justify-between border-b-2 border-my_black pb-3">
-        <button className="flex items-center justify-between text-xl text-my_blue ">
+        <button
+          onClick={() => router.back()}
+          className="flex items-center justify-between text-xl text-my_blue "
+        >
           {" "}
           <AiOutlineArrowLeft /> Back
         </button>

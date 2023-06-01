@@ -4,7 +4,7 @@ const UserTable = () => {
   return (
     <div>
       <div className="">
-        <div className="my-10 flex items-center justify-end">
+        <div className="my-10 flex items-center justify-end gap-2">
           <select className="h-10 w-40 border-[1px] border-my_black bg-white px-2">
             <option>Who shot first?</option>
             <option>Han Solo</option>
