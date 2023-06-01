@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link";
-const Questions = () => {
+const Test = () => {
   const data = [
     "Mathematics",
     "History",
@@ -16,9 +16,12 @@ const Questions = () => {
   return (
     <div>
       <div className="my-10 flex items-center justify-end gap-4">
-        {/* <button className="border-[1px] border-my_green px-6 py-1 text-my_green">
-          Custom Test
-        </button> */}
+        <Link
+          href="/questions"
+          className="border-[1px] border-my_green px-6 py-1 text-my_green"
+        >
+          Questions
+        </Link>
         <Link
           href="/create-test"
           className="border-[1px] border-my_green bg-my_green px-6 py-1 text-white"
@@ -34,8 +37,8 @@ const Questions = () => {
               return (
                 <li className="list-inside list-disc text-my_blue" key={index}>
                   <Link
-                    href={`/admin-question/[questionid]?id=${item}`}
-                    as={`/admin-question/${item}`}
+                    href={`/admin-test/[testid]?id=${item}`}
+                    as={`/admin-test/${item}`}
                   >
                     {item}
                   </Link>
@@ -66,4 +69,4 @@ const Questions = () => {
   );
 };
 
-export default Questions;
+export default Test;

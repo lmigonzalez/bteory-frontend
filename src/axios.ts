@@ -1,11 +1,13 @@
 import axios, { type AxiosHeaderValue, type AxiosRequestConfig } from "axios";
 
-const config: AxiosRequestConfig = {baseURL: "",}
+const config: AxiosRequestConfig = {
+  baseURL: "https://bteory-backend-production.up.railway.app/api/",
+};
 const instance = axios.create(config);
 
 type Question = {
-  id:string;
-  question: string;  
+  id: string;
+  question: string;
   questionImg: object;
   options: unknown[];
   answer: string;
@@ -14,12 +16,16 @@ type Question = {
   complexity: string;
 };
 
-export const getQuestion = async (id:string) => {
+export const getQuestion = async (id: string) => {
   const res = await instance.get(`/question/${id}`);
   return res.data as Question;
 };
 
-export const postQuestion = async (data: FormData, ctx: AxiosHeaderValue) => { 
-  const res = await instance.post<Question>("/question", data, { headers: { ctx: ctx }})
+export const postQuestion = async (data: FormData, ctx: AxiosHeaderValue) => {
+  console.log("here");
+
+  const res = await instance.post<Question>("create-question", data, {
+    headers: { ctx: ctx },
+  });
   return res.status;
-}
+};

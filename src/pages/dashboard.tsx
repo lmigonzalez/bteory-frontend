@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Layout from "~/components/Layout";
 
 import UserTable from "~/components/dashboard/UserTable";
-import Questions from "~/components/dashboard/Questions";
+import Test from "~/components/dashboard/Test";
 import Admins from "~/components/dashboard/Admins";
 const dashboard = () => {
   const [currentTab, setCurrentTab] = useState("users");
@@ -36,7 +36,7 @@ const dashboard = () => {
         </button>
       </div>
       {currentTab === "users" && <UserTable />}
-      {currentTab === "questions" && <Questions />}
+      {currentTab === "questions" && <Test />}
       {currentTab === "admins" && <Admins />}
     </Layout>
   );

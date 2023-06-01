@@ -1,0 +1,69 @@
+import React, { useState } from "react";
+import Layout from "~/components/Layout";
+import { useRouter } from "next/router";
+import { drivingQuestion } from "../data/userData";
+import { AiOutlineArrowLeft } from "react-icons/ai";
+import AddNewQuestion from "~/components/dashboard/AddNewQuestion";
+import Link from "next/link";
+const questions = () => {
+  const router = useRouter();
+  const [showNewQuestion, setShowNewQuestion] = useState(false);
+
+  function closeNewQuestionForm() {
+    setShowNewQuestion(false);
+  }
+
+  return (
+    <Layout>
+      <div>
+        <h1 className="text-center text-2xl">All Question</h1>
+        <div className="my-10 flex items-center justify-between">
+          <button
+            onClick={() => router.back()}
+            className="flex items-center justify-between text-xl text-my_blue "
+          >
+            <AiOutlineArrowLeft /> Back
+          </button>
+          <p>Questions: 230</p>
+          <button
+            onClick={() => setShowNewQuestion(!showNewQuestion)}
+            className="border-[1px] border-my_green bg-my_green px-6 py-1 text-white"
+          >
+            Create new question
+          </button>
+        </div>
+      </div>
+      {showNewQuestion && (
+        <AddNewQuestion closeNewQuestionForm={closeNewQuestionForm} />
+      )}
+      <div className="">
+        <div className=" flex  items-center gap-3 border-b-[2px] border-my_black pb-4">
+          <button className="bg-my_green px-4 py-1 text-white">all</button>
+          <button className="bg-my_grey px-4 py-1 text-white">practice</button>
+          <button className="bg-my_grey px-4 py-1 text-white">final</button>
+          <button className="bg-my_grey px-4 py-1 text-white">easy</button>
+          <button className="bg-my_grey px-4 py-1 text-white">normal</button>
+          <button className="bg-my_grey px-4 py-1 text-white">hard</button>
+        </div>
+        <div className="">
+          <ul className="mt-6 text-my_blue">
+            {drivingQuestion.map((item, index) => {
+              return (
+                <li className="my-1 list-inside list-disc" key={index}>
+                  <Link
+                    href={`/admin-question/[questionid]?id=${item}`}
+                    as={`/admin-question/${item}`}
+                  >
+                    {item}
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      </div>
+    </Layout>
+  );
+};
+
+export default questions;

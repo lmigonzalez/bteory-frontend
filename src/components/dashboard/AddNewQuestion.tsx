@@ -6,7 +6,7 @@ import {
 } from "react-icons/ai";
 
 import axios, { AxiosHeaders } from "axios";
-import { postQuestion } from "~/axios";
+import { postQuestion } from "../../axios";
 interface Field {
   type: string;
   value: string | File;
@@ -113,6 +113,7 @@ const AddNewQuestion: React.FC<QuestionProps> = ({ closeNewQuestionForm }) => {
   };
 
   const submitQuestion = async () => {
+    console.log("here");
     const formData = new FormData();
 
     formData.append("question", newQuestion.question);
@@ -139,7 +140,15 @@ const AddNewQuestion: React.FC<QuestionProps> = ({ closeNewQuestionForm }) => {
     const headers = {
       "Content-Type": "multipart/form-data",
     };
-    const status = await postQuestion(formData, new AxiosHeaders(headers));
+
+    try {
+      const status = await postQuestion(formData, new AxiosHeaders(headers));
+
+      console.log(status);
+    } catch (err) {
+      console.log(err);
+    }
+
     // try {
     //   const response = await axios.post(
     //     "http://localhost:3100/api/create-question",
