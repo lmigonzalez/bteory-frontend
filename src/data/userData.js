@@ -176,3 +176,27 @@ export const drivingQuestion = [
   "What should you do if you miss your intended highway exit?",
   "What does a green traffic light indicate?",
 ];
+
+
+const test = {
+  question: '',
+  questionImage: {name:'File Data'},
+  options: [],
+  answer: '',
+  explanation: [
+    {
+      type: 'file',
+      content: 'File Data'
+    },
+    {
+      type: 'text',
+      content: ''
+    },
+    {
+      type: 'file',
+      content: 'File Data'
+    },
+  ],
+  category: '',
+  complexity: ''
+}

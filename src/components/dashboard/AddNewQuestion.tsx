@@ -5,6 +5,7 @@ import {
   AiOutlineMinus,
 } from "react-icons/ai";
 
+import axios from "axios";
 interface Field {
   type: string;
   value: string | object;
@@ -17,7 +18,7 @@ interface QuestionProps {
 const AddNewQuestion: React.FC<QuestionProps> = ({ closeNewQuestionForm }) => {
   const initialData = {
     question: "",
-    questionImg: {},
+    questionImg: null,
     options: [],
     answer: "",
     explanation: [],
@@ -35,7 +36,6 @@ const AddNewQuestion: React.FC<QuestionProps> = ({ closeNewQuestionForm }) => {
   };
 
   const nextTab = () => {
-    console.log(questionImage);
     if (currentTab <= 2) {
       setCurrentTab(currentTab + 1);
     }
@@ -108,19 +108,47 @@ const AddNewQuestion: React.FC<QuestionProps> = ({ closeNewQuestionForm }) => {
     setQuestionImage(updatedFile);
   };
 
-  const submitQuestion = (e: any) => {
+  const submitQuestion = async (e: any) => {
     e.preventDefault();
+    const formData = new FormData();
+
     const updatedQuestion = {
       ...newQuestion,
       questionImg: questionImage,
       options: options,
       explanation: fields,
     };
-    console.log(updatedQuestion.questionImg);
-    closeNewQuestionForm();
-    setNewQuestion(initialData);
-    setQuestionImage({});
-    setFields([]);
+    formData.append("question", updatedQuestion.question);
+    formData.append("questionImg", updatedQuestion.questionImg);
+    formData.append("options", JSON.stringify(updatedQuestion.options));
+    formData.append("answer", updatedQuestion.answer);
+    updatedQuestion.explanation.forEach((item, index) => {
+      if (item.type === "file") {
+        formData.append(`explanationFile${index}`, item.value);
+      }
+      if (item.type === "text") {
+        formData.append(`explanationText${index}`, item.value);
+      }
+    });
+    formData.append("category", updatedQuestion.category);
+    formData.append("complexity", updatedQuestion.complexity);
+    for (let pair of formData.entries()) {
+      console.log(pair[0], pair[1]);
+    }
+    try {
+      const response = await axios.post(
+        "http://localhost:3100/api/create-question",
+        formData
+      );
+      console.log(response);
+    } catch (err) {
+      console.log(err);
+    }
+
+    // closeNewQuestionForm();
+    // setNewQuestion(initialData);
+    // setQuestionImage({});
+    // setFields([]);
   };
 
   return (
@@ -172,7 +200,7 @@ const AddNewQuestion: React.FC<QuestionProps> = ({ closeNewQuestionForm }) => {
             ))}
             <div>
               <button
-                className="flex items-center gap-1 text-my_blue my-2"
+                className="my-2 flex items-center gap-1 text-my_blue"
                 onClick={handleAddOption}
               >
                 new option <AiOutlinePlus />{" "}
