@@ -111,7 +111,11 @@ const AddNewQuestion: React.FC<QuestionProps> = ({ closeNewQuestionForm }) => {
   };
 
   const submitQuestion = async () => {
+<<<<<<< HEAD
 
+=======
+    console.log("here");
+>>>>>>> cfcbbb4cb2544d5a7dc846719a8c9741b6dabc95
     const formData = new FormData();
 
     formData.append("question", newQuestion.question);
@@ -368,7 +372,7 @@ const AddNewQuestion: React.FC<QuestionProps> = ({ closeNewQuestionForm }) => {
                 Prev
               </button>
               <button
-                onClick={submitQuestion}
+                onClick={void submitQuestion}
                 className="border-[1px] border-my_green bg-my_green px-6 py-1 text-white"
               >
                 Submit
