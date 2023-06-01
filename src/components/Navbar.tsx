@@ -27,7 +27,6 @@ const Navbar = () => {
     setCountdown(30);
   }, [isTimer]);
 
-  console.log(router.asPath);
 
   return (
     <nav className="absolute left-0 top-0 flex h-14 w-full justify-center bg-my_black text-white">
