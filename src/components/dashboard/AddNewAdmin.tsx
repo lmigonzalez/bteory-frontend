@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { AiOutlineCloseSquare } from "react-icons/ai";
 
 interface QuestionProps {
-  closeNewQuestionForm: any;
+  closeNewQuestionForm: () => void;
 }
 const AddNewAdmin: React.FC<QuestionProps> = ({ closeNewQuestionForm }) => {
   const initialData = {
@@ -14,14 +14,18 @@ const AddNewAdmin: React.FC<QuestionProps> = ({ closeNewQuestionForm }) => {
 
   const [adminData, setAdminData] = useState(initialData);
 
-  function onChange(e: any) {
+  function onChange(
+    e:
+      | React.ChangeEvent<HTMLSelectElement>
+      | React.ChangeEvent<HTMLInputElement>
+  ) {
     setAdminData({
       ...adminData,
       [e.target.name]: e.target.value,
     });
   }
 
-  function submitAdmin(e: any) {
+  function submitAdmin(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     console.log(adminData);
     setAdminData(initialData);

@@ -376,7 +376,7 @@ const AddNewQuestion: React.FC<QuestionProps> = ({ closeNewQuestionForm }) => {
                 Prev
               </button>
               <button
-                onClick={() => submitQuestion}
+                onClick={void submitQuestion}
                 className="border-[1px] border-my_green bg-my_green px-6 py-1 text-white"
               >
                 Submit
