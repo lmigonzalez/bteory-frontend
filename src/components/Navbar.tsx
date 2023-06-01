@@ -9,7 +9,7 @@ const Navbar = () => {
   const [isFlagged, setIsFlagged] = useState(false);
   const [countdown, setCountdown] = useState(30);
   useEffect(() => {
-    if (router.asPath !== "/test" || isTimer === false) return;
+    if (router.asPath !== "/test") return;
     const timer = setInterval(() => {
       setCountdown((prevCountdown) => prevCountdown - 1);
     }, 1000);
