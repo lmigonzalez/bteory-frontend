@@ -16,16 +16,14 @@ type Question = {
   complexity: string;
 };
 
-export const getQuestion = async (id: string) => {
-  const res = await instance.get(`/question/${id}`);
-  return res.data as Question;
+export const getAllQuestions = async () => {
+  const res = await instance.get("get-all-questions");
+  return res.data;
 };
 
 export const postQuestion = async (data: FormData, ctx: AxiosHeaderValue) => {
-  console.log("here");
-
   const res = await instance.post<Question>("create-question", data, {
     headers: { ctx: ctx },
   });
-  return res.status;
+  return res;
 };

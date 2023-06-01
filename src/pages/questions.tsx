@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Layout from "~/components/Layout";
 import { useRouter } from "next/router";
+import { getAllQuestions } from "../axios";
 import { drivingQuestion } from "../data/userData";
 import { AiOutlineArrowLeft } from "react-icons/ai";
 import AddNewQuestion from "~/components/dashboard/AddNewQuestion";
@@ -8,6 +9,16 @@ import Link from "next/link";
 const questions = () => {
   const router = useRouter();
   const [showNewQuestion, setShowNewQuestion] = useState(false);
+  const [questions, setQuestions] = useState([]);
+  useEffect(() => {
+    getQuestions();
+  }, []);
+
+  async function getQuestions() {
+    const response = await getAllQuestions();
+    setQuestions(response);
+  }
+  console.log(questions);
 
   function closeNewQuestionForm() {
     setShowNewQuestion(false);
@@ -47,14 +58,14 @@ const questions = () => {
         </div>
         <div className="">
           <ul className="mt-6 text-my_blue">
-            {drivingQuestion.map((item, index) => {
+            {questions.map((item, index) => {
               return (
                 <li className="my-1 list-inside list-disc" key={index}>
                   <Link
-                    href={`/admin-question/[questionid]?id=${item}`}
-                    as={`/admin-question/${item}`}
+                    href={`/admin-question/[questionid]?id=${item?._id}`}
+                    as={`/admin-question/${item?._id}`}
                   >
-                    {item}
+                    {item?.question}
                   </Link>
                 </li>
               );
