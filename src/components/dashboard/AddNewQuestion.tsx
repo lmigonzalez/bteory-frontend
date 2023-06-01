@@ -112,33 +112,37 @@ const AddNewQuestion: React.FC<QuestionProps> = ({ closeNewQuestionForm }) => {
     e.preventDefault();
     const formData = new FormData();
 
-    const updatedQuestion = {
-      ...newQuestion,
-      questionImg: questionImage,
-      options: options,
-      explanation: fields,
-    };
-    formData.append("question", updatedQuestion.question);
-    formData.append("questionImg", updatedQuestion.questionImg);
-    formData.append("options", JSON.stringify(updatedQuestion.options));
-    formData.append("answer", updatedQuestion.answer);
-    updatedQuestion.explanation.forEach((item, index) => {
+    formData.append("question", newQuestion.question);
+    formData.append("files", questionImage);
+    options.forEach((option) => {
+      formData.append("options[]", option);
+    });
+    formData.append("answer", newQuestion.answer);
+
+    fields.forEach((item, index) => {
       if (item.type === "file") {
-        formData.append(`explanationFile${index}`, item.value);
+        formData.append(`files`, item.value);
       }
       if (item.type === "text") {
-        formData.append(`explanationText${index}`, item.value);
+        formData.append(`explanation-${index}`, item.value);
       }
     });
-    formData.append("category", updatedQuestion.category);
-    formData.append("complexity", updatedQuestion.complexity);
+    formData.append("category", newQuestion.category);
+    formData.append("complexity", newQuestion.complexity);
+
     for (let pair of formData.entries()) {
       console.log(pair[0], pair[1]);
     }
+
     try {
       const response = await axios.post(
         "http://localhost:3100/api/create-question",
-        formData
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
       );
       console.log(response);
     } catch (err) {
@@ -299,7 +303,7 @@ const AddNewQuestion: React.FC<QuestionProps> = ({ closeNewQuestionForm }) => {
                   {field.type === "text" && (
                     <div
                       key={index}
-                      className="relative my-2 w-full border-[1px] border-my_black bg-red-200"
+                      className="relative my-2 w-full border-[1px] border-my_black bg-white"
                     >
                       <input
                         className="h-10  w-full bg-white px-2 pr-7"
