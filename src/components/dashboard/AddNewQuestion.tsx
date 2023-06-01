@@ -5,14 +5,15 @@ import {
   AiOutlineMinus,
 } from "react-icons/ai";
 
-import axios from "axios";
+import axios, { AxiosHeaders } from "axios";
+import { postQuestion } from "~/axios";
 interface Field {
   type: string;
-  value: string | object;
+  value: string | File;
 }
 
 interface QuestionProps {
-  closeNewQuestionForm: any;
+  closeNewQuestionForm: () => void;
 }
 
 const AddNewQuestion: React.FC<QuestionProps> = ({ closeNewQuestionForm }) => {
@@ -28,7 +29,7 @@ const AddNewQuestion: React.FC<QuestionProps> = ({ closeNewQuestionForm }) => {
   const [currentTab, setCurrentTab] = useState<number>(1);
   const [newQuestion, setNewQuestion] = useState(initialData);
   const [options, setOptions] = useState<string[]>(["", ""]);
-  const [questionImage, setQuestionImage] = useState({});
+  const [questionImage, setQuestionImage] = useState<File | undefined>();
   const [fields, setFields] = useState<Field[]>([]);
 
   const handleAddOption = () => {
@@ -72,14 +73,17 @@ const AddNewQuestion: React.FC<QuestionProps> = ({ closeNewQuestionForm }) => {
     setOptions(updatedOptions);
   };
 
-  const handleFieldChange = (index: number, e: any) => {
+  const handleFieldChange = (
+    index: number,
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
     const updatedFields = [...fields];
     const field = updatedFields[index];
 
     if (field) {
-      if (e.target && e.target.name === "explanationImage") {
-        console.log(e.target.files[0]);
-        field.value = e.target.files[0];
+      if (e.currentTarget && e.currentTarget.name === "explanationImage") {
+        console.log(e.currentTarget.files?.[0]);
+        field.value = e.currentTarget.files?.[0] as File;
       } else {
         field.value = e.target.value;
       }
@@ -103,17 +107,16 @@ const AddNewQuestion: React.FC<QuestionProps> = ({ closeNewQuestionForm }) => {
     });
   };
 
-  const handleQuestionImageFile = (e: any) => {
-    let updatedFile = e.target.files[0];
+  const handleQuestionImageFile = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const updatedFile = e.currentTarget?.files?.[0];
     setQuestionImage(updatedFile);
   };
 
-  const submitQuestion = async (e: any) => {
-    e.preventDefault();
+  const submitQuestion = async () => {
     const formData = new FormData();
 
     formData.append("question", newQuestion.question);
-    formData.append("files", questionImage);
+    if (questionImage) formData.append("files", questionImage);
     options.forEach((option) => {
       formData.append("options[]", option);
     });
@@ -130,24 +133,27 @@ const AddNewQuestion: React.FC<QuestionProps> = ({ closeNewQuestionForm }) => {
     formData.append("category", newQuestion.category);
     formData.append("complexity", newQuestion.complexity);
 
-    for (let pair of formData.entries()) {
+    for (const pair of formData.entries()) {
       console.log(pair[0], pair[1]);
     }
-
-    try {
-      const response = await axios.post(
-        "http://localhost:3100/api/create-question",
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
-      console.log(response);
-    } catch (err) {
-      console.log(err);
-    }
+    const headers = {
+      "Content-Type": "multipart/form-data",
+    };
+    const status = await postQuestion(formData, new AxiosHeaders(headers));
+    // try {
+    //   const response = await axios.post(
+    //     "http://localhost:3100/api/create-question",
+    //     formData,
+    //     {
+    //       headers: {
+    //         "Content-Type": "multipart/form-data",
+    //       },
+    //     }
+    //   );
+    //   console.log(response);
+    // } catch (err) {
+    //   console.log(err);
+    // }
 
     // closeNewQuestionForm();
     // setNewQuestion(initialData);
@@ -310,7 +316,7 @@ const AddNewQuestion: React.FC<QuestionProps> = ({ closeNewQuestionForm }) => {
                         type="text"
                         placeholder={`Enter Text`}
                         name="explanationText"
-                        value={field.value}
+                        value={field.value as string}
                         onChange={(e) => handleFieldChange(index, e)}
                       />
                       <button
@@ -370,7 +376,7 @@ const AddNewQuestion: React.FC<QuestionProps> = ({ closeNewQuestionForm }) => {
                 Prev
               </button>
               <button
-                onClick={submitQuestion}
+                onClick={() => submitQuestion}
                 className="border-[1px] border-my_green bg-my_green px-6 py-1 text-white"
               >
                 Submit
