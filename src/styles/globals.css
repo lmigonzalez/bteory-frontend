@@ -15,4 +15,31 @@
     margin: 0 auto;
     /* padding: 0 1rem; */
   }
+
+  #select-question-checkbox {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    width: 1.5rem;
+    height: 1.5rem;
+    border: 1px solid #146c94;
+    border-radius: 0.25rem;
+    background-color: #fff;
+    outline: none;
+    transition: border-color 0.2s ease-in-out;
+  }
+
+  #select-question-checkbox:checked {
+    border-color: #146c94;
+    background-color: #146c94;
+  }
+
+  #select-question-checkbox:checked::before {
+    content: "\2713";
+    font-size: 1rem;
+    color: #fff;
+    display: block;
+    text-align: center;
+    line-height: 1.5rem;
+  }
 }

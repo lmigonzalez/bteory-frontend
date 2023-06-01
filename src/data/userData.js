@@ -153,3 +153,26 @@ export const admins = [
     password: "passw0rd",
   },
 ];
+
+export const drivingQuestion = [
+  "What should you do if you approach a flashing red traffic light?",
+  "When should you use your vehicle's high beam headlights?",
+  "What does a yellow diamond-shaped sign indicate?",
+  "What is the legal blood alcohol concentration (BAC) limit for most drivers?",
+  "When should you yield the right-of-way to pedestrians?",
+  "What does a solid yellow line on the roadway indicate?",
+  "What is the purpose of an anti-lock braking system (ABS)?",
+  "How far in advance should you signal before making a turn?",
+  "What should you do when encountering a school bus with flashing red lights?",
+  "What is the recommended following distance behind another vehicle?",
+  "What does a blue sign with a white 'H' mean?",
+  "When should you adjust your mirrors while driving?",
+  "What does a solid white line on the roadway indicate?",
+  "What should you do if your vehicle starts to skid on a slippery road?",
+  "What is the purpose of a catalytic converter in a vehicle?",
+  "When should you use your vehicle's hazard lights?",
+  "What is the minimum age requirement to obtain a driver's license?",
+  "How often should you check your vehicle's tire pressure?",
+  "What should you do if you miss your intended highway exit?",
+  "What does a green traffic light indicate?",
+];

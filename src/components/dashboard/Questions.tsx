@@ -16,12 +16,15 @@ const Questions = () => {
   return (
     <div>
       <div className="my-10 flex items-center justify-end gap-4">
-        <button className="border-[1px] border-my_green px-6 py-1 text-my_green">
+        {/* <button className="border-[1px] border-my_green px-6 py-1 text-my_green">
           Custom Test
-        </button>
-        <button className="border-[1px] border-my_green bg-my_green px-6 py-1 text-white">
-          New Subject
-        </button>
+        </button> */}
+        <Link
+          href="/create-test"
+          className="border-[1px] border-my_green bg-my_green px-6 py-1 text-white"
+        >
+          Create new test
+        </Link>
       </div>
       <div className="flex justify-between">
         <div className="">
