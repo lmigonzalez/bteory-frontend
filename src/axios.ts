@@ -1,5 +1,8 @@
 import axios, { type AxiosHeaderValue, type AxiosRequestConfig } from "axios";
 
+// const config: AxiosRequestConfig = {
+//   baseURL: "http://localhost:3100/api/",
+// };
 const config: AxiosRequestConfig = {
   baseURL: "https://bteory-backend-production.up.railway.app/api/",
 };
@@ -23,6 +26,13 @@ export const getAllQuestions = async () => {
 
 export const postQuestion = async (data: FormData, ctx: AxiosHeaderValue) => {
   const res = await instance.post<Question>("create-question", data, {
+    headers: { ctx: ctx },
+  });
+  return res;
+};
+
+export const postTest = async (data: FormData, ctx: AxiosHeaderValue) => {
+  const res = await instance.post<Question>("create-test", data, {
     headers: { ctx: ctx },
   });
   return res;

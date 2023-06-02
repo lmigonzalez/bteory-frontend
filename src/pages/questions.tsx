@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import Layout from "~/components/Layout";
 import { useRouter } from "next/router";
 import { getAllQuestions } from "../axios";
-import { drivingQuestion } from "../data/userData";
 import { AiOutlineArrowLeft } from "react-icons/ai";
 import AddNewQuestion from "~/components/dashboard/AddNewQuestion";
 import Link from "next/link";

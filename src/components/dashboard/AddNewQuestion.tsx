@@ -26,6 +26,7 @@ const AddNewQuestion: React.FC<QuestionProps> = ({ closeNewQuestionForm }) => {
     category: "",
     complexity: "",
   };
+  
   const [currentTab, setCurrentTab] = useState<number>(1);
   const [newQuestion, setNewQuestion] = useState(initialData);
   const [options, setOptions] = useState<string[]>(["", ""]);

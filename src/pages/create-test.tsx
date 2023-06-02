@@ -1,11 +1,138 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { getAllQuestions, postTest } from "../axios";
 import Layout from "~/components/Layout";
-import { AiOutlineMinus, AiOutlineArrowLeft } from "react-icons/ai";
+import {
+  AiOutlineMinus,
+  AiOutlineArrowLeft,
+  AiOutlinePlus,
+} from "react-icons/ai";
 import { useRouter } from "next/router";
 import { drivingQuestion } from "../data/userData";
+import { AxiosHeaders } from "axios";
+
+interface Field {
+  type: string;
+  value: string | File;
+}
+
 const createTest = () => {
   const router = useRouter();
+  const initialData = {
+    testName: "",
+    category: "",
+    complexity: "",
+  };
   const [currentTab, setCurrentTab] = useState(1);
+  const [test, setTest] = useState(initialData);
+  const [fields, setFields] = useState<Field[]>([]);
+  const [questions, setQuestions] = useState([]);
+  const [selectedQuestions, setSelectedQuestions] = useState([]);
+
+  useEffect(() => {
+    getQuestions();
+  }, []);
+
+  async function getQuestions() {
+    const response = await getAllQuestions();
+    setQuestions(response);
+  }
+
+  const handleTestChange = (e: any) => {
+    setTest({
+      ...test,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleFieldChange = (
+    index: number,
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const updatedFields = [...fields];
+    const field = updatedFields[index];
+
+    if (field) {
+      if (e.currentTarget && e.currentTarget.name === "explanationImage") {
+        field.value = e.currentTarget.files?.[0];
+      } else {
+        field.value = e.target.value;
+      }
+
+      setFields(updatedFields);
+    }
+  };
+  const handleAddField = (type: string) => {
+    const newField = {
+      type: type,
+      value: "",
+    };
+    setFields([...fields, newField]);
+  };
+
+  const handleDeleteField = (index: number) => {
+    const updatedFields = [...fields];
+    updatedFields.splice(index, 1);
+    setFields(updatedFields);
+  };
+
+  const handleCheckboxChange = (item: any) => (e: any) => {
+    if (e.target.checked) {
+      setSelectedQuestions((prevSelectedQuestions) => [
+        ...prevSelectedQuestions,
+        item,
+      ]);
+    } else {
+      setSelectedQuestions((prevSelectedQuestions) =>
+        prevSelectedQuestions.filter((selectedItem) => selectedItem !== item)
+      );
+    }
+
+    console.log(selectedQuestions);
+  };
+
+  const deleteQuestion = (index: number) => {
+    const updatedQuestions = [...selectedQuestions];
+    updatedQuestions.splice(index, 1);
+    setSelectedQuestions(updatedQuestions);
+  };
+
+  const submitTest = async () => {
+    const formData = new FormData();
+    const selectedQuestionsId = selectedQuestions.map((item) => item?._id);
+
+    formData.append("name", test.testName);
+    formData.append("category", test.category);
+    formData.append("complexity", test.complexity);
+
+    fields.forEach((item, index) => {
+      if (item.type === "file") {
+        formData.append(`files`, item.value);
+      }
+      if (item.type === "text") {
+        formData.append(`explanation-${index}`, item.value);
+      }
+    });
+
+    selectedQuestionsId.forEach((item) => {
+      formData.append("questions[]", item);
+    });
+
+    const headers = {
+      "Content-Type": "multipart/form-data",
+    };
+
+    try {
+      const response = await postTest(formData, new AxiosHeaders(headers));
+      console.log(response);
+    } catch (err) {
+      console.log(err);
+    }
+
+    console.log(test);
+    console.log(selectedQuestionsId);
+    console.log(fields);
+  };
+
   return (
     <Layout>
       <div className="flex items-center justify-between border-b-2 border-my_black pb-3">
@@ -19,6 +146,7 @@ const createTest = () => {
         <h1 className="text-2xl text-my_blue">Question selected: 35</h1>
 
         <button
+          onClick={submitTest}
           disabled={currentTab === 3 ? false : true}
           className={`${
             currentTab === 3 ? "bg-my_green" : "bg-my_grey"
@@ -64,12 +192,16 @@ const createTest = () => {
           <div className="flex w-[700px] flex-col border-[1px] border-my_black bg-white px-4 py-8">
             <input
               type="text"
+              value={test.testName}
+              onChange={handleTestChange}
               name="testName"
               placeholder="Test name"
               className="my-2 h-10 border-[1px] border-my_black bg-white px-2"
             />
 
             <select
+              value={test.category}
+              onChange={handleTestChange}
               name="category"
               className="my-2 h-10 border-[1px] border-my_black bg-white px-2"
             >
@@ -80,6 +212,8 @@ const createTest = () => {
             </select>
 
             <select
+              value={test.complexity}
+              onChange={handleTestChange}
               name="complexity"
               className="my-2 h-10 border-[1px] border-my_black bg-white px-2"
             >
@@ -88,6 +222,73 @@ const createTest = () => {
               <option value="medium">Medium</option>
               <option value="hard">Hard</option>
             </select>
+            <div className="flex w-full flex-col border-opacity-50">
+              <div className="divider">Test explanation</div>
+            </div>
+            <div className="mb-4 w-full">
+              {fields.map((field, index) => (
+                <div key={index} className="mb-2 flex justify-start">
+                  {field.type === "text" && (
+                    <div
+                      key={index}
+                      className="relative my-2 w-full border-[1px] border-my_black bg-white"
+                    >
+                      <input
+                        className="h-10  w-full bg-white px-2 pr-7"
+                        type="text"
+                        placeholder={`Enter Text`}
+                        name="explanationText"
+                        value={field.value as string}
+                        onChange={(e) => handleFieldChange(index, e)}
+                      />
+                      <button
+                        onClick={() => handleDeleteField(index)}
+                        className="absolute right-1 top-1/3"
+                      >
+                        <AiOutlineMinus fill="#EA5455" size={20} />
+                      </button>
+                    </div>
+                  )}
+                  {field.type === "file" && (
+                    <div className="flex gap-1">
+                      <input
+                        name="explanationImage"
+                        className="hidden"
+                        id={`file-input-${index}`}
+                        type="file"
+                        accept="image/*"
+                        // value={field.value}
+                        onChange={(e) => handleFieldChange(index, e)}
+                      />
+                      <label
+                        htmlFor={`file-input-${index}`}
+                        className="my-6 flex h-20 w-40 cursor-pointer items-center justify-center rounded border border-gray-400 bg-gray-200 px-4 py-2 text-center"
+                      >
+                        Select a file
+                      </label>
+                      <button onClick={() => handleDeleteField(index)}>
+                        <AiOutlineMinus fill="#EA5455" size={20} />
+                      </button>
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+
+            <div className=" flex w-full justify-start gap-3">
+              <button
+                onClick={() => handleAddField("file")}
+                className=" flex items-center justify-center gap-2   px-6 py-1 text-my_blue"
+              >
+                Image <AiOutlinePlus />
+              </button>
+              <button
+                onClick={() => handleAddField("text")}
+                className=" flex items-center justify-center gap-2 px-6 py-1 text-my_blue"
+              >
+                Text <AiOutlinePlus />
+              </button>
+            </div>
 
             <div className="mt-4 flex justify-end">
               <button
@@ -112,22 +313,23 @@ const createTest = () => {
           </div>
           <div className="">
             <ul className="mt-8 space-y-2">
-              {drivingQuestion.map((item, index) => {
-                return (
-                  <li
-                    key={index}
-                    className="flex items-center justify-start gap-2 text-my_blue"
-                  >
-                    <input
-                      id="select-question-checkbox"
-                      type="checkbox"
-                      className="form-checkbox h-5 w-5 rounded-md bg-white text-blue-500 dark:bg-white"
-                    />
-
-                    {item}
-                  </li>
-                );
-              })}
+              {questions.map((item, index) => (
+                <li
+                  key={index}
+                  className="flex items-center justify-start gap-2 text-my_blue"
+                >
+                  <input
+                    id="select-question-checkbox"
+                    type="checkbox"
+                    className="form-checkbox h-5 w-5 rounded-md bg-white text-blue-500 dark:bg-white"
+                    onChange={handleCheckboxChange(item)}
+                    checked={selectedQuestions.some(
+                      (q) => q?._id === item?._id
+                    )}
+                  />
+                  {item?.question}
+                </li>
+              ))}
             </ul>
           </div>
         </div>
@@ -142,17 +344,20 @@ const createTest = () => {
           </div>
           <div className="">
             <ul className="mt-8 space-y-2">
-              {drivingQuestion.map((item, index) => {
+              {selectedQuestions.map((item, index) => {
                 return (
                   <li
                     key={index}
                     className="flex items-center justify-start gap-2 text-my_blue"
                   >
-                    <div className="flex h-5 w-5 items-center justify-center border-[1px] border-my_red">
+                    <button
+                      onClick={() => deleteQuestion(index)}
+                      className="flex h-5 w-5 items-center justify-center border-[1px] border-my_red"
+                    >
                       {" "}
                       <AiOutlineMinus fill="#EA5455" />
-                    </div>
-                    {item}
+                    </button>
+                    {item?.question}
                   </li>
                 );
               })}
