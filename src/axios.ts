@@ -17,7 +17,7 @@ type Question = {
 };
 
 export const getAllQuestions = async () => {
-  const res = await instance.get("get-all-questions");
+  const res = await instance.get<Question[]>("get-all-questions");
   return res.data;
 };
 
