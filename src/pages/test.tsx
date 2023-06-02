@@ -6,7 +6,9 @@ import Question from "~/components/Question";
 
 const Test: FC<{ id: string | undefined }> = (props) => {
   const [test, setTest] = useState<Test>();
-  const [actQuestion, setActQuestion] = useState<QuestionType>();
+  const [actQuestion, setActQuestion] = useState<QuestionType | undefined>(
+    test?.questions[0]
+  );
   const [selectedOption, setSelectedOption] = useState<
     Record<string, Set<number>>
   >({});
@@ -42,9 +44,31 @@ const Test: FC<{ id: string | undefined }> = (props) => {
             ></Question>
           )}
           <div className="flex items-center justify-center gap-6">
-            <button className="bg-my_black px-4 py-1 text-white">prev</button>
+            <button
+              className="bg-my_black px-4 py-1 text-white"
+              onClick={() => {
+                const index =
+                  test?.questions
+                    .map((act) => act.id)
+                    .indexOf(actQuestion?.id || "") || 0;
+                setActQuestion(test?.questions[index + 1]);
+              }}
+            >
+              prev
+            </button>
             <p>1 - 75</p>
-            <button className="bg-my_black px-4 py-1 text-white">next</button>
+            <button
+              className="bg-my_black px-4 py-1 text-white"
+              onClick={() => {
+                const index =
+                  test?.questions
+                    .map((act) => act.id)
+                    .indexOf(actQuestion?.id || "") || 0;
+                setActQuestion(test?.questions[index - 1]);
+              }}
+            >
+              next
+            </button>
           </div>
         </div>
       </div>
