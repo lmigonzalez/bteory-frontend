@@ -111,7 +111,7 @@ const AddNewQuestion: React.FC<QuestionProps> = ({ closeNewQuestionForm }) => {
   };
 
   const submitQuestion = async () => {
-    console.log("here");
+
     const formData = new FormData();
 
     formData.append("question", newQuestion.question);
