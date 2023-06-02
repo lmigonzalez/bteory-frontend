@@ -21,7 +21,7 @@ export type QuestionType = {
 
 export type TestType = {
   id: string;
-  questions: QuestionType[];
+  questions: string[];
   explanation: unknown[];
 };
 
