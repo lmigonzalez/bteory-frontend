@@ -5,21 +5,7 @@ import Layout from "~/components/Layout";
 import Question from "~/components/Question";
 
 const Test: FC<{ id: string | undefined }> = (props) => {
-  const [test, setTest] = useState<Test>({
-    id: "0",
-    questions: [
-      {
-        id: "",
-        question: "",
-        questionImg: "",
-        options: [],
-        answer: "",
-        explanation: [],
-        category: "",
-        complexity: "",
-      },
-    ],
-  });
+  const [test, setTest] = useState<Test>();
   const [actQuestion, setActQuestion] = useState<QuestionType>();
   const [selectedOption, setSelectedOption] = useState<
     Record<string, Set<number>>
