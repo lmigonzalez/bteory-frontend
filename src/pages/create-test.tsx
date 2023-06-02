@@ -8,6 +8,7 @@ import {
 } from "react-icons/ai";
 import { useRouter } from "next/router";
 import { drivingQuestion } from "../data/userData";
+<<<<<<< HEAD
 import { AxiosHeaders } from "axios";
 
 interface Field {
@@ -16,6 +17,9 @@ interface Field {
 }
 
 const createTest = () => {
+=======
+const CreateTest = () => {
+>>>>>>> 2d855e30e0ebfa813e3ddc357ca109c530f959cb
   const router = useRouter();
   const initialData = {
     testName: "",
@@ -369,4 +373,4 @@ const createTest = () => {
   );
 };
 
-export default createTest;
+export default CreateTest;
