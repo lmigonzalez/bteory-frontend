@@ -1,13 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { NextPage } from "next";
 import Link from "next/link";
 import Layout from "~/components/Layout";
 const Home: NextPage = () => {
   const [currentTab, setCurrentTab] = useState("practice");
 
+
   function switchTab(tab: string) {
     setCurrentTab(tab);
   }
+
+
 
   const practiceTest = [
     "practice test 1",
