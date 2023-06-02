@@ -4,7 +4,7 @@ import { type QuestionType, Test, getTest } from "~/axios";
 import Layout from "~/components/Layout";
 import Question from "~/components/Question";
 
-const Test: FC<{ id: string | undefined }> = (props) => {
+const Test: FC<{ id: string }> = (props) => {
   const [test, setTest] = useState<Test>();
   const [actQuestion, setActQuestion] = useState<QuestionType | undefined>(
     test?.questions[0]
