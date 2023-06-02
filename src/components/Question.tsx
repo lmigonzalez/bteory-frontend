@@ -1,45 +1,29 @@
-import { AxiosHeaders } from "axios";
-import { error } from "console";
 import Image from "next/image";
-import React, { type FC, useEffect, useState } from "react";
-import { Question, getQuestion } from "~/axios";
+import React, { type FC } from "react";
+import { type QuestionType } from "~/axios";
 
 const Question: FC<{
-  id: string;
-  select: (selected: number | undefined) => void;
+  question: QuestionType;
+  select: (selected: number) => void;
+  selected: Set<number>;
 }> = (props) => {
-  const [question, setQuestion] = useState<Question>();
-  const [selectedOption, selectOption] = useState<number>();
-
-  useEffect(() => {
-    props.select(selectedOption);
-  });
-
-  useEffect(() => {
-    void getQuestion(props.id, new AxiosHeaders())
-      .then((res) => {
-        setQuestion(res);
-      })
-      .catch(error);
-  });
-
   return (
     <div className="flex flex-col items-center justify-center ">
       <Image
-        src={question?.questionImg || ""}
+        src={props.question.questionImg || ""}
         alt=""
         width={500}
         height={500}
       />
-      <p>{question?.question}</p>
+      <p>{props.question?.question}</p>
       <ul className="m-auto mt-8  w-[700px] max-w-full space-y-4  ">
-        {question?.options.map((item, index) => {
+        {props.question?.options.map((item, index) => {
           return (
             <li key={index} className="flex items-center">
               <button
-                onClick={() => selectOption(index)}
+                onClick={() => props.select(index)}
                 className={` ${
-                  selectedOption === index ? "bg-my_red" : "bg-transparent"
+                  props.selected.has(index) ? "bg-my_red" : "bg-transparent"
                 } h-6 w-6  rounded-full border-[1px] border-my_black`}
               ></button>
             </li>
