@@ -49,7 +49,6 @@ const AddNewQuestion: React.FC<QuestionProps> = ({ closeNewQuestionForm }) => {
   };
 
   const handleAddField = (type: string) => {
-    console.log("here");
     const newField = {
       type: type,
       value: "",
@@ -82,7 +81,6 @@ const AddNewQuestion: React.FC<QuestionProps> = ({ closeNewQuestionForm }) => {
 
     if (field) {
       if (e.currentTarget && e.currentTarget.name === "explanationImage") {
-        console.log(e.currentTarget.files?.[0]);
         field.value = e.currentTarget.files?.[0] as File;
       } else {
         field.value = e.target.value;
@@ -113,7 +111,11 @@ const AddNewQuestion: React.FC<QuestionProps> = ({ closeNewQuestionForm }) => {
   };
 
   const submitQuestion = async () => {
+<<<<<<< HEAD
+
+=======
     console.log("here");
+>>>>>>> cfcbbb4cb2544d5a7dc846719a8c9741b6dabc95
     const formData = new FormData();
 
     formData.append("question", newQuestion.question);
@@ -134,21 +136,22 @@ const AddNewQuestion: React.FC<QuestionProps> = ({ closeNewQuestionForm }) => {
     formData.append("category", newQuestion.category);
     formData.append("complexity", newQuestion.complexity);
 
-    for (const pair of formData.entries()) {
-      console.log(pair[0], pair[1]);
-    }
+    // for (const pair of formData.entries()) {
+    //   console.log(pair[0], pair[1]);
+    // }
     const headers = {
       "Content-Type": "multipart/form-data",
     };
 
     try {
-      const status = await postQuestion(formData, new AxiosHeaders(headers));
+      const response = await postQuestion(formData, new AxiosHeaders(headers));
 
-      console.log(status);
+      console.log(response);
     } catch (err) {
       console.log(err);
     }
 
+<<<<<<< HEAD
     // try {
     //   const response = await axios.post(
     //     "http://localhost:3100/api/create-question",
@@ -168,6 +171,12 @@ const AddNewQuestion: React.FC<QuestionProps> = ({ closeNewQuestionForm }) => {
     // setNewQuestion(initialData);
     // setQuestionImage({});
     // setFields([]);
+=======
+    closeNewQuestionForm();
+    setNewQuestion(initialData);
+    setQuestionImage({});
+    setFields([]);
+>>>>>>> 122347a92155289e64f28eb2c8ef41be5fa70fca
   };
 
   return (
