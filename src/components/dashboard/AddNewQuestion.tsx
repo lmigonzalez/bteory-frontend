@@ -164,7 +164,7 @@ const AddNewQuestion: React.FC<QuestionProps> = ({ closeNewQuestionForm }) => {
     //   console.log(err);
     // }
 
-    // closeNewQuestionForm();
+    closeNewQuestionForm();
     // setNewQuestion(initialData);
     // setQuestionImage({});
     // setFields([]);
