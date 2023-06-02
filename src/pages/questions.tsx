@@ -1,17 +1,18 @@
 import React, { useState, useEffect } from "react";
 import Layout from "~/components/Layout";
 import { useRouter } from "next/router";
-import { getAllQuestions } from "../axios";
-import { drivingQuestion } from "../data/userData";
+import { type Question, getAllQuestions } from "../axios";
 import { AiOutlineArrowLeft } from "react-icons/ai";
 import AddNewQuestion from "~/components/dashboard/AddNewQuestion";
 import Link from "next/link";
+
 const Questions = () => {
   const router = useRouter();
   const [showNewQuestion, setShowNewQuestion] = useState(false);
-  const [questions, setQuestions] = useState([]);
+  const [questions, setQuestions] = useState<Question[]>();
+
   useEffect(() => {
-    getQuestions();
+    void getQuestions();
   }, []);
 
   async function getQuestions() {
@@ -58,12 +59,12 @@ const Questions = () => {
         </div>
         <div className="">
           <ul className="mt-6 text-my_blue">
-            {questions.map((item, index) => {
+            {questions?.map((item, index) => {
               return (
                 <li className="my-1 list-inside list-disc" key={index}>
                   <Link
-                    href={`/admin-question/[questionid]?id=${item?._id}`}
-                    as={`/admin-question/${item?._id}`}
+                    href={`/admin-question/[questionid]?id=${item?.id}`}
+                    as={`/admin-question/${item?.id}`}
                   >
                     {item?.question}
                   </Link>

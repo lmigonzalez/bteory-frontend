@@ -5,10 +5,10 @@ const config: AxiosRequestConfig = {
 };
 const instance = axios.create(config);
 
-type Question = {
+export type Question = {
   id: string;
   question: string;
-  questionImg: object;
+  questionImg: string;
   options: unknown[];
   answer: string;
   explanation: unknown[];
@@ -27,3 +27,12 @@ export const postQuestion = async (data: FormData, ctx: AxiosHeaderValue) => {
   });
   return res;
 };
+
+export const getQuestion = async (id:string, ctx: AxiosHeaderValue) => {
+  const res = await instance.get<Question>("get-question/id",{
+    headers: { ctx: ctx },
+  });
+  return res.data;
+};
+
+

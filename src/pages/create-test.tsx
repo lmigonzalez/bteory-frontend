@@ -3,7 +3,7 @@ import Layout from "~/components/Layout";
 import { AiOutlineMinus, AiOutlineArrowLeft } from "react-icons/ai";
 import { useRouter } from "next/router";
 import { drivingQuestion } from "../data/userData";
-const createTest = () => {
+const CreateTest = () => {
   const router = useRouter();
   const [currentTab, setCurrentTab] = useState(1);
   return (
@@ -164,4 +164,4 @@ const createTest = () => {
   );
 };
 
-export default createTest;
+export default CreateTest;
