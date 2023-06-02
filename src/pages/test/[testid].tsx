@@ -1,13 +1,14 @@
 import { AxiosHeaders } from "axios";
 import React, { type FC, useEffect, useState } from "react";
-import { type QuestionType, Test, getTest } from "~/axios";
+import { type QuestionType, type TestType, getTest } from "~/axios";
 import Layout from "~/components/Layout";
 import Question from "~/components/Question";
 
 const Test: FC<{ id: string }> = (props) => {
-  const [test, setTest] = useState<Test>();
+  const [test, setTest] = useState<TestType>();
+  const [actQuestionIndex, setActQuestionIndex] = useState<number>(0);
   const [actQuestion, setActQuestion] = useState<QuestionType | undefined>(
-    test?.questions[0]
+    test?.questions[actQuestionIndex]
   );
   const [selectedOption, setSelectedOption] = useState<
     Record<string, Set<number>>
@@ -20,7 +21,11 @@ const Test: FC<{ id: string }> = (props) => {
           setTest(res);
         })
         .catch(Error);
-  }, []);
+  }, [props.id]);
+
+  useEffect(() => {
+    setActQuestion(test?.questions[actQuestionIndex]);
+  }, [actQuestionIndex, test?.questions]);
 
   function selectOption(select: number) {
     setSelectedOption((state) => {
@@ -46,26 +51,14 @@ const Test: FC<{ id: string }> = (props) => {
           <div className="flex items-center justify-center gap-6">
             <button
               className="bg-my_black px-4 py-1 text-white"
-              onClick={() => {
-                const index =
-                  test?.questions
-                    .map((act) => act.id)
-                    .indexOf(actQuestion?.id || "") || 0;
-                setActQuestion(test?.questions[index + 1]);
-              }}
+              onClick={void setActQuestionIndex((act) => act + 1)}
             >
               prev
             </button>
             <p>1 - 75</p>
             <button
               className="bg-my_black px-4 py-1 text-white"
-              onClick={() => {
-                const index =
-                  test?.questions
-                    .map((act) => act.id)
-                    .indexOf(actQuestion?.id || "") || 0;
-                setActQuestion(test?.questions[index - 1]);
-              }}
+              onClick={void setActQuestionIndex((act) => act - 1)}
             >
               next
             </button>

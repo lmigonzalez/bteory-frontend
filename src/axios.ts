@@ -1,5 +1,4 @@
 import axios, { type AxiosHeaderValue, type AxiosRequestConfig } from "axios";
-import { type } from "os";
 
 // const config: AxiosRequestConfig = {
 //   baseURL: "http://localhost:3100/api/",
@@ -20,9 +19,10 @@ export type QuestionType = {
   complexity: string;
 };
 
-export type Test = {
+export type TestType = {
   id: string;
-  questions: QuestionType[];  
+  questions: QuestionType[];
+  explanation: unknown[];
 }
 
 export const getAllQuestions = async () => {
@@ -51,11 +51,14 @@ export const getQuestion = async (id:string, ctx: AxiosHeaderValue) => {
 };
 
 export const getTest = async (id:string, ctx: AxiosHeaderValue) => {
-  const res = await instance.get<Test>("get-test/id",{
+  const res = await instance.get<TestType>(`get-test/:${id}`,{
     headers: { ctx: ctx },
   });
   return res.data;
 };
 
-
+export const getAllTest = async () => {
+  const res = await instance.get<TestType>("get-all-test");
+  return res.data;
+};
 

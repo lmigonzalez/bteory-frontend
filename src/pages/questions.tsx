@@ -1,11 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Layout from "~/components/Layout";
 import { useRouter } from "next/router";
-<<<<<<< HEAD
-import { getAllQuestions } from "../axios";
-=======
-import { type Question, getAllQuestions } from "../axios";
->>>>>>> 2d855e30e0ebfa813e3ddc357ca109c530f959cb
+import { type QuestionType, getAllQuestions } from "../axios";
 import { AiOutlineArrowLeft } from "react-icons/ai";
 import AddNewQuestion from "~/components/dashboard/AddNewQuestion";
 import Link from "next/link";
@@ -13,7 +9,7 @@ import Link from "next/link";
 const Questions = () => {
   const router = useRouter();
   const [showNewQuestion, setShowNewQuestion] = useState(false);
-  const [questions, setQuestions] = useState<Question[]>();
+  const [questions, setQuestions] = useState<QuestionType[]>();
 
   useEffect(() => {
     void getQuestions();
