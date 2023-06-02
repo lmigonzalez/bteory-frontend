@@ -8,18 +8,7 @@ import {
 } from "react-icons/ai";
 import { useRouter } from "next/router";
 import { drivingQuestion } from "../data/userData";
-<<<<<<< HEAD
-import { AxiosHeaders } from "axios";
-
-interface Field {
-  type: string;
-  value: string | File;
-}
-
-const createTest = () => {
-=======
 const CreateTest = () => {
->>>>>>> 2d855e30e0ebfa813e3ddc357ca109c530f959cb
   const router = useRouter();
   const initialData = {
     testName: "",

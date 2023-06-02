@@ -20,7 +20,7 @@ const Test: FC<{ id: string }> = (props) => {
           setTest(res);
         })
         .catch(Error);
-  });
+  }, []);
 
   function selectOption(select: number) {
     setSelectedOption((state) => {
