@@ -1,5 +1,4 @@
 import axios, { type AxiosHeaderValue, type AxiosRequestConfig } from "axios";
-import { type } from "os";
 
 // const config: AxiosRequestConfig = {
 //   baseURL: "http://localhost:3100/api/",
