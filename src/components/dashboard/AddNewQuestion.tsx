@@ -111,6 +111,7 @@ const AddNewQuestion: React.FC<QuestionProps> = ({ closeNewQuestionForm }) => {
   };
 
   const submitQuestion = async () => {
+
     const formData = new FormData();
 
     formData.append("question", newQuestion.question);
@@ -147,9 +148,6 @@ const AddNewQuestion: React.FC<QuestionProps> = ({ closeNewQuestionForm }) => {
     }
 
     closeNewQuestionForm();
-    setNewQuestion(initialData);
-    setQuestionImage({});
-    setFields([]);
   };
 
   return (

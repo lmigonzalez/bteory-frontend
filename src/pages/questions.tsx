@@ -6,7 +6,7 @@ import { drivingQuestion } from "../data/userData";
 import { AiOutlineArrowLeft } from "react-icons/ai";
 import AddNewQuestion from "~/components/dashboard/AddNewQuestion";
 import Link from "next/link";
-const questions = () => {
+const Questions = () => {
   const router = useRouter();
   const [showNewQuestion, setShowNewQuestion] = useState(false);
   const [questions, setQuestions] = useState([]);
@@ -77,4 +77,4 @@ const questions = () => {
   );
 };
 
-export default questions;
+export default Questions;
