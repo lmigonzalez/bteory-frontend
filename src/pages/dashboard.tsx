@@ -4,7 +4,7 @@ import Layout from "~/components/Layout";
 import UserTable from "~/components/dashboard/UserTable";
 import Test from "~/components/dashboard/Test";
 import Admins from "~/components/dashboard/Admins";
-const dashboard = () => {
+const Dashboard = () => {
   const [currentTab, setCurrentTab] = useState("users");
   return (
     <Layout>
@@ -42,4 +42,4 @@ const dashboard = () => {
   );
 };
 
-export default dashboard;
+export default Dashboard;
