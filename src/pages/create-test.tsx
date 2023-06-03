@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { getAllQuestions, postTest } from "../axios";
+import { AxiosHeaders } from "axios";
 import Layout from "~/components/Layout";
 import {
   AiOutlineMinus,

@@ -54,5 +54,6 @@ export const getTest = async (id: string, ctx: AxiosHeaderValue) => {
 
 export const getAllTest = async () => {
   const res = await instance.get<TestType>("get-all-test");
+  console.log(res.data)
   return res.data;
 };

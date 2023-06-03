@@ -3,8 +3,8 @@ import React, { type FC, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { type QuestionType, type TestType, getTest } from "~/axios";
 import Layout from "~/components/Layout";
-import Question from "~/components/Question";
 import { globalState } from "~/Store";
+import Image from "next/image";
 
 const Test: FC = () => {
   const router = useRouter();
@@ -16,7 +16,7 @@ const Test: FC = () => {
   const [actQuestionIndex, setActQuestionIndex] = useState<number>(0);
   const [actQuestion, setActQuestion] = useState<QuestionType>();
   const [selectedOption, setSelectedOption] = useState<
-    Record<string, Set<number>>
+    Record<string, FormData>
   >({});
 
   useEffect(() => {
@@ -33,58 +33,79 @@ const Test: FC = () => {
     const questionid = test?.questionsId[actQuestionIndex];
     if (questionid)
       setActQuestion(questions.find((act) => act._id === questionid));
-    console.log(questions.filter((act) => act._id === questionid));
-    console.log(actQuestionIndex);
   }, [actQuestionIndex, questions, test?.questionsId]);
-
-  function selectOption(select: number): void {
-    setSelectedOption((state) => {
-      if (actQuestion) {
-        const set = state[actQuestion._id] ?? new Set<number>();
-        state[actQuestion._id] = set.delete(select) ? set : set.add(select);
-      }
-      return state;
-    });
-  }
 
   return (
     <Layout>
-      <div className="flex flex-col items-center justify-center gap-4">
-        {actQuestion && (
-          <Question
-            question={actQuestion}
-            select={selectOption}
-            selected={selectedOption[actQuestion._id] || new Set<number>()}
-          />
-        )}
-        <div className="flex items-center justify-center gap-6">
-          <button
-            className="bg-my_black px-4 py-1 text-white"
-            onClick={() =>
-              setActQuestionIndex((act) =>
-                test?.questionsId
-                  ? act < test.questionsId.length - 1
-                    ? act + 1
+      <form
+        action={(form) =>
+          setSelectedOption((prev) => {
+            if (actQuestion?._id) prev[actQuestion?._id] = form;
+            return prev;
+          })
+        }
+      >
+        <div className="flex flex-col items-center justify-center gap-4">
+          <div className="flex flex-col items-center justify-center ">
+            <Image
+              src={actQuestion?.questionImg || ""}
+              alt=""
+              width={500}
+              height={500}
+              className="w-[300px]"
+            />
+            <p>{actQuestion?.question}</p>
+
+            <ul className="m-auto mt-8  w-[700px] max-w-full space-y-4  ">
+              {actQuestion?.options.map((item, index) => {
+                const isMarked = selectedOption[actQuestion._id]
+                  ?.get(`${index}`)
+                  ?.valueOf() as boolean;
+                return (
+                  <li key={index} className="flex items-center justify-between">
+                    <input
+                      type="checkbox"
+                      id={`${index}`}
+                      className="h-6 w-6 self-start rounded-full border-[1px] border-my_black"
+                      checked={isMarked}
+                    />
+                    <label htmlFor={`${index}`}>{item}</label>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+          <div className="flex items-center justify-center gap-6">
+            <button
+              className="bg-my_black px-4 py-1 text-white"
+              type="submit"
+              onClick={() =>
+                setActQuestionIndex((act) =>
+                  test?.questionsId ? (act > 0 ? act - 1 : act) : act
+                )
+              }
+            >
+              prev
+            </button>
+            <p>1 - 75</p>
+            <button
+              className="bg-my_black px-4 py-1 text-white"
+              type="submit"
+              onClick={() =>
+                setActQuestionIndex((act) =>
+                  test?.questionsId
+                    ? act < test.questionsId.length - 1
+                      ? act + 1
+                      : act
                     : act
-                  : act
-              )
-            }
-          >
-            prev
-          </button>
-          <p>1 - 75</p>
-          <button
-            className="bg-my_black px-4 py-1 text-white"
-            onClick={() =>
-              setActQuestionIndex((act) =>
-                test?.questionsId ? (act > 0 ? act - 1 : act) : act
-              )
-            }
-          >
-            next
-          </button>
+                )
+              }
+            >
+              next
+            </button>
+          </div>
         </div>
-      </div>
+      </form>
     </Layout>
   );
 };
