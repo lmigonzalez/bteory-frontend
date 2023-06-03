@@ -12,7 +12,7 @@ import Question from "~/components/Question";
 
 const Test: FC<{ id: string }> = (props) => {
   const router = useRouter();
-  const { testid } = router.query
+  const { testid } = router.query;
 
   const [test, setTest] = useState<TestType>();
   const [actQuestionIndex, setActQuestionIndex] = useState<number>(0);
@@ -21,16 +21,13 @@ const Test: FC<{ id: string }> = (props) => {
     Record<string, Set<number>>
   >({});
 
-
-
   useEffect(() => {
-    if (props.id)
-      void getTest(props?.id, new AxiosHeaders())
-        .then((res) => {
-          setTest(res);
-        })
-        .catch(Error);
-  }, [props.id]);
+    void getTest(testid as string, new AxiosHeaders())
+      .then((res) => {
+        setTest(res);
+      })
+      .catch(Error);
+  }, []);
 
   useEffect(() => {
     async function Complain() {
