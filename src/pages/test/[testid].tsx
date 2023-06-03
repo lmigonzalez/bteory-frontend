@@ -25,6 +25,7 @@ const Test: FC<{ id: string }> = (props) => {
     void getTest(testid as string, new AxiosHeaders())
       .then((res) => {
         setTest(res);
+        console.log(res);
       })
       .catch(Error);
   }, []);
@@ -33,6 +34,7 @@ const Test: FC<{ id: string }> = (props) => {
     async function Complain() {
       const a = test?.questions[actQuestionIndex];
       if (a) {
+        console.log("inside if");
         try {
           const res = await getQuestion(a, new AxiosHeaders());
           console.log(res);
