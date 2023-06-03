@@ -1,5 +1,6 @@
 import { AxiosHeaders } from "axios";
 import React, { type FC, useEffect, useState } from "react";
+import { useRouter } from "next/router";
 import {
   type QuestionType,
   type TestType,
@@ -10,12 +11,17 @@ import Layout from "~/components/Layout";
 import Question from "~/components/Question";
 
 const Test: FC<{ id: string }> = (props) => {
+  const router = useRouter();
+  const { testid } = router.query
+
   const [test, setTest] = useState<TestType>();
   const [actQuestionIndex, setActQuestionIndex] = useState<number>(0);
   const [actQuestion, setActQuestion] = useState<QuestionType>();
   const [selectedOption, setSelectedOption] = useState<
     Record<string, Set<number>>
   >({});
+
+
 
   useEffect(() => {
     if (props.id)
