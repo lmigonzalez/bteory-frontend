@@ -1,18 +1,28 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import { getAllTest } from "../../axios";
+
+interface TestItem {
+  _id: string;
+  testName: string;
+  category: string;
+}
+
 const Test = () => {
-  const data = [
-    "Mathematics",
-    "History",
-    "Science (Physics, Chemistry, Biology)",
-    "English Language and Literature",
-    "Geography",
-    "Physical Education",
-    "Foreign Language (Spanish, French, German)",
-    "Computer Science",
-    "Art",
-    "Music",
-  ];
+  const [tests, setTests] = useState<TestItem[]>([]);
+  useEffect(() => {
+    getTests();
+  }, []);
+
+  async function getTests() {
+    try {
+      const response = await getAllTest();
+      // console.log(response);
+      setTests(response);
+    } catch (err) {
+      console.log(err);
+    }
+  }
   return (
     <div>
       <div className="my-10 flex items-center justify-end gap-4">
@@ -29,39 +39,26 @@ const Test = () => {
           Create new test
         </Link>
       </div>
-      <div className="flex justify-between">
+      <div className="">
         <div className="">
-          <h2 className="mb-4 text-2xl">Practice Tests</h2>
-          <ul>
-            {data.map((item, index) => {
-              return (
-                <li className="list-inside list-disc text-my_blue" key={index}>
-                  <Link
-                    href={`/admin-test/[testid]?id=${item}`}
-                    as={`/admin-test/${item}`}
+          <h2 className="mb-4 w-full text-center text-2xl">Tests</h2>
+          <ul className="space-y-2">
+            {tests &&
+              tests.map((item, index) => {
+                return (
+                  <li
+                    className="list-inside list-decimal text-my_blue"
+                    key={index}
                   >
-                    {item}
-                  </Link>
-                </li>
-              );
-            })}
-          </ul>
-        </div>
-        <div className="">
-          <h2 className="mb-4 text-2xl">Final Tests</h2>
-          <ul>
-            {data.map((item, index) => {
-              return (
-                <li className="list-inside list-disc text-my_blue" key={index}>
-                  <Link
-                    href={`/admin-question/[questionid]?id=${item}`}
-                    as={`/admin-question/${item}`}
-                  >
-                    {item}
-                  </Link>
-                </li>
-              );
-            })}
+                    <Link
+                      href={`/admin-test/[testid]?id=${item?._id}`}
+                      as={`/admin-test/${item?._id}`}
+                    >
+                      {item?.testName}
+                    </Link>
+                  </li>
+                );
+              })}
           </ul>
         </div>
       </div>

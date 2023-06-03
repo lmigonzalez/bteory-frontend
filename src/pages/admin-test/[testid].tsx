@@ -1,23 +1,66 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Layout from "~/components/Layout";
 import { AiOutlineArrowLeft } from "react-icons/ai";
 import AddNewQuestion from "~/components/dashboard/AddNewQuestion";
 import { useRouter } from "next/router";
+import { getTest } from "../../axios";
+import { AiFillDelete } from "react-icons/ai";
+import { globalState } from "../../Store";
+import { AxiosHeaders } from "axios";
+import axios from "axios";
+
 const Question = () => {
   const router = useRouter();
+  const { id } = router.query;
+  const { questions, getQuestions } = globalState();
   const [showNewQuestion, setShowNewQuestion] = useState(false);
-  const data = [
-    "What is the value of π (pi) to two decimal places?",
-    "Solve the equation: 3x + 7 = 22.",
-    "Simplify the expression: (4 + 5) × 3 - 2.",
-    "What is the square root of 81?",
-    "Convert the fraction 3/5 into a decimal.",
-    "A store is offering a 20% discount on a $50 item. What is the discounted price?",
-    "Solve the equation: 2(x - 4) = 10.",
-    "Calculate the area of a rectangle with length 8 cm and width 5 cm.",
-    "What is the value of 5! (5 factorial)?",
-    "A box contains 24 red balls and 36 blue balls. What is the probability of randomly selecting a red ball from the box?",
-  ];
+  const [selectedTest, setSelectedTest] = useState({});
+  const [selectedQuestions, setSelectedQuestions] = useState([]);
+
+  useEffect(() => {
+    getAllQuestions();
+    if (id) {
+      getTestById();
+    }
+  }, [id]);
+
+  useEffect(() => {
+    console.log("selectedTest: " + selectedTest);
+    const selected = findQuestionsByIds();
+    console.log(selected);
+
+    if (selected.length > 0) {
+      setSelectedQuestions(selected);
+    }
+  }, [selectedTest]);
+
+  async function getTestById() {
+    try {
+      console.log(id);
+      const response = await getTest(id, new AxiosHeaders());
+      setSelectedTest(response);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  async function getAllQuestions() {
+    if (questions.length === 0) {
+      try {
+        const response = await getQuestions();
+        // console.log(response);
+      } catch (err) {
+        console.log(err);
+      }
+    }
+  }
+
+  function findQuestionsByIds() {
+    console.log(selectedTest);
+    return questions.filter((obj) =>
+      selectedTest?.questionsId?.includes(obj._id)
+    );
+  }
 
   function closeNewQuestionForm() {
     setShowNewQuestion(false);
@@ -33,30 +76,30 @@ const Question = () => {
           {" "}
           <AiOutlineArrowLeft /> Back
         </button>
-        <h1 className="text-2xl text-my_blue text-center w-full">Test Name</h1>
-        {/* <button
+        <h1 className="w-full text-center text-2xl text-my_blue">Test Name</h1>
+        <button
           onClick={() => setShowNewQuestion(!showNewQuestion)}
-          className="bg-my_green px-6 py-1 text-white"
+          className="transition-all hover:-translate-y-1"
         >
-          Add
-        </button> */}
+          <AiFillDelete size={25} fill="#EA5455" />
+        </button>
       </div>
       {showNewQuestion && (
         <AddNewQuestion closeNewQuestionForm={closeNewQuestionForm} />
       )}
       <div>
         <ul className="mt-8">
-          {data.map((item, index) => {
-            return (
-              <li
-                key={index}
-                className="cursor-pointer list-inside list-disc text-my_blue"
-              >
-                {" "}
-                {item}{" "}
-              </li>
-            );
-          })}
+          {selectedQuestions &&
+            selectedQuestions.map((item, index) => {
+              return (
+                <li
+                  key={index}
+                  className="cursor-pointer list-inside list-decimal text-my_blue"
+                >
+                  {item.question}{" "}
+                </li>
+              );
+            })}
         </ul>
       </div>
     </Layout>
