@@ -30,8 +30,14 @@ const Test: FC<{ id: string }> = (props) => {
     async function Complain() {
       const a = test?.questions[actQuestionIndex];
       if (a) {
-        const res = await getQuestion(a, new AxiosHeaders()).then((res) => res);
-        setActQuestion(res);
+        try {
+          const res = await getQuestion(a, new AxiosHeaders());
+          console.log(res);
+
+          setActQuestion(res);
+        } catch (err) {
+          console.log(err);
+        }
       }
     }
     void Complain();
