@@ -18,5 +18,8 @@ const config = {
     locales: ["en"],
     defaultLocale: "en",
   },
+  images: {
+    domains: ['bteori-bucket.s3.us-east-2.amazonaws.com'],
+  },
 };
 export default config;

@@ -9,10 +9,10 @@ const config: AxiosRequestConfig = {
 const instance = axios.create(config);
 
 export type QuestionType = {
-  id: string;
+  _id: string;
   question: string;
   questionImg: string;
-  options: unknown[];
+  options: string[];
   answer: string;
   explanation: unknown[];
   category: string;
@@ -21,7 +21,7 @@ export type QuestionType = {
 
 export type TestType = {
   id: string;
-  questions: string[];
+  questionsId: string[];
   explanation: unknown[];
 };
 
@@ -43,12 +43,7 @@ export const postTest = async (data: FormData, ctx: AxiosHeaderValue) => {
   });
   return res;
 };
-export const getQuestion = async (id: string, ctx: AxiosHeaderValue) => {
-  const res = await instance.get<QuestionType>("get-question/id", {
-    headers: { ctx: ctx },
-  });
-  return res.data;
-};
+
 
 export const getTest = async (id: string, ctx: AxiosHeaderValue) => {
   const res = await instance.get<TestType>(`get-test/${id}`, {
