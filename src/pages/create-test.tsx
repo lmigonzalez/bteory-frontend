@@ -7,7 +7,7 @@ import {
   AiOutlinePlus,
 } from "react-icons/ai";
 import { useRouter } from "next/router";
-import { drivingQuestion } from "../data/userData";
+
 const CreateTest = () => {
   const router = useRouter();
   const initialData = {
