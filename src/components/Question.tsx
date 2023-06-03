@@ -14,6 +14,7 @@ const Question: FC<{
         alt=""
         width={500}
         height={500}
+        className="w-[300px]"
       />
       <p>{props.question?.question}</p>
       <ul className="m-auto mt-8  w-[700px] max-w-full space-y-4  ">
@@ -26,6 +27,7 @@ const Question: FC<{
                   props.selected.has(index) ? "bg-my_red" : "bg-transparent"
                 } h-6 w-6  rounded-full border-[1px] border-my_black`}
               ></button>
+              {item}
             </li>
           );
         })}

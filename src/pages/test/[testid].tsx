@@ -1,18 +1,16 @@
 import { AxiosHeaders } from "axios";
 import React, { type FC, useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import {
-  type QuestionType,
-  type TestType,
-  getTest,
-  getQuestion,
-} from "~/axios";
+import { type QuestionType, type TestType, getTest } from "~/axios";
 import Layout from "~/components/Layout";
 import Question from "~/components/Question";
+import { globalState } from "~/Store";
 
-const Test: FC<{ id: string }> = (props) => {
+const Test: FC = () => {
   const router = useRouter();
   const { testid } = router.query;
+
+  const { questions, getQuestions } = globalState();
 
   const [test, setTest] = useState<TestType>();
   const [actQuestionIndex, setActQuestionIndex] = useState<number>(0);
@@ -25,32 +23,25 @@ const Test: FC<{ id: string }> = (props) => {
     void getTest(testid as string, new AxiosHeaders())
       .then((res) => {
         setTest(res);
+        console.log(test);
       })
       .catch(Error);
+    void getQuestions();
   }, []);
 
   useEffect(() => {
-    async function Complain() {
-      const a = test?.questions[actQuestionIndex];
-      if (a) {
-        try {
-          const res = await getQuestion(a, new AxiosHeaders());
-          console.log(res);
-
-          setActQuestion(res);
-        } catch (err) {
-          console.log(err);
-        }
-      }
-    }
-    void Complain();
-  }, [actQuestionIndex, test?.questions]);
+    const questionid = test?.questionsId[actQuestionIndex];
+    if (questionid)
+      setActQuestion(questions.find((act) => act._id === questionid));
+    console.log(questions.filter((act) => act._id === questionid));
+    console.log(actQuestionIndex);
+  }, [actQuestionIndex, questions, test?.questionsId]);
 
   function selectOption(select: number): void {
     setSelectedOption((state) => {
       if (actQuestion) {
-        const set = state[actQuestion.id] ?? new Set<number>();
-        state[actQuestion.id] = set.delete(select) ? set : set.add(select);
+        const set = state[actQuestion._id] ?? new Set<number>();
+        state[actQuestion._id] = set.delete(select) ? set : set.add(select);
       }
       return state;
     });
@@ -58,42 +49,40 @@ const Test: FC<{ id: string }> = (props) => {
 
   return (
     <Layout>
-      <div className="flex flex-col items-center justify-center ">
-        <div className="mt-auto h-8">
-          {actQuestion && (
-            <Question
-              question={actQuestion}
-              select={selectOption}
-              selected={selectedOption[actQuestion.id] || new Set<number>()}
-            ></Question>
-          )}
-          <div className="flex items-center justify-center gap-6">
-            <button
-              className="bg-my_black px-4 py-1 text-white"
-              onClick={() =>
-                setActQuestionIndex((act) =>
-                  test?.questions
-                    ? act < test.questions.length - 1
-                      ? act + 1
-                      : act
+      <div className="flex flex-col items-center justify-center gap-4">
+        {actQuestion && (
+          <Question
+            question={actQuestion}
+            select={selectOption}
+            selected={selectedOption[actQuestion._id] || new Set<number>()}
+          />
+        )}
+        <div className="flex items-center justify-center gap-6">
+          <button
+            className="bg-my_black px-4 py-1 text-white"
+            onClick={() =>
+              setActQuestionIndex((act) =>
+                test?.questionsId
+                  ? act < test.questionsId.length - 1
+                    ? act + 1
                     : act
-                )
-              }
-            >
-              prev
-            </button>
-            <p>1 - 75</p>
-            <button
-              className="bg-my_black px-4 py-1 text-white"
-              onClick={() =>
-                setActQuestionIndex((act) =>
-                  test?.questions ? (act > 0 ? act - 1 : act) : act
-                )
-              }
-            >
-              next
-            </button>
-          </div>
+                  : act
+              )
+            }
+          >
+            prev
+          </button>
+          <p>1 - 75</p>
+          <button
+            className="bg-my_black px-4 py-1 text-white"
+            onClick={() =>
+              setActQuestionIndex((act) =>
+                test?.questionsId ? (act > 0 ? act - 1 : act) : act
+              )
+            }
+          >
+            next
+          </button>
         </div>
       </div>
     </Layout>
