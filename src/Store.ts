@@ -11,7 +11,6 @@ export const globalState = create<state>()((set) => ({
   getQuestions: async () => {
     try {      
       const res = await getAllQuestions()
-      console.log(res)
       set({questions:res})
     } catch (err) {
       console.log(err)
