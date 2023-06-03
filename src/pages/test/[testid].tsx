@@ -61,8 +61,8 @@ const Test: FC<{ id: string }> = (props) => {
           <div className="flex items-center justify-center gap-6">
             <button
               className="bg-my_black px-4 py-1 text-white"
-              onClick={
-                void setActQuestionIndex((act) =>
+              onClick={() =>
+                setActQuestionIndex((act) =>
                   test?.questions
                     ? act < test.questions.length - 1
                       ? act + 1
@@ -76,8 +76,8 @@ const Test: FC<{ id: string }> = (props) => {
             <p>1 - 75</p>
             <button
               className="bg-my_black px-4 py-1 text-white"
-              onClick={
-                void setActQuestionIndex((act) =>
+              onClick={() =>
+                setActQuestionIndex((act) =>
                   test?.questions ? (act > 0 ? act - 1 : act) : act
                 )
               }
