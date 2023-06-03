@@ -20,9 +20,11 @@ export type QuestionType = {
 };
 
 export type TestType = {
-  id: string;
-  questionsId: string[];
-  explanation: unknown[];
+  _id: string,
+  questionsId: string[],
+  explanation: unknown[],
+  category: string,
+complexity: string,
 };
 
 export const getAllQuestions = async () => {
