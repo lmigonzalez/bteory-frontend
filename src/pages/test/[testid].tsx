@@ -23,28 +23,33 @@ const Test: FC = () => {
     void getTest(testid as string, new AxiosHeaders())
       .then((res) => {
         setTest(res);
-        console.log(test);
       })
       .catch(Error);
     void getQuestions();
   }, []);
 
   useEffect(() => {
+  console.log(test);
+}, [actQuestionIndex]);
+
+  useEffect(() => {
     const questionid = test?.questionsId[actQuestionIndex];
     if (questionid)
       setActQuestion(questions.find((act) => act._id === questionid));
-  }, [actQuestionIndex, questions, test?.questionsId]);
+  }, [actQuestionIndex,test]);
+
+  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setSelectedOption((prev) => {
+      if (actQuestion?._id && event.currentTarget)
+        prev[actQuestion?._id] = new FormData(event.currentTarget);
+      return prev;
+    });
+  }
 
   return (
     <Layout>
-      <form
-        action={(form) =>
-          setSelectedOption((prev) => {
-            if (actQuestion?._id) prev[actQuestion?._id] = form;
-            return prev;
-          })
-        }
-      >
+      <form onSubmit={(event) => handleSubmit(event)}>
         <div className="flex flex-col items-center justify-center gap-4">
           <div className="flex flex-col items-center justify-center ">
             <Image
@@ -59,17 +64,17 @@ const Test: FC = () => {
             <ul className="m-auto mt-8  w-[700px] max-w-full space-y-4  ">
               {actQuestion?.options.map((item, index) => {
                 const isMarked = selectedOption[actQuestion._id]
-                  ?.get(`${index}`)
+                  ?.get(`${actQuestionIndex}-${index}`)
                   ?.valueOf() as boolean;
                 return (
                   <li key={index} className="flex items-center justify-between">
                     <input
                       type="checkbox"
-                      id={`${index}`}
+                      id={`${actQuestionIndex}-${index}`}
                       className="h-6 w-6 self-start rounded-full border-[1px] border-my_black"
                       checked={isMarked}
                     />
-                    <label htmlFor={`${index}`}>{item}</label>
+                    <label htmlFor={`${actQuestionIndex}-${index}`}>{item}</label>
                   </li>
                 );
               })}
