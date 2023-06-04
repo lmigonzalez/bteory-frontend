@@ -13,24 +13,25 @@ const Test: FC = () => {
   const { questions, getQuestions } = globalState();
 
   const [test, setTest] = useState<TestType>();
-  const [actQuestionIndex, setActQuestionIndex] = useState<number>(0);
   const [actQuestion, setActQuestion] = useState<QuestionType>();
+
+  const [actQuestionIndex, setActQuestionIndex] = useState<number>(0);
   const [selectedOption, setSelectedOption] = useState<
-    Record<string, FormData>
+    Record<string, FormDataEntryValue>
   >({});
 
   useEffect(() => {
+    void getQuestions();
     void getTest(testid as string, new AxiosHeaders())
       .then((res) => {
         setTest(res);
       })
       .catch(Error);
-    void getQuestions();
   }, []);
 
   useEffect(() => {
-    console.log(test);
-  }, [test]);
+    console.log(selectedOption);
+  }, [actQuestionIndex]);
 
   useEffect(() => {
     const questionid = test?.questionsId[actQuestionIndex];
@@ -40,16 +41,21 @@ const Test: FC = () => {
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    const form = event.currentTarget;
+    const formData = new FormData(form);
+    formData.forEach((item, key) => console.log(key, item));
+
     setSelectedOption((prev) => {
-      if (actQuestion?._id && event.currentTarget)
-        prev[actQuestion?._id] = new FormData(event.currentTarget);
+      formData.forEach((item, key) => {
+        prev[key] = item;
+      });
       return prev;
     });
   }
 
   return (
     <Layout>
-      <form onSubmit={(event) => handleSubmit(event)}>
+      <form id="form" onSubmit={(event) => handleSubmit(event)}>
         <div className="flex flex-col items-center justify-center gap-4">
           <div className="flex flex-col items-center justify-center ">
             <Image
@@ -63,18 +69,20 @@ const Test: FC = () => {
 
             <ul className="m-auto mt-8  w-[700px] max-w-full space-y-4  ">
               {actQuestion?.options.map((item, index) => {
-                const isMarked = selectedOption[actQuestion._id]
-                  ?.get(`${actQuestion._id}${actQuestionIndex}-${index}`)
-                  ?.valueOf() as boolean;
-                console.log(isMarked);
+                const isMarked =
+                  selectedOption[
+                    `${actQuestion._id}${actQuestionIndex}-${index}`
+                  ];
+                // console.log(isMarked);
                 return (
                   <li key={index} className="flex items-center justify-between">
                     <input
                       type="checkbox"
                       id={`${actQuestion._id}${actQuestionIndex}-${index}`}
+                      name={`${actQuestion._id}${actQuestionIndex}-${index}`}
                       key={`${actQuestion._id}${actQuestionIndex}-${index}`}
                       className="h-6 w-6 self-start rounded-full border-[1px] border-my_black"
-                      defaultChecked={isMarked}
+                      defaultChecked={isMarked === "on"}
                     />
                     <label
                       htmlFor={`${actQuestion._id}${actQuestionIndex}-${index}`}
@@ -89,7 +97,6 @@ const Test: FC = () => {
           <div className="flex items-center justify-center gap-6">
             <button
               className="bg-my_black px-4 py-1 text-white"
-              type="submit"
               onClick={() =>
                 setActQuestionIndex((act) =>
                   test?.questionsId ? (act > 0 ? act - 1 : act) : act
@@ -106,16 +113,15 @@ const Test: FC = () => {
             </p>
             <button
               className="bg-my_black px-4 py-1 text-white"
-              type="submit"
-              onClick={() =>
+              onClick={() => {
                 setActQuestionIndex((act) =>
                   test?.questionsId
-                    ? act < test.questionsId.length - 1
+                    ? act < test.questionsId.length
                       ? act + 1
                       : act
                     : act
-                )
-              }
+                );
+              }}
             >
               next
             </button>
