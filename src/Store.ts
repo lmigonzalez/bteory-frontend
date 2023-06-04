@@ -13,35 +13,36 @@ type state = {
 
 export const globalState = create<state>()((set) => ({
   //all questionns
-  questions:[],
+  questions: [],
   setQuestions: async () => {
-    try {      
-      const res = await getAllQuestions()
-      set({questions:res})
+    try {
+      const res = await getAllQuestions();
+      set({ questions: res });
     } catch (err) {
-      console.log(err)
-    }    
+      console.log(err);
+    }
   },
-  // test 
+  // test
   test: {
     _id: "",
     questionsId: [],
     explanation: [],
     category: "",
-    complexity: ""
+    complexity: "",
   },
-  setTest: async (testId:string,ctx:AxiosHeaders) => {
+  setTest: async () => {
     try {
-      const res = await getTest(testId,ctx);
+      const res = await getTest(testId, ctx);
       set({ test: res });
     } catch (err) {
       console.log(err);
-    }  
+    }
   },
 
   // test solutions
 
   solutions: {},
-  setSolution:
-
+  setSolution: async (questionId, answer) => {
+    set((state)=>{solution:state.solution[]})
+  },
 }));
