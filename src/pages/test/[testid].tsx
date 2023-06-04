@@ -30,7 +30,7 @@ const Test: FC = () => {
 
   useEffect(() => {
     console.log(test);
-  }, [actQuestionIndex]);
+  }, [test]);
 
   useEffect(() => {
     const questionid = test?.questionsId[actQuestionIndex];
@@ -99,7 +99,10 @@ const Test: FC = () => {
               prev
             </button>
             <p>
-              {actQuestionIndex} - {test?.questionsId.length}
+              {actQuestionIndex + 1} -{" "}
+              {test?.questionsId.length
+                ? test?.questionsId.length + 1
+                : undefined ?? "loading"}
             </p>
             <button
               className="bg-my_black px-4 py-1 text-white"
