@@ -6,12 +6,14 @@ import Layout from "~/components/Layout";
 import { globalState } from "~/Store";
 import Image from "next/image";
 
+import TestExplanation from "~/components/TestExplanation";
+
 const Test: FC = () => {
   const router = useRouter();
   const { testid } = router.query;
 
   const { questions, getQuestions } = globalState();
-
+  const [showTestExplanation, setShowTextExplanation] = useState(true);
   const [test, setTest] = useState<TestType>();
   const [actQuestion, setActQuestion] = useState<QuestionType>();
 
@@ -53,6 +55,9 @@ const Test: FC = () => {
     });
   }
 
+  function closeTestExplanation() {
+    setShowTextExplanation(false);
+  }
   return (
     <Layout>
       <form id="form" onSubmit={(event) => handleSubmit(event)}>
