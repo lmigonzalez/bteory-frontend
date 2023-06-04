@@ -1,14 +1,19 @@
-import { create } from "zustand"
-import { type QuestionType,getAllQuestions, TestType, getTest } from "./axios";
-import { AxiosHeaders } from "axios";
+import { create } from "zustand";
+import {
+  type QuestionType,
+  getAllQuestions,
+  type TestType,
+  getTest,
+} from "./axios";
+import { type AxiosHeaders } from "axios";
 
 type state = {
   questions: QuestionType[];
   setQuestions: () => Promise<void>;
   test: TestType;
   setTest: (testId: string, ctx: AxiosHeaders) => Promise<void>;
-  solution: Record<string, number>;
-  setSolution: (questionId: string, answer: number) => Promise<void>;
+  solutions: Record<string, number>;
+  setSolution: (questionId: string, answer: number) => void;
 };
 
 export const globalState = create<state>()((set) => ({
@@ -30,7 +35,7 @@ export const globalState = create<state>()((set) => ({
     category: "",
     complexity: "",
   },
-  setTest: async () => {
+  setTest: async (testId, ctx) => {
     try {
       const res = await getTest(testId, ctx);
       set({ test: res });
@@ -42,7 +47,9 @@ export const globalState = create<state>()((set) => ({
   // test solutions
 
   solutions: {},
-  setSolution: async (questionId, answer) => {
-    set((state)=>{solution:state.solution[]})
+  setSolution: (questionId, answer) => {
+    set((state) => ({
+      solutions: { ...state.solutions, [questionId]: answer },
+    }));
   },
 }));
