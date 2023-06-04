@@ -1,13 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import Layout from "~/components/Layout";
 import { AiOutlineArrowLeft } from "react-icons/ai";
 import AddNewQuestion from "~/components/dashboard/AddNewQuestion";
 import { useRouter } from "next/router";
-import { getTest } from "../../axios";
+import { getTest, deleteTestById } from "../../axios";
 import { AiFillDelete } from "react-icons/ai";
 import { globalState } from "../../Store";
 import { AxiosHeaders } from "axios";
-import axios from "axios";
 
 const Question = () => {
   const router = useRouter();
@@ -17,6 +16,16 @@ const Question = () => {
   const [selectedTest, setSelectedTest] = useState({});
   const [selectedQuestions, setSelectedQuestions] = useState([]);
 
+  const deleteTest = useCallback(async () => {
+    try {
+      const response = await deleteTestById(id, new AxiosHeaders());
+      router.push("/dashboard");
+
+    } catch (err) {
+      console.log(err);
+    }
+  }, [id]);
+
   useEffect(() => {
     getAllQuestions();
     if (id) {
@@ -25,9 +34,9 @@ const Question = () => {
   }, [id]);
 
   useEffect(() => {
-    console.log("selectedTest: " + selectedTest);
+
     const selected = findQuestionsByIds();
-    console.log(selected);
+
 
     if (selected.length > 0) {
       setSelectedQuestions(selected);
@@ -36,7 +45,7 @@ const Question = () => {
 
   async function getTestById() {
     try {
-      console.log(id);
+
       const response = await getTest(id, new AxiosHeaders());
       setSelectedTest(response);
     } catch (err) {
@@ -48,7 +57,7 @@ const Question = () => {
     if (questions.length === 0) {
       try {
         const response = await getQuestions();
-        // console.log(response);
+     
       } catch (err) {
         console.log(err);
       }
@@ -56,7 +65,7 @@ const Question = () => {
   }
 
   function findQuestionsByIds() {
-    console.log(selectedTest);
+
     return questions.filter((obj) =>
       selectedTest?.questionsId?.includes(obj._id)
     );
@@ -76,9 +85,11 @@ const Question = () => {
           {" "}
           <AiOutlineArrowLeft /> Back
         </button>
-        <h1 className="w-full text-center text-2xl text-my_blue">Test Name</h1>
+        <h1 className="w-full text-center text-2xl text-my_blue">
+          {selectedTest.testName}
+        </h1>
         <button
-          onClick={() => setShowNewQuestion(!showNewQuestion)}
+          onClick={deleteTest}
           className="transition-all hover:-translate-y-1"
         >
           <AiFillDelete size={25} fill="#EA5455" />

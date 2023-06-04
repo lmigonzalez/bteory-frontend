@@ -19,7 +19,7 @@ const Questions = () => {
     const response = await getAllQuestions();
     setQuestions(response);
   }
-  console.log(questions);
+
 
   function closeNewQuestionForm() {
     setShowNewQuestion(false);
@@ -63,8 +63,8 @@ const Questions = () => {
               return (
                 <li className="my-1 list-inside list-disc" key={index}>
                   <Link
-                    href={`/admin-question/[questionid]?id=${item?.id}`}
-                    as={`/admin-question/${item?.id}`}
+                    href={`/admin-question/[questionid]?id=${item?._id}`}
+                    as={`/admin-question/${item?._id}`}
                   >
                     {item?.question}
                   </Link>

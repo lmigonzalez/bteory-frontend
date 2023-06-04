@@ -69,20 +69,19 @@ const CreateTest = () => {
     setFields(updatedFields);
   };
 
-  const handleCheckboxChange = (item: any) => (e: any) => {
-    if (e.target.checked) {
-      setSelectedQuestions((prevSelectedQuestions) => [
-        ...prevSelectedQuestions,
-        item,
-      ]);
-    } else {
-      setSelectedQuestions((prevSelectedQuestions) =>
-        prevSelectedQuestions.filter((selectedItem) => selectedItem !== item)
-      );
-    }
-
-    console.log(selectedQuestions);
-  };
+  const handleCheckboxChange =
+    (item: any) => (e: React.ChangeEvent<HTMLInputElement>) => {
+      if (e.target.checked) {
+        setSelectedQuestions((prevSelectedQuestions) => [
+          ...prevSelectedQuestions,
+          item,
+        ]);
+      } else {
+        setSelectedQuestions((prevSelectedQuestions) =>
+          prevSelectedQuestions.filter((selectedItem) => selectedItem !== item)
+        );
+      }
+    };
 
   const deleteQuestion = (index: number) => {
     const updatedQuestions = [...selectedQuestions];
@@ -116,15 +115,20 @@ const CreateTest = () => {
     };
 
     try {
-      const response = await postTest(formData, new AxiosHeaders(headers));
-      console.log(response);
+      await postTest(formData, new AxiosHeaders(headers));
+      // const [currentTab, setCurrentTab] = useState(1);
+      // const [test, setTest] = useState(initialData);
+      // const [fields, setFields] = useState<Field[]>([]);
+      // const [questions, setQuestions] = useState([]);
+      // const [selectedQuestions, setSelectedQuestions] = useState([]);
+
+      setCurrentTab(1);
+      setTest(initialData);
+      setFields([]);
+      setSelectedQuestions([]);
     } catch (err) {
       console.log(err);
     }
-
-    console.log(test);
-    console.log(selectedQuestionsId);
-    console.log(fields);
   };
 
   return (

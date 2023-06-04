@@ -44,7 +44,6 @@ export const postTest = async (data: FormData, ctx: AxiosHeaderValue) => {
   return res;
 };
 
-
 export const getTest = async (id: string, ctx: AxiosHeaderValue) => {
   const res = await instance.get<TestType>(`get-test/${id}`, {
     headers: { ctx: ctx },
@@ -54,5 +53,12 @@ export const getTest = async (id: string, ctx: AxiosHeaderValue) => {
 
 export const getAllTest = async () => {
   const res = await instance.get<TestType>("get-all-test");
+  return res.data;
+};
+
+export const deleteTestById = async (id: string, ctx: AxiosHeaderValue) => {
+  const res = await instance.delete(`delete/test/${id}`, {
+    headers: { ctx: ctx },
+  });
   return res.data;
 };
