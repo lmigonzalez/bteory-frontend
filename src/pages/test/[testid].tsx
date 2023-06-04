@@ -98,7 +98,9 @@ const Test: FC = () => {
             >
               prev
             </button>
-            <p>1 - 75</p>
+            <p>
+              {actQuestionIndex} - {test?.questionsId.length}
+            </p>
             <button
               className="bg-my_black px-4 py-1 text-white"
               type="submit"
