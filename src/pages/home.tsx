@@ -2,11 +2,17 @@ import React, { useState, useEffect } from "react";
 import { NextPage } from "next";
 import Link from "next/link";
 import Layout from "~/components/Layout";
-
 import { getAllTest } from "../axios";
+
+interface test {
+  category: String;
+  testName: String;
+  _id: String;
+}
+
 const Home: NextPage = () => {
   const [currentTab, setCurrentTab] = useState("practice");
-  const [tests, setTests] = useState([]);
+  const [tests, setTests] = useState<test[]>([]);
 
   useEffect(() => {
     getTests();
