@@ -29,14 +29,14 @@ const Test: FC = () => {
   }, []);
 
   useEffect(() => {
-  console.log(test);
-}, [actQuestionIndex]);
+    console.log(test);
+  }, [actQuestionIndex]);
 
   useEffect(() => {
     const questionid = test?.questionsId[actQuestionIndex];
     if (questionid)
       setActQuestion(questions.find((act) => act._id === questionid));
-  }, [actQuestionIndex,test]);
+  }, [actQuestionIndex, test]);
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -64,17 +64,23 @@ const Test: FC = () => {
             <ul className="m-auto mt-8  w-[700px] max-w-full space-y-4  ">
               {actQuestion?.options.map((item, index) => {
                 const isMarked = selectedOption[actQuestion._id]
-                  ?.get(`${actQuestionIndex}-${index}`)
+                  ?.get(`${actQuestion._id}${actQuestionIndex}-${index}`)
                   ?.valueOf() as boolean;
+                console.log(isMarked);
                 return (
                   <li key={index} className="flex items-center justify-between">
                     <input
                       type="checkbox"
-                      id={`${actQuestionIndex}-${index}`}
+                      id={`${actQuestion._id}${actQuestionIndex}-${index}`}
+                      key={`${actQuestion._id}${actQuestionIndex}-${index}`}
                       className="h-6 w-6 self-start rounded-full border-[1px] border-my_black"
-                      checked={isMarked}
+                      defaultChecked={isMarked}
                     />
-                    <label htmlFor={`${actQuestionIndex}-${index}`}>{item}</label>
+                    <label
+                      htmlFor={`${actQuestion._id}${actQuestionIndex}-${index}`}
+                    >
+                      {item}
+                    </label>
                   </li>
                 );
               })}
