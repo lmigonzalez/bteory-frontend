@@ -13,17 +13,16 @@ const CategoryIndexPage = () => {
   useEffect(() => {
     void setTest(testid as string, new AxiosHeaders());
   }, []);
-
+  console.log(test);
   return (
     <div>
       {" "}
       {
         // questions
-        test.explanation.toString()
+        test.explanation.map((item) => {})
       }{" "}
     </div>
   );
 };
 
-export default CategoryIndexPage; // pero bro que calificacion le das a las practicas que ves aqui?
-// aver, deja revisar
+export default CategoryIndexPage;
