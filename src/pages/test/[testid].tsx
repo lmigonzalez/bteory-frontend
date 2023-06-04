@@ -6,12 +6,14 @@ import Layout from "~/components/Layout";
 import { globalState } from "~/Store";
 import Image from "next/image";
 
+import TestExplanation from "~/components/TestExplanation";
+
 const Test: FC = () => {
   const router = useRouter();
   const { testid } = router.query;
 
   const { questions, getQuestions } = globalState();
-
+  const [showTestExplanation, setShowTextExplanation] = useState(true);
   const [test, setTest] = useState<TestType>();
   const [actQuestionIndex, setActQuestionIndex] = useState<number>(0);
   const [actQuestion, setActQuestion] = useState<QuestionType>();
@@ -47,9 +49,18 @@ const Test: FC = () => {
     });
   }
 
+  function closeTestExplanation() {
+    setShowTextExplanation(false);
+  }
   return (
     <Layout>
       <form onSubmit={(event) => handleSubmit(event)}>
+        {test?.explanation && showTestExplanation && (
+          <TestExplanation
+            close={closeTestExplanation}
+            explanation={test.explanation}
+          />
+        )}
         <div className="flex flex-col items-center justify-center gap-4">
           <div className="flex flex-col items-center justify-center ">
             <Image
