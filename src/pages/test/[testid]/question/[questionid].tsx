@@ -42,7 +42,7 @@ const Question = () => {
           alt="image"
           width={500}
           height={500}
-          className="h-auto w-[300px] mt-8"
+          className="mt-8 h-auto w-[300px]"
         />
         <p className="mt-8 text-lg font-bold">{question?.question}</p>
         <ul className="m-auto my-8  w-[700px] max-w-full space-y-4  ">
@@ -50,12 +50,12 @@ const Question = () => {
             return (
               <li
                 key={`${question._id}-${index}`}
-                className="flex items-center justify-start gap-4 "
+                className="flex items-center gap-4 "
               >
                 <input
                   type="checkbox"
                   id={`select-question-checkbox`}
-                  className="h-6 w-6  self-start rounded-full border-[1px] border-my_black"
+                  className="h-6 w-6  flex-shrink-0 self-start rounded-full border-[1px] border-my_black"
                   defaultChecked={solutions.has(`${question._id}-${index}`)}
                   onClick={() => touchSolution(`${question._id}-${index}`)}
                 />
