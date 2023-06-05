@@ -12,7 +12,7 @@ const Test = () => {
 
   const { test, setTest, questions, setQuestions } = globalState();
 
-  const [showExplanation, setShowExplanation] = useState(false);
+  const [showExplanation, setShowExplanation] = useState(true);
 
   useEffect(() => {
     void setQuestions();
