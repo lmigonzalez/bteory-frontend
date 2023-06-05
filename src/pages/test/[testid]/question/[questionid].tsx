@@ -9,15 +9,8 @@ const Question = () => {
     query: { questionid, testid },
   } = useRouter();
 
-  const {
-    test,
-    setTest,
-    solutions,
-    setSolution,
-    questions,
-    setQuestions,
-    removeSolution,
-  } = globalState();
+  const { test, setTest, solutions, questions, setQuestions, touchSolution } =
+    globalState();
 
   useEffect(() => {
     async function set(testid: string) {
@@ -54,10 +47,7 @@ const Question = () => {
                     ? "bg-my_red"
                     : "bg-transparent"
                 } h-6 w-6  self-start rounded-full border-[1px] border-my_black`}
-                onChange={() => {
-                  if (removeSolution(`${question._id}-${index}`)) return;
-                  setSolution(`${question._id}-${index}`);
-                }}
+                onChange={() => touchSolution(`${question._id}-${index}`)}
               />
               <label htmlFor={`${index}`}>{item}</label>
             </li>

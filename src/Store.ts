@@ -13,8 +13,9 @@ type state = {
   test: TestType;
   setTest: (testId: string, ctx: AxiosHeaders) => Promise<void>;
   solutions: Set<string>;
-  setSolution: (questionId: string) => void;
-  removeSolution: (questionId: string) => boolean;
+  touchSolution: (questionId_i: string) => void;
+  flags: Set<string>;
+  touchFlag: (questionId: string) => void;
 };
 
 export const globalState = create<state>()((set) => ({
@@ -36,7 +37,7 @@ export const globalState = create<state>()((set) => ({
     category: "",
     complexity: "",
   },
-  setTest: async (testId, ctx) => {
+  setTest: async (testId: string, ctx: AxiosHeaders) => {
     try {
       const res = await getTest(testId, ctx);
       set({ test: res });
@@ -48,17 +49,19 @@ export const globalState = create<state>()((set) => ({
   // test solutions
 
   solutions: new Set<string>(),
-  setSolution: (questionId) => {
+
+  touchSolution: (questionId_i) =>
     set((state) => ({
-      solutions: state.solutions.add(questionId),
-    }));
-  },
-  removeSolution: (questionid) => {
-    let wasRemoved = false;
-    set((state) => {
-      wasRemoved = state.solutions.delete(questionid);
-      return { solutions: state.solutions };
-    });
-    return wasRemoved;
-  },
+      solutions: state.solutions.delete(questionId_i)
+        ? state.solutions
+        : state.solutions.add(questionId_i),
+    })),
+
+  flags: new Set<string>(),
+  touchFlag: (questionId) =>
+    set((state) => ({
+      flags: state.flags.delete(questionId)
+        ? state.flags
+        : state.flags.add(questionId),
+    })),
 }));
