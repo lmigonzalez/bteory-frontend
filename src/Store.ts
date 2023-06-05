@@ -12,8 +12,9 @@ type state = {
   setQuestions: () => Promise<void>;
   test: TestType;
   setTest: (testId: string, ctx: AxiosHeaders) => Promise<void>;
-  solutions: Record<string, number>;
-  setSolution: (questionId: string, answer: number) => void;
+  solutions: Set<string>;
+  setSolution: (questionId: string) => void;
+  removeSolution: (questionId: string) => boolean;
 };
 
 export const globalState = create<state>()((set) => ({
@@ -31,7 +32,7 @@ export const globalState = create<state>()((set) => ({
   test: {
     _id: "",
     questionsId: [],
-    explanation: [],
+    explanation: [{ explanation: "", image: "", type: "" }],
     category: "",
     complexity: "",
   },
@@ -46,10 +47,18 @@ export const globalState = create<state>()((set) => ({
 
   // test solutions
 
-  solutions: {},
-  setSolution: (questionId, answer) => {
+  solutions: new Set<string>(),
+  setSolution: (questionId) => {
     set((state) => ({
-      solutions: { ...state.solutions, [questionId]: answer },
+      solutions: state.solutions.add(questionId),
     }));
+  },
+  removeSolution: (questionid) => {
+    let wasRemoved = false;
+    set((state) => {
+      wasRemoved = state.solutions.delete(questionid);
+      return { solutions: state.solutions };
+    });
+    return wasRemoved;
   },
 }));

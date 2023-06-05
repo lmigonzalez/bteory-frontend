@@ -22,7 +22,13 @@ export type QuestionType = {
 export type TestType = {
   _id: string;
   questionsId: string[];
-  explanation: unknown[];
+  explanation: [
+    {
+      explanation: string;
+      image: string;
+      type: string;
+    }
+  ];
   category: string;
   complexity: string;
 };

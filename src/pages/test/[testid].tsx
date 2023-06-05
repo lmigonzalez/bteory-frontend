@@ -1,28 +1,52 @@
 import { AxiosHeaders } from "axios";
-import { useRouter } from "next/router";
-import React, { useEffect } from "react";
+import Link from "next/link";
+import { Router, useRouter } from "next/router";
+import React, { useEffect, useState } from "react";
 import { globalState } from "~/Store";
-// pages/category/index.tsx
-const CategoryIndexPage = () => {
+import TestExplanation from "~/components/TestExplanation";
+
+const Test = () => {
   const {
     query: { testid },
   } = useRouter();
 
-  const { test, setTest } = globalState();
+  const { test, setTest, questions, setQuestions } = globalState();
+
+  const [showExplanation, setShowExplanation] = useState(false);
 
   useEffect(() => {
+    void setQuestions();
     void setTest(testid as string, new AxiosHeaders());
   }, []);
   console.log(test);
   return (
-    <div>
-      {" "}
-      {
-        // questions
-        test.explanation.map((item) => {})
-      }{" "}
-    </div>
+    <>
+      {showExplanation && (
+        <TestExplanation
+          explanation={test.explanation}
+          close={() => setShowExplanation(false)}
+        />
+      )}
+      <div>
+        <button onClick={() => setShowExplanation(true)}>Explanation</button>
+        <br />
+        {test.questionsId.map((item, index) => {
+          const question = questions.find((q) => item === q._id);
+          return (
+            <>
+              <Link
+                key={index}
+                href={`${test._id}/question/${question?._id ?? ""}`}
+              >
+                {question?.question}
+              </Link>
+              <br />
+            </>
+          );
+        })}
+      </div>
+    </>
   );
 };
 
-export default CategoryIndexPage;
+export default Test;
