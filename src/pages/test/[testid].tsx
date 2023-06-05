@@ -22,7 +22,7 @@ const Test = () => {
   }, []);
 
   useEffect(() => {
-    if (!showExplanation && test._id != "")
+    if (!showExplanation && questions.length > 0)
       void push({
         pathname: "/test/[testid]/question/[questionid]",
         query: {

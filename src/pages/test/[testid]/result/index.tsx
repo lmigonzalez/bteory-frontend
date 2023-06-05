@@ -51,10 +51,16 @@ const Results = () => {
         {test.questionsId.map((item, index) => {
           return (
             <div
+              onClick={() =>
+                void push({
+                  pathname: "question/[questionid]",
+                  query: { testid: testid, questionid: item },
+                })
+              }
               key={index}
               className={`${
                 solved.has(item) ? "bg-my_grey" : "bg-my_black"
-              } relative flex h-[70px] w-[70px] items-center justify-center rounded text-center text-white`}
+              } relative flex h-[70px] w-[70px] cursor-pointer items-center justify-center rounded text-center text-white`}
             >
               {index}
               {flags.has(item) && (
