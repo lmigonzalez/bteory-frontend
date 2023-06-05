@@ -87,7 +87,15 @@ const Question = () => {
           </p>
           <button
             className="bg-my_black px-4 py-1 text-white"
-            onClick={() =>
+            onClick={() => {
+              if (questionIndex === test.questionsId.length - 1) {
+                void push({
+                  pathname: "/test/[testid]/result",
+                  query: {
+                    testid: testid,
+                  },
+                });
+              }
               void push({
                 pathname: "/test/[testid]/question/[questionid]",
                 query: {
@@ -99,8 +107,8 @@ const Question = () => {
                         : questionIndex
                     ],
                 },
-              })
-            }
+              });
+            }}
           >
             next
           </button>
