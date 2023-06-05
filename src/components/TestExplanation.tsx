@@ -7,24 +7,21 @@ interface Props {
 }
 
 const TestExplanation: React.FC<Props> = ({ explanation, close }) => {
-
-  console.log(explanation);
   return (
-    <div className="fixed left-0 top-0 flex h-screen w-full flex-col items-center justify-center bg-black bg-opacity-80 backdrop-blur-sm">
+    <div className="fixed left-0 top-0 flex h-screen w-full flex-col items-center justify-center text-black">
       <ul className="flex flex-col items-center justify-center gap-4">
         {explanation.map((item, index) => {
           return (
             <li key={index}>
               {item.type === "text" ? (
-                <p className="text-xl text-white">{item.explanation}</p>
+                <p className="text-xl">{item.explanation}</p>
               ) : (
-                "<></>"
-                // <Image
-                //   src={item.image ?? ""}
-                //   alt="explanation image"      //// this do not work
-                //   width={300}
-                //   height={300}
-                // />
+                <Image
+                  src={item.image ?? ""}
+                  alt="explanation image"
+                  width={300}
+                  height={300}
+                />
               )}
             </li>
           );

@@ -59,7 +59,7 @@ const Results = () => {
               }
               key={index}
               className={`${
-                solved.has(item) ? "bg-my_grey" : "bg-my_black"
+                solved.has(item) ? "bg-my_black" : "bg-my_grey"
               } relative flex h-[70px] w-[70px] cursor-pointer items-center justify-center rounded text-center text-white`}
             >
               {index}
