@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import { getAllQuestions } from "../../axios";
 import Layout from "~/components/Layout";
+import { AiOutlineArrowLeft, AiFillDelete } from "react-icons/ai";
 interface Question {
   _id: string;
   options: [string];
@@ -37,7 +38,6 @@ const MyComponent: React.FC = () => {
   const fetchAllQuestions = async () => {
     try {
       const response = await getAllQuestions();
-      console.log(response);
       const selectedQuestion = findQuestionById(response);
       setQuestionData(selectedQuestion);
     } catch (err) {
@@ -45,14 +45,30 @@ const MyComponent: React.FC = () => {
     }
   };
 
+  function deleteQuestion() {}
+
   const findQuestionById = (questions: Question[]): Question | null => {
     return questions.find((question) => question._id === id) || null;
   };
 
-  console.log(questionData);
-
   return (
     <Layout>
+      <div className="mt-6 border-b-[2px] border-my_black pb-3 flex justify-between">
+        <button
+          onClick={() => router.back()}
+          className="flex items-center justify-between text-xl text-my_blue "
+        >
+          {" "}
+          <AiOutlineArrowLeft /> Back
+        </button>
+
+        <button
+          onClick={deleteQuestion}
+          className="transition-all hover:-translate-y-1"
+        >
+          <AiFillDelete size={25} fill="#EA5455" />
+        </button>
+      </div>
       {questionData && (
         <div className="">
           <strong>Question:</strong>
@@ -76,7 +92,7 @@ const MyComponent: React.FC = () => {
             <ul className="space-y-4">
               {questionData.explanation.map((item, index) => {
                 return item.type === "image" ? (
-                  <li>
+                  <li key={index}>
                     <Image src={item.content} alt="" width={200} height={200} />
                   </li>
                 ) : (
