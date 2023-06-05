@@ -35,6 +35,8 @@ const Navbar = () => {
     setCountdown(30);
   }, [isTimer]);
 
+  console.log(asPath === "/test/[testid]/result");
+
   return (
     <>
       <nav className="absolute left-0 top-0 flex h-14 w-full justify-center bg-my_black text-white">
@@ -58,7 +60,7 @@ const Navbar = () => {
           </div>
         )}
 
-        {asPath === "/results" ||
+        {asPath === "/result" ||
           (asPath === "/final-result" && (
             <div className="flex h-full w-[1200px] max-w-full items-center justify-between px-4 text-xl">
               <Link href={"/home"}>B-Teori</Link>
@@ -81,7 +83,7 @@ const Navbar = () => {
             </div>
           ))}
 
-        {asPath !== "/test/[testid]/question/[questionid]" && (
+        {asPath === `/test/${testid as string}/question/${questionid as string}` && (
           <div className="flex h-full w-[1200px] max-w-full items-center justify-between px-4 text-xl">
             <div className="flex items-center justify-center gap-12">
               <div className="form-control w-32 ">
@@ -114,18 +116,21 @@ const Navbar = () => {
               </button>
             </div>
             <div className="flex gap-6">
-              <button>See answer</button>
-              <button>Explanation</button>
-              <Link href="/results">Results</Link>
+              {/* <button>See answer</button> this here, really? */}
+              <button onClick={() => setShowExplanation(true)}>
+                Explanation
+              </button>
+              <Link href={`/test/${testid as string}/result`}>Results</Link>
             </div>
           </div>
         )}
       </nav>
       {showExplanation && (
         <TestExplanation
-          explanation={questions.find(
-            (item) => item._id === (questionid as string)
-          )}
+          explanation={
+            questions.find((item) => item._id === (questionid as string))!
+              .explanation
+          }
           close={() => setShowExplanation(false)}
         />
       )}
