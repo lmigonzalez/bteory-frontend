@@ -14,7 +14,13 @@ export type QuestionType = {
   questionImg: string;
   options: string[];
   answer: string;
-  explanation: unknown[];
+  explanation: [
+    {
+      explanation: string;
+      image: string;
+      type: string;
+    }
+  ];
   category: string;
   complexity: string;
 };

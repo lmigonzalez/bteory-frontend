@@ -29,6 +29,7 @@ export const globalState = create<state>()((set) => ({
       console.log(err);
     }
   },
+
   // test
   test: {
     _id: "",
@@ -56,6 +57,8 @@ export const globalState = create<state>()((set) => ({
         ? state.solutions
         : state.solutions.add(questionId_i),
     })),
+
+  // flags
 
   flags: new Set<string>(),
   touchFlag: (questionId) =>

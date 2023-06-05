@@ -18,12 +18,13 @@ const TestExplanation: React.FC<Props> = ({ explanation, close }) => {
               {item.type === "text" ? (
                 <p className="text-xl text-white">{item.explanation}</p>
               ) : (
-                <Image
-                  src={item.image}
-                  alt="explanation image"
-                  width={300}
-                  height={300}
-                />
+                "<></>"
+                // <Image
+                //   src={item.image ?? ""}
+                //   alt="explanation image"      //// this do not work
+                //   width={300}
+                //   height={300}
+                // />
               )}
             </li>
           );
@@ -31,7 +32,10 @@ const TestExplanation: React.FC<Props> = ({ explanation, close }) => {
       </ul>
 
       <div className="">
-        <button className="px-6 py-1 bg-my_green mt-8 text-white" onClick={() => close()}>
+        <button
+          className="mt-8 bg-my_green px-6 py-1 text-white"
+          onClick={() => close()}
+        >
           Continue
         </button>
       </div>
