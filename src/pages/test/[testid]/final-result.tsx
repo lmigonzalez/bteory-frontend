@@ -5,8 +5,6 @@ import { AiFillExclamationCircle } from "react-icons/ai";
 import { globalState } from "~/Store";
 
 const FinalResult = () => {
-  const router = useRouter();
-
   const { evaluation, test } = globalState();
   const [isHovered, setIsHovered] = useState(false);
   const handleHover = () => {
@@ -21,14 +19,24 @@ const FinalResult = () => {
       <h1 className="mb-8 text-center text-5xl">Final Result</h1>
       <div className="relative my-8 flex justify-end gap-4">
         <div className="flex h-10 w-fit items-center justify-center rounded bg-my_black px-6 py-1 text-white">
-          19 / 75
+          {evaluation.reduce(
+            (prev, curr) => prev + (curr.isCorrect ? 1 : 0),
+            0
+          )}{" "}
+          {"-"}
+          {test.questionsId.length}
         </div>
         <div
           className="relative flex h-10 w-fit cursor-pointer items-center justify-center rounded bg-my_black px-6 py-1 text-white"
           onMouseEnter={handleHover}
           onMouseLeave={handleMouseLeave}
         >
-          19 / 75
+          {evaluation.reduce(
+            (prev, curr) => prev + (curr.isCorrect ? 1 : 0),
+            0
+          )}{" "}
+          {"-"}
+          {test.questionsId.length}
           <AiFillExclamationCircle className="absolute right-0 top-0" />
         </div>
         {isHovered && (

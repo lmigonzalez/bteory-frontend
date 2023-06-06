@@ -43,7 +43,10 @@ const Results = () => {
         <button
           onClick={() => {
             void sendSolution({ testId: test._id, solutions: solutions });
-            void push("/final-result");
+            void push({
+              pathname: "/test/[testid]/final-result",
+              query: { testid: test._id },
+            });
           }}
           className="rounded bg-my_green px-6 py-2 text-white"
         >

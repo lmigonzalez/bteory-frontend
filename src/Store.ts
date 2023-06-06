@@ -5,7 +5,7 @@ import {
   type TestType,
   getTest,
   postTestSolution,
-  TestResult,
+  type TestResult,
 } from "./axios";
 import { AxiosHeaders } from "axios";
 

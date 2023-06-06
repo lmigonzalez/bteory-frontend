@@ -18,48 +18,53 @@ const Navbar = () => {
   const { flags, touchFlag, questions, test } = globalState();
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      setCountdown((prevCountdown) => prevCountdown - 1);
-    }, 1000);
+    if (
+      asPath === `/test/${testid as string}/question/${questionid as string}`
+    ) {
+      const timer = setInterval(() => {
+        setCountdown((prevCountdown) => prevCountdown - 1);
+      }, 1000);
 
-    if (countdown === 0) {
-      const questionIndex = test.questionsId.findIndex(
-        (q_id) => q_id == (questionid as string)
-      );
+      if (countdown === 0) {
+        const questionIndex = test.questionsId.findIndex(
+          (q_id) => q_id == (questionid as string)
+        );
 
-      console.log(questionIndex);
-      if (questionIndex === test.questionsId.length - 1) {
+        console.log(questionIndex);
+        if (questionIndex === test.questionsId.length - 1) {
+          void push({
+            pathname: "/test/[testid]/result",
+            query: {
+              testid: testid,
+            },
+          });
+        }
         void push({
-          pathname: "/test/[testid]/result",
+          pathname: "/test/[testid]/question/[questionid]",
           query: {
             testid: testid,
+            questionid:
+              test.questionsId[
+                questionIndex + 1 < test.questionsId.length
+                  ? questionIndex + 1
+                  : questionIndex
+              ],
           },
         });
+        clearInterval(timer);
+        setCountdown(30);
       }
-      void push({
-        pathname: "/test/[testid]/question/[questionid]",
-        query: {
-          testid: testid,
-          questionid:
-            test.questionsId[
-              questionIndex + 1 < test.questionsId.length
-                ? questionIndex + 1
-                : questionIndex
-            ],
-        },
-      });
-      clearInterval(timer);
-      setCountdown(30);
-    }
 
-    return () => {
-      clearInterval(timer);
-    };
+      return () => {
+        clearInterval(timer);
+      };
+    }
   }, [countdown]);
 
   useEffect(() => {
     setCountdown(30);
   }, [isTimer]);
+  console.log(asPath);
 
   return (
     <>
