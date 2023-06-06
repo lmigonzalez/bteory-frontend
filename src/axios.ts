@@ -8,6 +8,8 @@ const config: AxiosRequestConfig = {
 // };
 const instance = axios.create(config);
 
+export type Category = "practice" | "final";
+
 export type QuestionType = {
   _id: string;
   question: string;
@@ -21,7 +23,7 @@ export type QuestionType = {
       type: string;
     }
   ];
-  category: string;
+  category: Category;
   complexity: string;
 };
 
@@ -71,7 +73,7 @@ export const getAllTest = async () => {
 };
 
 export const deleteTestById = async (id: string, ctx: AxiosHeaderValue) => {
-  const res = await instance.delete(`delete/test/${id}`, {
+  const res = await instance.delete<TestType>(`delete/test/${id}`, {
     headers: { ctx: ctx },
   });
   return res.data;

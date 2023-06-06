@@ -8,22 +8,48 @@ import TestExplanation from "./TestExplanation";
 const Navbar = () => {
   const {
     query: { testid, questionid },
+    push,
     asPath,
   } = useRouter();
   const [isTimer, setIsTimer] = useState(false);
   const [countdown, setCountdown] = useState(30);
   const [showExplanation, setShowExplanation] = useState(false);
 
-  const { flags, touchFlag, questions } = globalState();
+  const { flags, touchFlag, questions, test } = globalState();
 
   useEffect(() => {
-    if (asPath !== "/test/[testid]/question/[questionid]") return;
     const timer = setInterval(() => {
       setCountdown((prevCountdown) => prevCountdown - 1);
     }, 1000);
 
     if (countdown === 0) {
+      const questionIndex = test.questionsId.findIndex(
+        (q_id) => q_id == (questionid as string)
+      );
+
+      console.log(questionIndex);
+      if (questionIndex === test.questionsId.length - 1) {
+        void push({
+          pathname: "/test/[testid]/result",
+          query: {
+            testid: testid,
+          },
+        });
+      }
+      void push({
+        pathname: "/test/[testid]/question/[questionid]",
+        query: {
+          testid: testid,
+          questionid:
+            test.questionsId[
+              questionIndex + 1 < test.questionsId.length
+                ? questionIndex + 1
+                : questionIndex
+            ],
+        },
+      });
       clearInterval(timer);
+      setCountdown(30);
     }
 
     return () => {
@@ -34,8 +60,6 @@ const Navbar = () => {
   useEffect(() => {
     setCountdown(30);
   }, [isTimer]);
-
-  console.log(asPath === "/test/[testid]/result");
 
   return (
     <>
@@ -83,7 +107,8 @@ const Navbar = () => {
             </div>
           ))}
 
-        {asPath === `/test/${testid as string}/question/${questionid as string}` && (
+        {asPath ===
+          `/test/${testid as string}/question/${questionid as string}` && (
           <div className="flex h-full w-[1200px] max-w-full items-center justify-between px-4 text-xl">
             <div className="flex items-center justify-center gap-12">
               <div className="form-control w-32 ">
@@ -128,8 +153,8 @@ const Navbar = () => {
       {showExplanation && (
         <TestExplanation
           explanation={
-            questions.find((item) => item._id === (questionid as string))!
-              .explanation
+            questions.find((item) => item._id === (questionid as string))
+              ?.explanation ?? [{ type: "", image: "", explanation: "" }]
           }
           close={() => setShowExplanation(false)}
         />
