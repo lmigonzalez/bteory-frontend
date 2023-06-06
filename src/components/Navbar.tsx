@@ -19,6 +19,7 @@ const Navbar = () => {
 
   useEffect(() => {
     if (
+      isTimer &&
       asPath === `/test/${testid as string}/question/${questionid as string}`
     ) {
       const timer = setInterval(() => {
