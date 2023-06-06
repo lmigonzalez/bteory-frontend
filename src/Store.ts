@@ -20,7 +20,7 @@ type state = {
   touchFlag: (questionId: string) => void;
   evaluation: TestResult;
   sendSolution: (data: {
-    testid: string;
+    testId: string;
     solutions: Set<string>;
   }) => Promise<void>;
 };
@@ -75,20 +75,12 @@ export const globalState = create<state>()((set) => ({
         : state.flags.add(questionId),
     })),
 
-  evaluation: {
-    userId: "",
-    testId: "",
-    result: [],
-    category: "practice",
-    complexity: "easy",
-  },
+  evaluation: [],
 
   sendSolution: async (data) => {
     const settedData: string[] = [];
     data.solutions.forEach((item) => settedData.push(item));
-
-    const createData = { testid: data.testid, solutions: settedData };
-
+    const createData = { testId: data.testId, answers: settedData };
     try {
       const res = await postTestSolution(createData, new AxiosHeaders());
       set({ evaluation: res });

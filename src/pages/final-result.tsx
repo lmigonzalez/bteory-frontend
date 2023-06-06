@@ -56,9 +56,11 @@ const FinalResult = () => {
 
       <div className="mt-8 grid grid-cols-10 place-items-center gap-5">
         {test.questionsId.map((item, index) => {
-          const result = evaluation.result.find(
-            ({ questionId }) => questionId === item
+          const result = evaluation?.find(
+            (question) => question.questionId == item
           );
+          console.log(evaluation);
+          console.log(result);
           return (
             <div
               key={index}

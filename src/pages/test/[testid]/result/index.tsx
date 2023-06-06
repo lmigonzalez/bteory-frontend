@@ -42,7 +42,7 @@ const Results = () => {
         </div>
         <button
           onClick={() => {
-            void sendSolution({ testid: test._id, solutions: solutions });
+            void sendSolution({ testId: test._id, solutions: solutions });
             void push("/final-result");
           }}
           className="rounded bg-my_green px-6 py-2 text-white"

@@ -56,8 +56,8 @@ const Question = () => {
                   type="checkbox"
                   id={`select-question-checkbox`}
                   className="h-6 w-6  flex-shrink-0 self-start rounded-full border-[1px] border-my_black"
-                  defaultChecked={solutions.has(`${question._id}-${index}`)}
-                  onClick={() => touchSolution(`${question._id}-${index}`)}
+                  defaultChecked={solutions.has(`${question._id}-${item}`)}
+                  onClick={() => touchSolution(`${question._id}-${item}`)}
                 />
                 <label htmlFor={`${index}`}>{item}</label>
               </li>

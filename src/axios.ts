@@ -1,9 +1,4 @@
-import axios, {
-  AxiosResponse,
-  type AxiosHeaderValue,
-  type AxiosRequestConfig,
-} from "axios";
-import { data } from "./data/userData";
+import axios, { type AxiosHeaderValue, type AxiosRequestConfig } from "axios";
 
 const config: AxiosRequestConfig = {
   baseURL: "http://localhost:3100/api/",
@@ -34,17 +29,11 @@ export type QuestionType = {
 };
 
 export type TestResult = {
-  userId: string;
-  testId: string;
-  result: {
-    questionId: string;
-    questionAnswer: string;
-    userAnswer: string;
-    isCorrect: boolean;
-  }[];
-  category: Category;
-  complexity: Complexity;
-};
+  questionId: string;
+  questionAnswer: string;
+  userAnswer: string;
+  isCorrect: boolean;
+}[];
 
 export type TestType = {
   _id: string;
@@ -99,7 +88,7 @@ export const deleteTestById = async (id: string, ctx: AxiosHeaderValue) => {
 };
 
 export const postTestSolution = async (
-  data: { testid: string; solutions: string[] },
+  data: { testId: string; answers: string[] },
   ctx: AxiosHeaderValue
 ) => {
   const res = await instance.post<TestResult>("/create-test-result", data, {
