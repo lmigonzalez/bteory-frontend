@@ -4,8 +4,10 @@ import {
   getAllQuestions,
   type TestType,
   getTest,
+  postTestSolution,
+  TestResult,
 } from "./axios";
-import { type AxiosHeaders } from "axios";
+import { AxiosHeaders } from "axios";
 
 type state = {
   questions: QuestionType[];
@@ -16,6 +18,11 @@ type state = {
   touchSolution: (questionId_i: string) => void;
   flags: Set<string>;
   touchFlag: (questionId: string) => void;
+  evaluation: TestResult;
+  sendSolution: (data: {
+    testid: string;
+    solutions: Set<string>;
+  }) => Promise<void>;
 };
 
 export const globalState = create<state>()((set) => ({
@@ -35,8 +42,8 @@ export const globalState = create<state>()((set) => ({
     _id: "",
     questionsId: [],
     explanation: [{ explanation: "", image: "", type: "" }],
-    category: "",
-    complexity: "",
+    category: "practice",
+    complexity: "easy",
   },
   setTest: async (testId: string, ctx: AxiosHeaders) => {
     try {
@@ -67,4 +74,26 @@ export const globalState = create<state>()((set) => ({
         ? state.flags
         : state.flags.add(questionId),
     })),
+
+  evaluation: {
+    userId: "",
+    testId: "",
+    result: [],
+    category: "practice",
+    complexity: "easy",
+  },
+
+  sendSolution: async (data) => {
+    const settedData: string[] = [];
+    data.solutions.forEach((item) => settedData.push(item));
+
+    const createData = { testid: data.testid, solutions: settedData };
+
+    try {
+      const res = await postTestSolution(createData, new AxiosHeaders());
+      set({ evaluation: res });
+    } catch (err) {
+      console.log(err);
+    }
+  },
 }));

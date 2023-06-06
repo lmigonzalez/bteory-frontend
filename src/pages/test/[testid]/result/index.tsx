@@ -11,7 +11,7 @@ const Results = () => {
     push,
   } = useRouter();
 
-  const { test, setTest, solutions, flags } = globalState();
+  const { test, setTest, solutions, flags, sendSolution } = globalState();
 
   const [solved, setSolved] = useState<Set<string>>(new Set<string>());
 
@@ -41,7 +41,10 @@ const Results = () => {
           </div>
         </div>
         <button
-          onClick={() => void push("/final-result")}
+          onClick={() => {
+            void sendSolution({ testid: test._id, solutions: solutions });
+            void push("/final-result");
+          }}
           className="rounded bg-my_green px-6 py-2 text-white"
         >
           Final Result

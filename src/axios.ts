@@ -1,4 +1,9 @@
-import axios, { type AxiosHeaderValue, type AxiosRequestConfig } from "axios";
+import axios, {
+  AxiosResponse,
+  type AxiosHeaderValue,
+  type AxiosRequestConfig,
+} from "axios";
+import { data } from "./data/userData";
 
 const config: AxiosRequestConfig = {
   baseURL: "http://localhost:3100/api/",
@@ -8,7 +13,7 @@ const config: AxiosRequestConfig = {
 // };
 const instance = axios.create(config);
 
-export type Category = "practice" | "final";
+export type Category = "practice" | "general" | "final";
 export type Complexity = "easy" | "medium" | "hard";
 
 export type QuestionType = {
@@ -28,6 +33,19 @@ export type QuestionType = {
   complexity: Complexity;
 };
 
+export type TestResult = {
+  userId: string;
+  testId: string;
+  result: {
+    questionId: string;
+    questionAnswer: string;
+    userAnswer: string;
+    isCorrect: boolean;
+  }[];
+  category: Category;
+  complexity: Complexity;
+};
+
 export type TestType = {
   _id: string;
   questionsId: string[];
@@ -38,7 +56,7 @@ export type TestType = {
       type: string;
     }
   ];
-  category: string;
+  category: Category;
   complexity: Complexity;
 };
 
@@ -75,6 +93,16 @@ export const getAllTest = async () => {
 
 export const deleteTestById = async (id: string, ctx: AxiosHeaderValue) => {
   const res = await instance.delete<TestType>(`delete/test/${id}`, {
+    headers: { ctx: ctx },
+  });
+  return res.data;
+};
+
+export const postTestSolution = async (
+  data: { testid: string; solutions: string[] },
+  ctx: AxiosHeaderValue
+) => {
+  const res = await instance.post<TestResult>("/create-test-result", data, {
     headers: { ctx: ctx },
   });
   return res.data;

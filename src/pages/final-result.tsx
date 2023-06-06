@@ -2,10 +2,12 @@ import React, { useState } from "react";
 import { useRouter } from "next/router";
 import Layout from "~/components/Layout";
 import { AiFillExclamationCircle } from "react-icons/ai";
+import { globalState } from "~/Store";
 
 const FinalResult = () => {
   const router = useRouter();
-  const numbersArray = Array.from({ length: 76 }, (_, index) => index);
+
+  const { evaluation, test } = globalState();
   const [isHovered, setIsHovered] = useState(false);
   const handleHover = () => {
     setIsHovered(true);
@@ -53,19 +55,22 @@ const FinalResult = () => {
       </div>
 
       <div className="mt-8 grid grid-cols-10 place-items-center gap-5">
-        {numbersArray.map((item, index) => {
+        {test.questionsId.map((item, index) => {
+          const result = evaluation.result.find(
+            ({ questionId }) => questionId === item
+          );
           return (
             <div
               key={index}
               className={`${
-                item % 3 === 0
-                  ? "bg-my_red"
-                  : item % 7 === 0
+                !result
+                  ? "bg-my_grey"
+                  : result.isCorrect
                   ? "bg-my_green"
-                  : "bg-my_grey"
+                  : "bg-my_red"
               } relative flex h-[70px] w-[70px] items-center justify-center rounded text-center text-white`}
             >
-              {item}
+              {index + 1}
             </div>
           );
         })}
