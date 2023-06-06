@@ -9,6 +9,7 @@ const config: AxiosRequestConfig = {
 const instance = axios.create(config);
 
 export type Category = "practice" | "final";
+export type Complexity = "easy" | "medium" | "hard";
 
 export type QuestionType = {
   _id: string;
@@ -24,7 +25,7 @@ export type QuestionType = {
     }
   ];
   category: Category;
-  complexity: string;
+  complexity: Complexity;
 };
 
 export type TestType = {
@@ -38,7 +39,7 @@ export type TestType = {
     }
   ];
   category: string;
-  complexity: string;
+  complexity: Complexity;
 };
 
 export const getAllQuestions = async () => {
