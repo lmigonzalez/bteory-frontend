@@ -65,7 +65,6 @@ const Navbar = () => {
   useEffect(() => {
     setCountdown(30);
   }, [isTimer]);
-  console.log(asPath);
 
   return (
     <>

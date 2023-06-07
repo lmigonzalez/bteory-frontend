@@ -16,7 +16,7 @@
     /* padding: 0 1rem; */
   }
 
-  #select-question-checkbox {
+  .select-question-checkbox {
     appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;
@@ -29,12 +29,12 @@
     transition: border-color 0.2s ease-in-out;
   }
 
-  #select-question-checkbox:checked {
+  .select-question-checkbox:checked {
     border-color: #146c94;
     background-color: #146c94;
   }
 
-  #select-question-checkbox:checked::before {
+  .select-question-checkbox:checked::before {
     content: "\2713";
     font-size: 1rem;
     color: #fff;

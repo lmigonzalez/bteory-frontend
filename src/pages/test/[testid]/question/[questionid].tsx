@@ -31,8 +31,7 @@ const Question = () => {
   useEffect(() => {
     setQuestion(questions.find((q) => questionid === q._id));
     setQuestionIndex(test.questionsId.indexOf(questionid as string));
-    console.log(solutions);
-  }, [questionid, questions, solutions, test.questionsId, testid]);
+  }, [questionid, questions, test.questionsId, testid]);
 
   return (
     <Layout>
@@ -54,12 +53,17 @@ const Question = () => {
               >
                 <input
                   type="checkbox"
-                  id={`select-question-checkbox`}
-                  className="h-6 w-6  flex-shrink-0 self-start rounded-full border-[1px] border-my_black"
-                  defaultChecked={solutions.has(`${question._id}-${item}`)}
+                  id={`${question._id}-${index}`}
+                  className="select-question-checkbox h-6 w-6 flex-shrink-0 cursor-pointer self-start rounded-full border-[1px] border-my_black"
+                  checked={solutions.has(`${question._id}-${item}`)}
                   onClick={() => touchSolution(`${question._id}-${item}`)}
                 />
-                <label htmlFor={`${index}`}>{item}</label>
+                <label
+                  htmlFor={`${question._id}-${index}`}
+                  className="cursor-pointer"
+                >
+                  {item}
+                </label>
               </li>
             );
           })}

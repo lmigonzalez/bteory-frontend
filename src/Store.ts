@@ -58,12 +58,27 @@ export const globalState = create<state>()((set) => ({
 
   solutions: new Set<string>(),
 
-  touchSolution: (questionId_i) =>
-    set((state) => ({
-      solutions: state.solutions.delete(questionId_i)
-        ? state.solutions
-        : state.solutions.add(questionId_i),
-    })),
+  touchSolution: (questionId_i) => {
+    console.log(questionId_i);
+    set((state) => {
+      if (state.solutions.has(questionId_i)) {
+        state.solutions.forEach((item) => {
+          if (item.split("-")[0] === questionId_i.split("-")[0])
+            state.solutions.delete(item);
+        });
+        return { solutions: state.solutions };
+      } else {
+        state.solutions.forEach((item) => {
+          if (item.split("-")[0] === questionId_i.split("-")[0])
+            state.solutions.delete(item);
+        });
+        console.log(state.solutions);
+        return {
+          solutions: state.solutions.add(questionId_i),
+        };
+      }
+    });
+  },
 
   // flags
 
