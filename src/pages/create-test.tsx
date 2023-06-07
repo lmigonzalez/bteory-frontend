@@ -132,7 +132,7 @@ const CreateTest = () => {
   };
 
   return (
-    <Layout>
+    <Layout name="Create Test">
       <div className="flex items-center justify-between border-b-2 border-my_black pb-3">
         <button
           onClick={() => router.back()}

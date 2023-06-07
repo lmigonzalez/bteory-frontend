@@ -34,7 +34,7 @@ const Question = () => {
   }, [questionid, questions, test.questionsId, testid]);
 
   return (
-    <Layout>
+    <Layout name="Question">
       <div className="flex flex-col items-center justify-center ">
         <Image
           src={question?.questionImg ?? ""}

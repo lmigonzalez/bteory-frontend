@@ -34,7 +34,7 @@ const Home: NextPage = () => {
 
   return (
     <>
-      <Layout>
+      <Layout name="Home">
         <div className="my-div space-y-8 text-center">
           <h1 className="text-4xl">Welcome</h1>
           <p className="text-lg">

@@ -20,13 +20,12 @@ const Questions = () => {
     setQuestions(response);
   }
 
-
   function closeNewQuestionForm() {
     setShowNewQuestion(false);
   }
 
   return (
-    <Layout>
+    <Layout name="Questions">
       <div>
         <h1 className="text-center text-2xl">All Question</h1>
         <div className="my-10 flex items-center justify-between">

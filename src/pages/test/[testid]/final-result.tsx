@@ -15,7 +15,7 @@ const FinalResult = () => {
     setIsHovered(false);
   };
   return (
-    <Layout>
+    <Layout name="Test Evaluation">
       <h1 className="mb-8 text-center text-5xl">Final Result</h1>
       <div className="relative my-8 flex justify-end gap-4">
         <div className="flex h-10 w-fit items-center justify-center rounded bg-my_black px-6 py-1 text-white">

@@ -20,7 +20,6 @@ const Question = () => {
     try {
       const response = await deleteTestById(id, new AxiosHeaders());
       router.push("/dashboard");
-
     } catch (err) {
       console.log(err);
     }
@@ -34,9 +33,7 @@ const Question = () => {
   }, [id]);
 
   useEffect(() => {
-
     const selected = findQuestionsByIds();
-
 
     if (selected.length > 0) {
       setSelectedQuestions(selected);
@@ -45,7 +42,6 @@ const Question = () => {
 
   async function getTestById() {
     try {
-
       const response = await getTest(id, new AxiosHeaders());
       setSelectedTest(response);
     } catch (err) {
@@ -57,7 +53,6 @@ const Question = () => {
     if (questions.length === 0) {
       try {
         const response = await getQuestions();
-     
       } catch (err) {
         console.log(err);
       }
@@ -65,7 +60,6 @@ const Question = () => {
   }
 
   function findQuestionsByIds() {
-
     return questions.filter((obj) =>
       selectedTest?.questionsId?.includes(obj._id)
     );
@@ -76,7 +70,7 @@ const Question = () => {
   }
 
   return (
-    <Layout>
+    <Layout name="Admin Test">
       <div className="flex items-center justify-between border-b-2 border-my_black pb-3">
         <button
           onClick={() => router.back()}

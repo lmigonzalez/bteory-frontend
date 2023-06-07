@@ -5,6 +5,7 @@ import { AiOutlineLoading } from "react-icons/ai";
 import React, { useEffect, useState } from "react";
 import { globalState } from "~/Store";
 import TestExplanation from "~/components/TestExplanation";
+import Layout from "~/components/Layout";
 
 const Test = () => {
   const {
@@ -35,13 +36,13 @@ const Test = () => {
 
   console.log(test);
   return (
-    <>
+    <Layout name="Test Explanation">
       <TestExplanation
         explanation={test.explanation}
         close={() => setShowExplanation(false)}
       />
       {test._id != "" && <AiOutlineLoading size={30}></AiOutlineLoading>}
-    </>
+    </Layout>
   );
 };
 

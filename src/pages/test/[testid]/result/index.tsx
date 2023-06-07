@@ -27,7 +27,7 @@ const Results = () => {
   }, [solutions]);
 
   return (
-    <Layout>
+    <Layout name="Test Results">
       <h1 className="mb-8 text-center text-5xl">Result</h1>
       <div className="flex h-10 items-center justify-between border-b-2 border-my_black pb-3">
         <div className="flex gap-8">

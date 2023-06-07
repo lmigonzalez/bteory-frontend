@@ -52,8 +52,8 @@ const MyComponent: React.FC = () => {
   };
 
   return (
-    <Layout>
-      <div className="mt-6 border-b-[2px] border-my_black pb-3 flex justify-between">
+    <Layout name="Admin Question">
+      <div className="mt-6 flex justify-between border-b-[2px] border-my_black pb-3">
         <button
           onClick={() => router.back()}
           className="flex items-center justify-between text-xl text-my_blue "

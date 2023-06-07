@@ -7,7 +7,7 @@ import Admins from "~/components/dashboard/Admins";
 const Dashboard = () => {
   const [currentTab, setCurrentTab] = useState("users");
   return (
-    <Layout>
+    <Layout name="Dashboard">
       <h1 className="mb-8 text-center text-5xl">Dashboard</h1>
       <div className="flex h-10 justify-between gap-1">
         <button
