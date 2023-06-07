@@ -18,7 +18,7 @@ const Layout: React.FC<LayoutProps> = ({ children, name }) => {
         <meta name="description" content="Created by Luis Miguel" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className="relative flex min-h-screen w-full flex-col pt-16 ">
+      <div className="relative flex min-h-screen w-full flex-col items-center justify-center  pt-16">
         <Navbar />
         <main className="flex w-[1200px] max-w-full flex-1 flex-col px-4">
           {children}
