@@ -46,7 +46,6 @@ const Test = () => {
         explanation={test.explanation}
         close={() => setShowExplanation(false)}
       />
-      {test._id != "" && <AiOutlineLoading size={30}></AiOutlineLoading>}
     </Layout>
   );
 };

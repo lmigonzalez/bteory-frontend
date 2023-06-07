@@ -8,7 +8,7 @@ interface Props {
 
 const TestExplanation: React.FC<Props> = ({ explanation, close }) => {
   return (
-    <div className="fixed left-0 top-0 flex h-screen w-full flex-col items-center justify-center text-black">
+    <div className="fixed left-0 top-0 flex h-screen w-full flex-col items-center justify-center bg-white text-black">
       <ul className="flex flex-col items-center justify-center gap-4">
         {explanation.map((item, index) => {
           return (
