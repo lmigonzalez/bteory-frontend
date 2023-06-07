@@ -98,7 +98,7 @@ const Navbar = () => {
                   <Link href={"/home"}>Home</Link>{" "}
                 </li>
                 <li>
-                  <Link href={"/account"}>Account</Link>
+                  <UserButton afterSignOutUrl="/" />
                 </li>
                 <li>
                   <Link href={"/"}>Retake</Link>
@@ -131,7 +131,9 @@ const Navbar = () => {
                 {isTimer && (
                   <div className="w-fit rounded-sm bg-my_green px-4">
                     <span className="countdown">
-                      <span style={{ "--value": countdown }}></span>
+                      <span
+                        style={{ "--value": countdown } as React.CSSProperties}
+                      ></span>
                     </span>
                   </div>
                 )}
