@@ -1,11 +1,10 @@
-import { AxiosHeaders } from "axios";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import { AiOutlineLoading } from "react-icons/ai";
 import React, { useEffect, useState } from "react";
 import { globalState } from "~/Store";
 import TestExplanation from "~/components/TestExplanation";
 import Layout from "~/components/Layout";
+import { useAuth } from "@clerk/nextjs";
 
 const Test = () => {
   const {
@@ -13,13 +12,19 @@ const Test = () => {
     push,
   } = useRouter();
 
+  const { getToken } = useAuth();
+
   const { test, setTest, questions, setQuestions } = globalState();
 
   const [showExplanation, setShowExplanation] = useState(true);
 
   useEffect(() => {
+    async function set(testid: string) {
+      const auth = await getToken();
+      void setTest(testid, auth);
+    }
+    void set(testid as string);
     void setQuestions();
-    void setTest(testid as string, new AxiosHeaders());
   }, []);
 
   useEffect(() => {

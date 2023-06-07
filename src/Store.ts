@@ -7,13 +7,13 @@ import {
   postTestSolution,
   type TestResult,
 } from "./axios";
-import { AxiosHeaders } from "axios";
+import { type AxiosHeaderValue, AxiosHeaders } from "axios";
 
 type state = {
   questions: QuestionType[];
   setQuestions: () => Promise<void>;
   test: TestType;
-  setTest: (testId: string, ctx: AxiosHeaders) => Promise<void>;
+  setTest: (testId: string, auth: AxiosHeaderValue) => Promise<void>;
   solutions: Set<string>;
   touchSolution: (questionId_i: string) => void;
   flags: Set<string>;
@@ -45,9 +45,9 @@ export const globalState = create<state>()((set) => ({
     category: "practice",
     complexity: "easy",
   },
-  setTest: async (testId: string, ctx: AxiosHeaders) => {
+  setTest: async (testId: string, auth: AxiosHeaderValue) => {
     try {
-      const res = await getTest(testId, ctx);
+      const res = await getTest(testId, auth);
       set({ test: res });
     } catch (err) {
       console.log(err);
