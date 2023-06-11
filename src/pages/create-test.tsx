@@ -9,7 +9,7 @@ import {
 } from "react-icons/ai";
 import { useRouter } from "next/router";
 
-type Field = {type:string,value:FormDataEntryValue} 
+type Field = { type: string; value: FormDataEntryValue };
 
 const CreateTest = () => {
   const router = useRouter();
@@ -22,18 +22,26 @@ const CreateTest = () => {
   const [test, setTest] = useState(initialData);
   const [fields, setFields] = useState<Field[]>([]);
   const [questions, setQuestions] = useState<QuestionType[]>([]);
-  const [selectedQuestions, setSelectedQuestions] = useState<QuestionType[]>([]);
+  const [selectedQuestions, setSelectedQuestions] = useState<QuestionType[]>(
+    []
+  );
 
   useEffect(() => {
-    getQuestions();
+    void getQuestions();
   }, []);
 
   async function getQuestions() {
-    const response = await getAllQuestions();
-    setQuestions(response);
+    try {
+      const response = await getAllQuestions();
+      setQuestions(response);
+    } catch (err) {
+      console.log(err);
+    }
   }
 
-  const handleTestChange = (e: any) => {
+  const handleTestChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
     setTest({
       ...test,
       [e.target.name]: e.target.value,
@@ -48,7 +56,11 @@ const CreateTest = () => {
     const field = updatedFields[index];
 
     if (field) {
-      if (e.currentTarget && e.currentTarget.files?.[0] && e.currentTarget.name === "explanationImage") {
+      if (
+        e.currentTarget &&
+        e.currentTarget.files?.[0] &&
+        e.currentTarget.name === "explanationImage"
+      ) {
         field.value = e.currentTarget.files?.[0];
       } else {
         field.value = e.target.value;
@@ -93,7 +105,7 @@ const CreateTest = () => {
 
   const submitTest = async () => {
     const formData = new FormData();
-    const selectedQuestionsId = selectedQuestions.map((item) => item?._id); 
+    const selectedQuestionsId = selectedQuestions.map((item) => item?._id);
 
     formData.append("name", test.testName);
     formData.append("category", test.category);
@@ -146,7 +158,7 @@ const CreateTest = () => {
         <h1 className="text-2xl text-my_blue">Question selected: 35</h1>
 
         <button
-          onClick={submitTest}
+          onClick={()=> void submitTest()}
           disabled={currentTab === 3 ? false : true}
           className={`${
             currentTab === 3 ? "bg-my_green" : "bg-my_grey"

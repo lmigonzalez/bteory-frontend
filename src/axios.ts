@@ -75,37 +75,57 @@ export const deleteQuestion = async (id: string) => {
 };
 
 export const postTest = async (data: FormData, auth: AxiosHeaderValue) => {
-  const res = await instance.post("create-test", data, {
-    headers: { Authorization: auth },
-  });
-  return res;
+  try {
+    const res = await instance.post("create-test", data, {
+      headers: { Authorization: auth },
+    });
+    return res;
+  } catch (e) {
+    console.log(e);
+  }
 };
 
 export const getTest = async (id: string, auth: AxiosHeaderValue) => {
-  const res = await instance.get<TestType>(`get-test/${id}`, {
-    headers: { Authorization: auth },
-  });
-  return res.data;
+  try {
+    const res = await instance.get<TestType>(`get-test/${id}`, {
+      headers: { Authorization: auth },
+    });
+    return res.data;
+  } catch (e) {
+    console.log(e);
+  }
 };
 
 export const getAllTest = async () => {
-  const res = await instance.get<TestType[]>("get-all-test");
-  return res.data;
+  try {
+    const res = await instance.get<TestType[]>("get-all-test");
+    return res.data;
+  } catch (e) {
+    console.log(e);
+  }
 };
 
 export const deleteTestById = async (id: string, auth: AxiosHeaderValue) => {
-  const res = await instance.delete<TestType>(`delete/test/${id}`, {
-    headers: { Authorization: auth },
-  });
-  return res.data;
+  try {
+    const res = await instance.delete<TestType>(`delete/test/${id}`, {
+      headers: { Authorization: auth },
+    });
+    return res.data;
+  } catch (e) {
+    console.log(e);
+  }
 };
 
 export const postTestSolution = async (
   data: { testId: string; answers: string[] },
   auth: AxiosHeaderValue
 ) => {
-  const res = await instance.post<TestResult>("/create-test-result", data, {
-    headers: { Authorization: auth },
-  });
-  return res.data;
+  try {
+    const res = await instance.post<TestResult>("/create-test-result", data, {
+      headers: { Authorization: auth },
+    });
+    return res.data;
+  } catch (e) {
+    console.log(e);
+  }
 };

@@ -19,7 +19,7 @@ const Results = () => {
 
   useEffect(() => {
     async function set(testid: string) {
-      void setTest(testid, userId ?? "");
+      await setTest(testid, userId ?? "");
     }
     void set(testid as string);
   }, []);

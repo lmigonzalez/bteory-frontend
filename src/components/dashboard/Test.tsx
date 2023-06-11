@@ -12,7 +12,7 @@ const Test = () => {
     try {
       const response = await getAllTest();
       // console.log(response);
-      setTests(response);
+      setTests(response??[]);
     } catch (err) {
       console.log(err);
     }
