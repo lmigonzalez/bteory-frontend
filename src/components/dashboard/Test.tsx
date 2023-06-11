@@ -1,17 +1,11 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { getAllTest } from "../../axios";
-
-interface TestItem {
-  _id: string;
-  testName: string;
-  category: string;
-}
+import { getAllTest, type TestType } from "../../axios";
 
 const Test = () => {
-  const [tests, setTests] = useState<TestItem[]>([]);
+  const [tests, setTests] = useState<TestType[]>([]);
   useEffect(() => {
-    getTests();
+    void getTests();
   }, []);
 
   async function getTests() {
