@@ -51,6 +51,8 @@ const MyComponent: React.FC = () => {
     return questions.find((question) => question._id === id) || null;
   };
 
+  console.log(questionData);
+
   return (
     <Layout name="Admin Question">
       <div className="mt-6 flex justify-between border-b-[2px] border-my_black pb-3">
