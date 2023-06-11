@@ -62,6 +62,10 @@ export const postQuestion = async (data: FormData, auth: AxiosHeaderValue) => {
   return res;
 };
 
+export const deleteQuestion = async (id: string) => {
+  // const res = await instance.delete(,id)
+};
+
 export const postTest = async (data: FormData, auth: AxiosHeaderValue) => {
   const res = await instance.post("create-test", data, {
     headers: { Authorization: auth },

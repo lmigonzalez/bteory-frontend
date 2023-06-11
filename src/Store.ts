@@ -6,12 +6,14 @@ import {
   getTest,
   postTestSolution,
   type TestResult,
+  deleteQuestion,
 } from "./axios";
 import { type AxiosHeaderValue, AxiosHeaders } from "axios";
 
 type state = {
   questions: QuestionType[];
   setQuestions: () => Promise<void>;
+  deleteQuestion: (id: string) => Promise<void>;
   test: TestType;
   setTest: (testId: string, auth: AxiosHeaderValue) => Promise<void>;
   solutions: Set<string>;
@@ -36,6 +38,11 @@ export const globalState = create<state>()((set) => ({
       console.log(err);
     }
   },
+  deleteQuestion: async (id) => {
+    try {
+      const res = await deleteQuestion(id);
+    } catch (error) {}
+  },
 
   // test
   test: {
@@ -44,6 +51,7 @@ export const globalState = create<state>()((set) => ({
     explanation: [{ explanation: "", image: "", type: "" }],
     category: "practice",
     complexity: "easy",
+    testName: "",
   },
   setTest: async (testId: string, auth: AxiosHeaderValue) => {
     try {
