@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { getAllQuestions, postTest } from "../axios";
+import { getAllQuestions, postTest, QuestionType } from "../axios";
 import { AxiosHeaders } from "axios";
 import Layout from "~/components/Layout";
 import {
@@ -8,6 +8,8 @@ import {
   AiOutlinePlus,
 } from "react-icons/ai";
 import { useRouter } from "next/router";
+
+type Field = {type:string,value:FormDataEntryValue} 
 
 const CreateTest = () => {
   const router = useRouter();
@@ -19,8 +21,8 @@ const CreateTest = () => {
   const [currentTab, setCurrentTab] = useState(1);
   const [test, setTest] = useState(initialData);
   const [fields, setFields] = useState<Field[]>([]);
-  const [questions, setQuestions] = useState([]);
-  const [selectedQuestions, setSelectedQuestions] = useState([]);
+  const [questions, setQuestions] = useState<QuestionType[]>([]);
+  const [selectedQuestions, setSelectedQuestions] = useState<QuestionType[]>([]);
 
   useEffect(() => {
     getQuestions();
@@ -46,7 +48,7 @@ const CreateTest = () => {
     const field = updatedFields[index];
 
     if (field) {
-      if (e.currentTarget && e.currentTarget.name === "explanationImage") {
+      if (e.currentTarget && e.currentTarget.files?.[0] && e.currentTarget.name === "explanationImage") {
         field.value = e.currentTarget.files?.[0];
       } else {
         field.value = e.target.value;
@@ -70,7 +72,7 @@ const CreateTest = () => {
   };
 
   const handleCheckboxChange =
-    (item: any) => (e: React.ChangeEvent<HTMLInputElement>) => {
+    (item: QuestionType) => (e: React.ChangeEvent<HTMLInputElement>) => {
       if (e.target.checked) {
         setSelectedQuestions((prevSelectedQuestions) => [
           ...prevSelectedQuestions,
@@ -91,7 +93,7 @@ const CreateTest = () => {
 
   const submitTest = async () => {
     const formData = new FormData();
-    const selectedQuestionsId = selectedQuestions.map((item) => item?._id);
+    const selectedQuestionsId = selectedQuestions.map((item) => item?._id); 
 
     formData.append("name", test.testName);
     formData.append("category", test.category);
