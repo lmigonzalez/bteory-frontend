@@ -11,7 +11,7 @@ const Results = () => {
     push,
   } = useRouter();
 
-  const { getToken } = useAuth();
+  const { userId } = useAuth();
 
   const { test, setTest, solutions, flags, sendSolution } = globalState();
 
@@ -19,8 +19,7 @@ const Results = () => {
 
   useEffect(() => {
     async function set(testid: string) {
-      const auth = await getToken();
-      void setTest(testid, auth);
+      void setTest(testid, userId ?? "");
     }
     void set(testid as string);
   }, []);

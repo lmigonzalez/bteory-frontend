@@ -17,13 +17,17 @@ export type QuestionType = {
   questionImg: string;
   options: string[];
   answer: string;
-  explanation: [
-    {
-      explanation: string;
-      image: string;
-      type: string;
-    }
-  ];
+  explanation: (
+    | {
+        explanation: string;
+        type: "text";
+      }
+    | {
+        content: string;
+        image: string;
+        type: "image";
+      }
+  )[];
   category: Category;
   complexity: Complexity;
 };
@@ -60,6 +64,10 @@ export const postQuestion = async (data: FormData, auth: AxiosHeaderValue) => {
     headers: { Authorization: auth },
   });
   return res;
+};
+
+export const deleteQuestion = async (id: string) => {
+  // const res = await instance.delete(,id)
 };
 
 export const postTest = async (data: FormData, auth: AxiosHeaderValue) => {

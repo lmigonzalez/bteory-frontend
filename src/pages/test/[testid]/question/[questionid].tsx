@@ -12,7 +12,7 @@ const Question = () => {
     push,
   } = useRouter();
 
-  const { getToken } = useAuth();
+  const { userId } = useAuth();
 
   const { test, setTest, solutions, questions, setQuestions, touchSolution } =
     globalState();
@@ -24,8 +24,7 @@ const Question = () => {
 
   useEffect(() => {
     async function set(testid: string) {
-      const auth = await getToken();
-      await setTest(testid, auth);
+      await setTest(testid, userId ?? "");
     }
     void set(testid as string);
     void setQuestions();

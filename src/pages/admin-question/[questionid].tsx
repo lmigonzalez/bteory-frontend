@@ -1,57 +1,29 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import { getAllQuestions } from "../../axios";
+import { type QuestionType } from "../../axios";
 import Layout from "~/components/Layout";
 import { AiOutlineArrowLeft, AiFillDelete } from "react-icons/ai";
-interface Question {
-  _id: string;
-  options: [string];
-  category: string;
-  complexity: string;
-  answer: string;
-  question: string;
-  explanation: [
-    { type: string; content: string; images: string; explanation: string }
-  ];
-}
+import { globalState } from "~/Store";
 
 const MyComponent: React.FC = () => {
   const router = useRouter();
   const { id } = router.query;
-  const [questions, setQuestions] = useState<Question[]>([]);
-  const [questionData, setQuestionData] = useState<Question | null>(null);
+
+  const { questions, setQuestions } = globalState();
+  const [questionData, setQuestionData] = useState<QuestionType>();
 
   useEffect(() => {
-    const fetchQuestionData = async () => {
+    const fetchQuestionData = () => {
       if (id && questions.length > 0) {
-        const selectedQuestion = findQuestionById(questions);
+        const selectedQuestion = questions.find((q) => id === q._id);
         setQuestionData(selectedQuestion);
       } else {
-        await fetchAllQuestions();
+        void setQuestions();
       }
     };
-
     fetchQuestionData();
   }, [id, questions]);
-
-  const fetchAllQuestions = async () => {
-    try {
-      const response = await getAllQuestions();
-      const selectedQuestion = findQuestionById(response);
-      setQuestionData(selectedQuestion);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  function deleteQuestion() {}
-
-  const findQuestionById = (questions: Question[]): Question | null => {
-    return questions.find((question) => question._id === id) || null;
-  };
-
-  console.log(questionData);
 
   return (
     <Layout name="Admin Question">
@@ -65,7 +37,7 @@ const MyComponent: React.FC = () => {
         </button>
 
         <button
-          onClick={deleteQuestion}
+          // onClick={deleteQuestion}
           className="transition-all hover:-translate-y-1"
         >
           <AiFillDelete size={25} fill="#EA5455" />
