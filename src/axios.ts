@@ -17,13 +17,17 @@ export type QuestionType = {
   questionImg: string;
   options: string[];
   answer: string;
-  explanation: [
-    {
-      explanation: string;
-      image: string;
-      type: string;
-    }
-  ];
+  explanation: (
+    | {
+        explanation: string;
+        type: "text";
+      }
+    | {
+        content: string;
+        image: string;
+        type: "image";
+      }
+  )[];
   category: Category;
   complexity: Complexity;
 };
