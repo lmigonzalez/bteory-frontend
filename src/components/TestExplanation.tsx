@@ -2,7 +2,17 @@ import React from "react";
 import Image from "next/image";
 
 interface Props {
-  explanation: [{ explanation: string; image: string; type: string }];
+  explanation: (
+    | {
+        explanation: string;
+        type: "text";
+      }
+    | {
+        content: string;
+        image: string;
+        type: "image";
+      }
+  )[];
   close: () => void;
 }
 

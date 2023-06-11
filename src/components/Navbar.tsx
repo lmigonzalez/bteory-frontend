@@ -161,7 +161,12 @@ const Navbar = () => {
         <TestExplanation
           explanation={
             questions.find((item) => item._id === (questionid as string))
-              ?.explanation ?? [{ type: "", image: "", explanation: "" }]
+              ?.explanation ?? [
+              {
+                explanation: "No Explanation",
+                type: "text",
+              },
+            ]
           }
           close={() => setShowExplanation(false)}
         />
