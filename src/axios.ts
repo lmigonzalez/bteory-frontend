@@ -43,13 +43,17 @@ export type TestType = {
   _id: string;
   questionsId: string[];
   testName: string;
-  explanation: [
-    {
-      explanation: string;
-      image: string;
-      type: string;
-    }
-  ];
+  explanation: (
+    | {
+        explanation: string;
+        type: "text";
+      }
+    | {
+        content: string;
+        image: string;
+        type: "image";
+      }
+  )[];
   category: Category;
   complexity: Complexity;
 };

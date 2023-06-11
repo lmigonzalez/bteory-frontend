@@ -48,7 +48,7 @@ export const globalState = create<state>()((set) => ({
   test: {
     _id: "",
     questionsId: [],
-    explanation: [{ explanation: "", image: "", type: "" }],
+    explanation: [{ type: "text", explanation:"No Explanation"}],
     category: "practice",
     complexity: "easy",
     testName: "",
