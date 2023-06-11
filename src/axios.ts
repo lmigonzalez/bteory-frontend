@@ -38,6 +38,7 @@ export type TestResult = {
 export type TestType = {
   _id: string;
   questionsId: string[];
+  testName: string;
   explanation: [
     {
       explanation: string;
