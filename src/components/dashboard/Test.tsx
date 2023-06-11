@@ -3,8 +3,6 @@ import Link from "next/link";
 import { TestType } from "../../axios";
 import { getAllTest } from "../../axios";
 
-
-
 const Test = () => {
   const [tests, setTests] = useState<any>([]);
   useEffect(() => {
