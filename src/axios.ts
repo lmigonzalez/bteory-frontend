@@ -76,7 +76,7 @@ export const getTest = async (id: string, auth: AxiosHeaderValue) => {
 };
 
 export const getAllTest = async () => {
-  const res = await instance.get<TestType>("get-all-test");
+  const res = await instance.get<TestType[]>("get-all-test");
   return res.data;
 };
 
