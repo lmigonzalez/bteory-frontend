@@ -73,7 +73,7 @@ const FinalResult = () => {
             <div
               key={index}
               className={`${
-                !result
+                !result?.userAnswer
                   ? "bg-my_grey"
                   : result.isCorrect
                   ? "bg-my_green"
