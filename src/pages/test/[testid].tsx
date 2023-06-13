@@ -4,7 +4,8 @@ import React, { useEffect, useState } from "react";
 import { globalState } from "~/Store";
 import TestExplanation from "~/components/TestExplanation";
 import Layout from "~/components/Layout";
-import { useAuth } from "@clerk/nextjs";
+import { useAuth, useUser } from "@clerk/nextjs";
+import { AxiosHeaders } from "axios";
 
 const Test = () => {
   const {
@@ -12,7 +13,7 @@ const Test = () => {
     push,
   } = useRouter();
 
-  const { getToken } = useAuth();
+  const { user } = useUser();
 
   const { test, setTest, questions, setQuestions } = globalState();
 
@@ -20,8 +21,15 @@ const Test = () => {
 
   useEffect(() => {
     async function set(testid: string) {
-      const auth = await getToken();
-      void setTest(testid, auth);
+      await setTest(
+        testid,
+        new AxiosHeaders({
+          userId: user?.id ?? "",
+          email: user?.primaryEmailAddress?.emailAddress ?? "",
+          firstName: user?.firstName ?? "",
+          lastName: user?.lastName ?? "",
+        })
+      );
     }
     void set(testid as string);
     void setQuestions();
@@ -41,7 +49,7 @@ const Test = () => {
 
   console.log(test);
   return (
-    <Layout name="Test Explanation"> 
+    <Layout name="Test Explanation">
       <TestExplanation
         explanation={test.explanation}
         close={() => setShowExplanation(false)}
@@ -49,7 +57,5 @@ const Test = () => {
     </Layout>
   );
 };
-
-
 
 export default Test;
