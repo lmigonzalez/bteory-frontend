@@ -53,9 +53,9 @@ export const globalState = create<state>()((set) => ({
     complexity: "easy",
     testName: "",
   },
-  setTest: async (testId: string, auth: AxiosHeaderValue) => {
+  setTest: async (testId: string, ctx: AxiosHeaderValue) => {
     try {
-      const res = await getTest(testId, auth);
+      const res = await getTest(testId, ctx);
       set({ test: res });
     } catch (err) {
       console.log(err);

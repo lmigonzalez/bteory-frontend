@@ -11,13 +11,13 @@ import {
 } from "../../axios";
 
 import { globalState } from "../../Store";
+import { useUser } from "@clerk/nextjs";
 import { AxiosHeaders } from "axios";
-import { useAuth } from "@clerk/nextjs";
 
 const Question = () => {
   const router = useRouter();
   const { id } = router.query;
-  const { userId } = useAuth();
+  const { user } = useUser();
   const { questions, setQuestions } = globalState();
   const [showNewQuestion, setShowNewQuestion] = useState(false);
   const [selectedTest, setSelectedTest] = useState<TestType>();
@@ -27,7 +27,15 @@ const Question = () => {
 
   const deleteTest = useCallback(async () => {
     try {
-      const response = await deleteTestById(id as string, new AxiosHeaders());
+      await deleteTestById(
+        id as string,
+        new AxiosHeaders({
+          userId: user?.id ?? "",
+          email: user?.primaryEmailAddress?.emailAddress ?? "",
+          firstName: user?.firstName ?? "",
+          lastName: user?.lastName ?? "",
+        })
+      );
       void router.push("/dashboard");
     } catch (err) {
       console.log(err);
@@ -51,7 +59,15 @@ const Question = () => {
 
   async function getTestById() {
     try {
-      const response = await getTest(id as string, userId ?? "");
+      const response = await getTest(
+        id as string,
+        new AxiosHeaders({
+          userId: user?.id ?? "",
+          email: user?.primaryEmailAddress?.emailAddress ?? "",
+          firstName: user?.firstName ?? "",
+          lastName: user?.lastName ?? "",
+        })
+      );
       setSelectedTest(response);
     } catch (err) {
       console.log(err);

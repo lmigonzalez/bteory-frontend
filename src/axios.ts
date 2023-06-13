@@ -59,9 +59,9 @@ export const getAllQuestions = async () => {
   return res.data;
 };
 
-export const postQuestion = async (data: FormData, auth: AxiosHeaderValue) => {
+export const postQuestion = async (data: FormData, ctx: AxiosHeaderValue) => {
   const res = await instance.post<QuestionType>("create-question", data, {
-    headers: { Authorization: auth },
+    headers: { ctx: ctx },
   });
   return res;
 };
@@ -70,16 +70,16 @@ export const deleteQuestion = async (id: string) => {
   // const res = await instance.delete(,id)
 };
 
-export const postTest = async (data: FormData, auth: AxiosHeaderValue) => {
+export const postTest = async (data: FormData, ctx: AxiosHeaderValue) => {
   const res = await instance.post("create-test", data, {
-    headers: { Authorization: auth },
+    headers: { ctx: ctx },
   });
   return res;
 };
 
-export const getTest = async (id: string, auth: AxiosHeaderValue) => {
+export const getTest = async (id: string, ctx: AxiosHeaderValue) => {
   const res = await instance.get<TestType>(`get-test/${id}`, {
-    headers: { Authorization: auth },
+    headers: { ctx: ctx },
   });
   return res.data;
 };
@@ -89,19 +89,19 @@ export const getAllTest = async () => {
   return res.data;
 };
 
-export const deleteTestById = async (id: string, auth: AxiosHeaderValue) => {
+export const deleteTestById = async (id: string, ctx: AxiosHeaderValue) => {
   const res = await instance.delete<TestType>(`delete/test/${id}`, {
-    headers: { Authorization: auth },
+    headers: { ctx: ctx },
   });
   return res.data;
 };
 
 export const postTestSolution = async (
   data: { testId: string; answers: string[] },
-  auth: AxiosHeaderValue
+  ctx: AxiosHeaderValue
 ) => {
   const res = await instance.post<TestResult>("/create-test-result", data, {
-    headers: { Authorization: auth },
+    headers: { ctx: ctx },
   });
   return res.data;
 };
