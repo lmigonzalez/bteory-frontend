@@ -43,13 +43,17 @@ export type TestType = {
   _id: string;
   questionsId: string[];
   testName: string;
-  explanation: [
-    {
-      explanation: string;
-      image: string;
-      type: string;
-    }
-  ];
+  explanation: (
+    | {
+        explanation: string;
+        type: "text";
+      }
+    | {
+        content: string;
+        image: string;
+        type: "image";
+      }
+  )[];
   category: Category;
   complexity: Complexity;
 };
@@ -85,8 +89,12 @@ export const getTest = async (id: string, ctx: AxiosHeaderValue) => {
 };
 
 export const getAllTest = async () => {
-  const res = await instance.get<TestType[]>("get-all-test");
-  return res.data;
+  try {
+    const res = await instance.get<TestType[]>("get-all-test");
+    return res.data;
+  } catch (e) {
+    console.log(e);
+  }
 };
 
 export const deleteTestById = async (id: string, ctx: AxiosHeaderValue) => {

@@ -41,7 +41,7 @@ const Test = () => {
 
   console.log(test);
   return (
-    <Layout name="Test Explanation">
+    <Layout name="Test Explanation"> 
       <TestExplanation
         explanation={test.explanation}
         close={() => setShowExplanation(false)}
@@ -49,5 +49,7 @@ const Test = () => {
     </Layout>
   );
 };
+
+
 
 export default Test;
