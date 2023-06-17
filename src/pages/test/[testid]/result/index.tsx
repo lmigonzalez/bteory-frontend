@@ -3,7 +3,8 @@ import { useRouter } from "next/router";
 import Layout from "~/components/Layout";
 import { AiFillFlag } from "react-icons/ai";
 import { globalState } from "~/Store";
-import { useAuth } from "@clerk/nextjs";
+import { useUser } from "@clerk/nextjs";
+import { AxiosHeaders } from "axios";
 
 const Results = () => {
   const {
@@ -11,7 +12,7 @@ const Results = () => {
     push,
   } = useRouter();
 
-  const { userId } = useAuth();
+  const { user } = useUser();
 
   const { test, setTest, solutions, flags, sendSolution } = globalState();
 
@@ -19,7 +20,15 @@ const Results = () => {
 
   useEffect(() => {
     async function set(testid: string) {
-      await setTest(testid, userId ?? "");
+      await setTest(
+        testid,
+        new AxiosHeaders({
+          userId: user?.id ?? "",
+          email: user?.primaryEmailAddress?.emailAddress ?? "",
+          firstName: user?.firstName ?? "",
+          lastName: user?.lastName ?? "",
+        })
+      );
     }
     void set(testid as string);
   }, []);

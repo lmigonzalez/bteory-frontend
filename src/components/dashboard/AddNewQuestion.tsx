@@ -7,6 +7,7 @@ import {
 
 import axios, { AxiosHeaders } from "axios";
 import { postQuestion } from "../../axios";
+import { useUser } from "@clerk/nextjs";
 interface Field {
   type: string;
   value: string | File;
@@ -26,7 +27,7 @@ const AddNewQuestion: React.FC<QuestionProps> = ({ closeNewQuestionForm }) => {
     category: "",
     complexity: "",
   };
-  
+  const { user } = useUser();
   const [currentTab, setCurrentTab] = useState<number>(1);
   const [newQuestion, setNewQuestion] = useState(initialData);
   const [options, setOptions] = useState<string[]>(["", ""]);
@@ -112,7 +113,6 @@ const AddNewQuestion: React.FC<QuestionProps> = ({ closeNewQuestionForm }) => {
   };
 
   const submitQuestion = async () => {
-
     const formData = new FormData();
 
     formData.append("question", newQuestion.question);
@@ -137,7 +137,10 @@ const AddNewQuestion: React.FC<QuestionProps> = ({ closeNewQuestionForm }) => {
     //   console.log(pair[0], pair[1]);
     // }
     const headers = {
-      "Content-Type": "multipart/form-data",
+      userId: user?.id ?? "",
+      email: user?.primaryEmailAddress?.emailAddress ?? "",
+      firstName: user?.firstName ?? "",
+      lastName: user?.lastName ?? "",
     };
 
     try {
