@@ -1,18 +1,21 @@
 import React, { useState } from "react";
 import { AiOutlineCloseSquare } from "react-icons/ai";
-
+import { createAdmin } from "../../axios";
 interface QuestionProps {
   closeNewQuestionForm: () => void;
 }
+
+interface NewAdmin {
+  email: string;
+  level: string;
+}
 const AddNewAdmin: React.FC<QuestionProps> = ({ closeNewQuestionForm }) => {
   const initialData = {
-    firstName: "",
-    lastName: "",
     email: "",
     level: "",
   };
 
-  const [adminData, setAdminData] = useState(initialData);
+  const [adminData, setAdminData] = useState<NewAdmin>(initialData);
 
   function onChange(
     e:
@@ -25,8 +28,14 @@ const AddNewAdmin: React.FC<QuestionProps> = ({ closeNewQuestionForm }) => {
     });
   }
 
-  function submitAdmin(e: React.FormEvent<HTMLFormElement>) {
+  async function submitAdmin(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    try {
+      await createAdmin(adminData);
+    } catch (err) {
+      console.log(err);
+    }
+
     console.log(adminData);
     setAdminData(initialData);
     closeNewQuestionForm();
@@ -50,22 +59,6 @@ const AddNewAdmin: React.FC<QuestionProps> = ({ closeNewQuestionForm }) => {
         className="flex w-[700px] flex-col bg-white px-4 py-8"
       >
         <p className="text-center text-xl">Add new admin</p>
-        <input
-          placeholder="First Name"
-          type="text"
-          name="firstName"
-          value={adminData.firstName}
-          onChange={onChange}
-          className="my-2 h-10 border-[1px] border-my_black bg-white px-2"
-        />
-        <input
-          placeholder="Last Name"
-          type="text"
-          name="lastName"
-          value={adminData.lastName}
-          onChange={onChange}
-          className="my-2 h-10 border-[1px] border-my_black bg-white px-2"
-        />
         <input
           placeholder="Email"
           type="email"

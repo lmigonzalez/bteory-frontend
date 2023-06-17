@@ -1,11 +1,11 @@
 import axios, { type AxiosHeaderValue, type AxiosRequestConfig } from "axios";
 
-// const config: AxiosRequestConfig = {
-//   baseURL: "http://localhost:8100/api/",
-// };
 const config: AxiosRequestConfig = {
-  baseURL: "https://bteory-backend-production.up.railway.app/api/",
+  baseURL: "http://localhost:8100/api/",
 };
+// const config: AxiosRequestConfig = {
+//   baseURL: "https://bteory-backend-production.up.railway.app/api/",
+// };
 const instance = axios.create(config);
 
 export type Category = "practice" | "general" | "final";
@@ -125,6 +125,44 @@ export const postTestSolution = async (
       headers: { Authorization: auth },
     });
     return res.data;
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+// Admins
+
+export const getAllAdmins = async () => {
+  try {
+    const res = await instance.get("get-admins");
+
+    return res.data;
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export const createAdmin = async (newAdmin: {}) => {
+  try {
+    await instance.post("create-admin", newAdmin);
+    console.log("Admin created");
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export const updateAdmin = async (_id: string, level: string) => {
+  try {
+    await instance.patch(`patch-admin/${_id}`, { level });
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export const deleteAdmin = async (_id: string) => {
+  try {
+    await instance.delete(`delete-admin/${_id}`);
+    return "deleted";
   } catch (e) {
     console.log(e);
   }
