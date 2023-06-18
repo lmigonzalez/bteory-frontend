@@ -84,17 +84,15 @@ const Navbar = () => {
   }
 
   const adminUrls = [
-    "/dashboard",
-    "/questions",
-    "/admin-question",
-    "/create-test",
-    "/admin-test",
+    "dashboard",
+    "questions",
+    "admin-question",
+    "create-test",
+    "admin-test",
   ];
 
   function arrayContainsSubstring() {
-    return adminUrls.some((item) =>
-      item.includes(asPath.split("/")[1]?.trim() ?? "")
-    );
+    return adminUrls.some((item) => item === asPath.split("/")[1]?.trim());
   }
 
   async function protectRouters() {
