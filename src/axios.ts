@@ -155,12 +155,7 @@ export const checkIfAdmin = async () => {
 
 export const getAllAdmins = async () => {
   try {
-<<<<<<< Updated upstream
-    const res = await instance.get<User[]>("get-admins");
-
-=======
     const res = await instance.get("get-admins");
->>>>>>> Stashed changes
     return res.data;
   } catch (e) {
     return false;
