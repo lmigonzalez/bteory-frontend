@@ -144,8 +144,7 @@ export const postTestSolution = async (
 
 export const checkIfAdmin = async () => {
   try {
-    const res = await instance.get("check-if-admin");
-    console.log(res.data);
+    const res = await instance.get<boolean>("check-if-admin");
     return res.data;
   } catch (e) {
     // console.log(e);
@@ -155,7 +154,7 @@ export const checkIfAdmin = async () => {
 
 export const getAllAdmins = async () => {
   try {
-    const res = await instance.get("get-admins");
+    const res = await instance.get<User[]>("get-admins");
     return res.data;
   } catch (e) {
     return false;
