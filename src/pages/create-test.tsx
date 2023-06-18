@@ -8,11 +8,13 @@ import {
   AiOutlinePlus,
 } from "react-icons/ai";
 import { useRouter } from "next/router";
+import { useUser } from "@clerk/nextjs";
 
 type Field = { type: string; value: FormDataEntryValue };
 
 const CreateTest = () => {
   const router = useRouter();
+  const { user } = useUser();
   const initialData = {
     testName: "",
     category: "",
@@ -129,7 +131,7 @@ const CreateTest = () => {
     };
 
     try {
-      await postTest(formData, new AxiosHeaders(headers));
+      await postTest(formData, user?.id ?? '');
       // const [currentTab, setCurrentTab] = useState(1);
       // const [test, setTest] = useState(initialData);
       // const [fields, setFields] = useState<Field[]>([]);

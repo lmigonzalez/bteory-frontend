@@ -70,9 +70,9 @@ const Navbar = () => {
   }, [isTimer]);
 
   useEffect(() => {
-    checkIdUserIsAdmin();
+    void checkIdUserIsAdmin();
     setUrlInArray(arrayContainsSubstring);
-    protectRouters();
+    void protectRouters();
   }, []);
 
   async function checkIdUserIsAdmin() {
@@ -100,7 +100,7 @@ const Navbar = () => {
     const test = await checkIfAdmin();
     if (arrayContainsSubstring() && !test) {
       console.log("here!!!!!!!!");
-      push("/home");
+      void push("/home");
     }
   }
 
