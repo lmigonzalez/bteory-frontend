@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useRouter } from "next/router";
 import Layout from "~/components/Layout";
 import { AiFillExclamationCircle } from "react-icons/ai";
 import { globalState } from "~/Store";

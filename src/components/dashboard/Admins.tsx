@@ -4,33 +4,24 @@ import {
   getAllAdmins,
   updateAdmin,
   deleteAdmin as deleteAdminAPI,
+  type User,
 } from "../../axios";
-
-interface Admin {
-  _id: string;
-  userId: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-  level: string;
-}
 
 const Admins = () => {
   const [showNewAdmin, setShowNewAdmin] = useState(false);
   const [showSelectedRow, setShowSelectedRow] = useState(false);
   const [selectedRowIndex, setSelectedRowIndex] = useState(-1);
   const [selectedLevel, setSelectedLevel] = useState("");
-  const [admins, setAdmins] = useState<Admin[]>([]);
+  const [admins, setAdmins] = useState<User[]>([]);
 
   useEffect(() => {
-    getAdmins();
+    void getAdmins();
   }, [showNewAdmin]);
 
   async function getAdmins() {
     try {
       const res = await getAllAdmins();
-
-      setAdmins(res);
+      setAdmins(res || []);
     } catch (err) {
       console.log(err);
     }
@@ -49,7 +40,7 @@ const Admins = () => {
   async function updateLevel(_id: string, level: string) {
     try {
       await updateAdmin(_id, level);
-      getAdmins();
+      void getAdmins();
     } catch (errors) {
       console.log(errors);
     }
@@ -58,7 +49,7 @@ const Admins = () => {
   async function deleteAdmin(_id: string) {
     try {
       await deleteAdminAPI(_id);
-      getAdmins();
+      void getAdmins();
       console.log("deleted");
     } catch (error) {
       console.log(error);
@@ -122,7 +113,7 @@ const Admins = () => {
                       <td colSpan={4} className="w-full p-4 ">
                         <div className="flex items-center justify-between">
                           <button
-                            onClick={() => deleteAdmin(row._id)}
+                            onClick={() => void deleteAdmin(row._id)}
                             className="bg-my_red px-6 py-1 text-white"
                           >
                             Delete Admin
@@ -135,7 +126,7 @@ const Admins = () => {
                               value="questions"
                               checked={row.level === "questions"}
                               onChange={() => {
-                                updateLevel(row._id, "questions");
+                                void updateLevel(row._id, "questions");
                               }}
                             />
                             <label>questions</label>
@@ -147,7 +138,7 @@ const Admins = () => {
                               value="users"
                               checked={row.level === "users"}
                               onChange={() => {
-                                updateLevel(row._id, "users");
+                                void updateLevel(row._id, "users");
                               }}
                             />
                             <label>users</label>
@@ -159,7 +150,7 @@ const Admins = () => {
                               value="both"
                               checked={row.level === "both"}
                               onChange={() => {
-                                updateLevel(row._id, "both");
+                                void updateLevel(row._id, "both");
                               }}
                             />
                             <label>both</label>

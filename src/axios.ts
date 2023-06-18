@@ -57,15 +57,23 @@ export type TestType = {
   category: Category;
   complexity: Complexity;
 };
+export interface User {
+  _id: string;
+  userId: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  level: string;
+}
 
 export const getAllQuestions = async () => {
   const res = await instance.get<QuestionType[]>("get-all-questions");
   return res.data;
 };
 
-export const postQuestion = async (data: FormData, ctx: AxiosHeaderValue) => {
+export const postQuestion = async (data: FormData, auth: AxiosHeaderValue) => {
   const res = await instance.post<QuestionType>("create-question", data, {
-    headers: { ctx: ctx },
+    headers: { Authorization: auth },
   });
   return res;
 };
@@ -74,18 +82,26 @@ export const deleteQuestion = async (id: string) => {
   // const res = await instance.delete(,id)
 };
 
-export const postTest = async (data: FormData, ctx: AxiosHeaderValue) => {
-  const res = await instance.post("create-test", data, {
-    headers: { ctx: ctx },
-  });
-  return res;
+export const postTest = async (data: FormData, auth: AxiosHeaderValue) => {
+  try {
+    const res = await instance.post("create-test", data, {
+      headers: { Authorization: auth },
+    });
+    return res;
+  } catch (e) {
+    console.log(e);
+  }
 };
 
-export const getTest = async (id: string, ctx: AxiosHeaderValue) => {
-  const res = await instance.get<TestType>(`get-test/${id}`, {
-    headers: { ctx: ctx },
-  });
-  return res.data;
+export const getTest = async (id: string, auth: AxiosHeaderValue) => {
+  try {
+    const res = await instance.get<TestType>(`get-test/${id}`, {
+      headers: { Authorization: auth },
+    });
+    return res.data;
+  } catch (e) {
+    console.log(e);
+  }
 };
 
 export const getAllTest = async () => {
@@ -97,28 +113,36 @@ export const getAllTest = async () => {
   }
 };
 
-export const deleteTestById = async (id: string, ctx: AxiosHeaderValue) => {
-  const res = await instance.delete<TestType>(`delete/test/${id}`, {
-    headers: { ctx: ctx },
-  });
-  return res.data;
+export const deleteTestById = async (id: string, auth: AxiosHeaderValue) => {
+  try {
+    const res = await instance.delete<TestType>(`delete/test/${id}`, {
+      headers: { Authorization: auth },
+    });
+    return res.data;
+  } catch (e) {
+    console.log(e);
+  }
 };
 
 export const postTestSolution = async (
   data: { testId: string; answers: string[] },
-  ctx: AxiosHeaderValue
+  auth: AxiosHeaderValue
 ) => {
-  const res = await instance.post<TestResult>("/create-test-result", data, {
-    headers: { ctx: ctx },
-  });
-  return res.data;
+  try {
+    const res = await instance.post<TestResult>("/create-test-result", data, {
+      headers: { Authorization: auth },
+    });
+    return res.data;
+  } catch (e) {
+    console.log(e);
+  }
 };
 
 // Admins
 
 export const getAllAdmins = async () => {
   try {
-    const res = await instance.get("get-admins");
+    const res = await instance.get<User[]>("get-admins");
 
     return res.data;
   } catch (e) {
@@ -126,7 +150,7 @@ export const getAllAdmins = async () => {
   }
 };
 
-export const createAdmin = async (newAdmin: {}) => {
+export const createAdmin = async (newAdmin: Partial<User>) => {
   try {
     await instance.post("create-admin", newAdmin);
     console.log("Admin created");

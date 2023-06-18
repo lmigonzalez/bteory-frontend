@@ -13,7 +13,7 @@ const Test = () => {
     push,
   } = useRouter();
 
-  const { user } = useUser();
+  const { getToken } = useAuth();
 
   const { test, setTest, questions, setQuestions } = globalState();
 
@@ -21,15 +21,7 @@ const Test = () => {
 
   useEffect(() => {
     async function set(testid: string) {
-      await setTest(
-        testid,
-        new AxiosHeaders({
-          userId: user?.id ?? "",
-          email: user?.primaryEmailAddress?.emailAddress ?? "",
-          firstName: user?.firstName ?? "",
-          lastName: user?.lastName ?? "",
-        })
-      );
+      await setTest(testid, await getToken());
     }
     void set(testid as string);
     void setQuestions();

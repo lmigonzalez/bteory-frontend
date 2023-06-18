@@ -55,7 +55,7 @@ const AddNewAdmin: React.FC<QuestionProps> = ({ closeNewQuestionForm }) => {
         </button>
       </div>
       <form
-        onSubmit={submitAdmin}
+        onSubmit={(e) => void submitAdmin(e)}
         className="flex w-[700px] flex-col bg-white px-4 py-8"
       >
         <p className="text-center text-xl">Add new admin</p>
