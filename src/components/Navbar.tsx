@@ -33,7 +33,6 @@ const Navbar = () => {
           (q_id) => q_id == (questionid as string)
         );
 
-        console.log(questionIndex);
         if (questionIndex === test.questionsId.length - 1) {
           void push({
             pathname: "/test/[testid]/result",
@@ -62,16 +61,16 @@ const Navbar = () => {
         clearInterval(timer);
       };
     }
-  }, [countdown]);
+  }, [countdown, isTimer]);
 
   useEffect(() => {
     setCountdown(30);
   }, [isTimer]);
 
   useEffect(() => {
-    checkIdUserIsAdmin();
+    void checkIdUserIsAdmin();
     setUrlInArray(arrayContainsSubstring);
-    protectRouters();
+    void protectRouters();
   }, []);
 
   async function checkIdUserIsAdmin() {
@@ -101,7 +100,7 @@ const Navbar = () => {
     const test = await checkIfAdmin();
     if (arrayContainsSubstring() && !test) {
       console.log("here!!!!!!!!");
-      push("/home");
+      void push("/home");
     }
   }
 
@@ -166,8 +165,8 @@ const Navbar = () => {
                   <input
                     type="checkbox"
                     className="toggle-accent toggle"
-                    checked={isTimer}
                     onChange={() => setIsTimer(!isTimer)}
+                    checked={isTimer}
                   />
                 </label>
               </div>
