@@ -123,11 +123,6 @@ const Navbar = () => {
               <li>
                 <UserButton afterSignOutUrl="/" />
               </li>
-              <li>
-                <Link href={"/"}>
-                  <AiOutlineLogin />
-                </Link>
-              </li>
             </ul>
           </div>
         )}
@@ -140,16 +135,11 @@ const Navbar = () => {
               <li>
                 <Link href={"/home"}>Home</Link>{" "}
               </li>
+              {/* <li>
+                <Link href={"/"}>Retake</Link>
+              </li> */}
               <li>
                 <UserButton afterSignOutUrl="/" />
-              </li>
-              <li>
-                <Link href={"/"}>Retake</Link>
-              </li>
-              <li>
-                <Link href={"/"}>
-                  <AiOutlineLogin />
-                </Link>
               </li>
             </ul>
           </div>

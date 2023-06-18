@@ -15,8 +15,8 @@ const FinalResult = () => {
   };
   return (
     <Layout name="Test Evaluation">
-      <h1 className="mb-8 text-center text-5xl">Final Result</h1>
-      <div className="relative my-8 flex justify-end gap-4">
+      <h1 className="mb-4 text-center text-2xl md:text-5xl">Final Result</h1>
+      <div className="relative my-4 md:my-8 flex justify-end gap-4">
         <div className="flex h-10 w-fit items-center justify-center rounded bg-my_black px-6 py-1 text-white">
           {evaluation.reduce(
             (prev, curr) => prev + (curr.isCorrect ? 1 : 0),
@@ -39,29 +39,29 @@ const FinalResult = () => {
           <AiFillExclamationCircle className="absolute right-0 top-0" />
         </div>
         {isHovered && (
-          <div className="absolute -top-16 w-52 rounded border-[1px] border-my_grey px-4 text-center">
+          <div className="absolute -top-16 w-52 rounded border-[1px] border-my_grey px-4 text-center bg-white z-30">
             <p>You need a minimum of 85% to pass the exam</p>
           </div>
         )}
       </div>
-      <div className="flex h-10 flex-col items-center justify-between border-b-2 border-my_black pb-3">
-        <div className="flex w-full justify-between gap-8">
+      <div className="flex min-h-10 flex-col items-center justify-between border-b-2 border-my_black pb-3">
+        <div className="flex w-full justify-between gap-4 md:gap-8">
           <div className="flex items-center justify-between gap-2">
-            <div className="h-4 w-8 rounded-sm bg-my_grey"></div>
+            <div className="h-4 w-4 md:w-8 rounded-sm bg-my_grey"></div>
             <p>Unanswered</p>
           </div>
           <div className="flex items-center justify-between gap-2">
-            <div className="h-4 w-8 rounded-sm bg-my_green"></div>
+            <div className="h-4 w-4 md:w-8 rounded-sm bg-my_green"></div>
             <p>Correct</p>
           </div>
           <div className="flex items-center justify-between gap-2">
-            <div className="h-4 w-8 rounded-sm bg-my_red"></div>
+            <div className="h-4 w-4 md:w-8 rounded-sm bg-my_red"></div>
             <p>Incorrect</p>
           </div>
         </div>
       </div>
 
-      <div className="mt-8 grid grid-cols-10 place-items-center gap-5">
+      <div className="mt-8 grid grid-cols-5 place-items-center gap-5 md:grid-cols-10">
         {test.questionsId.map((item, index) => {
           const result = evaluation?.find(
             (question) => question.questionId == item
@@ -77,7 +77,7 @@ const FinalResult = () => {
                   : result.isCorrect
                   ? "bg-my_green"
                   : "bg-my_red"
-              } relative flex h-[70px] w-[70px] items-center justify-center rounded text-center text-white`}
+              } relative flex h-[50px] w-[50px] items-center justify-center rounded text-center text-white md:h-[70px] md:w-[70px]`}
             >
               {index + 1}
             </div>

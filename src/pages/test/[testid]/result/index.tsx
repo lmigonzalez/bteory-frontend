@@ -34,7 +34,7 @@ const Results = () => {
   return (
     <Layout name="Test Results">
       <h1 className="mb-8 text-center text-5xl">Result</h1>
-      <div className="flex h-10 items-center justify-between border-b-2 border-my_black pb-3">
+      <div className="flex min-h-10 flex-col items-center justify-between border-b-2 border-my_black pb-3 md:flex-row">
         <div className="flex gap-8">
           <div className="flex items-center justify-between gap-2">
             <div className="h-4 w-8 rounded-sm bg-my_grey"></div>
@@ -45,23 +45,25 @@ const Results = () => {
             <p>Answered</p>
           </div>
         </div>
-        <button
-          onClick={() => {
-            void sendSolution(
-              { testId: test._id, solutions: solutions },
-              user?.id ?? ""
-            );
-            void push({
-              pathname: "/test/[testid]/final-result",
-              query: { testid: test._id },
-            });
-          }}
-          className="rounded bg-my_green px-6 py-2 text-white"
-        >
-          Final Result
-        </button>
+        <div className="w-full flex justify-end my-4">
+          <button
+            onClick={() => {
+              void sendSolution(
+                { testId: test._id, solutions: solutions },
+                user?.id ?? ""
+              );
+              void push({
+                pathname: "/test/[testid]/final-result",
+                query: { testid: test._id },
+              });
+            }}
+            className="rounded bg-my_green px-6 py-2 text-white"
+          >
+            Final Result
+          </button>
+        </div>
       </div>
-      <div className="mt-8 grid grid-cols-10 place-items-center gap-5">
+      <div className="mt-8 grid grid-cols-5 place-items-center gap-5 md:grid-cols-10">
         {test.questionsId.map((item, index) => {
           return (
             <div
@@ -74,7 +76,7 @@ const Results = () => {
               key={index}
               className={`${
                 solved.has(item) ? "bg-my_black" : "bg-my_grey"
-              } relative flex h-[70px] w-[70px] cursor-pointer items-center justify-center rounded text-center text-white`}
+              } relative flex h-[50px] w-[50px] cursor-pointer items-center justify-center rounded text-center text-white md:h-[70px] md:w-[70px]`}
             >
               {index}
               {flags.has(item) && (
