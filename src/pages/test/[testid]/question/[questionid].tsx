@@ -4,8 +4,7 @@ import { globalState } from "~/Store";
 import Image from "next/image";
 import { type QuestionType } from "~/axios";
 import Layout from "~/components/Layout";
-import { useAuth, useUser } from "@clerk/nextjs";
-import { AxiosHeaders } from "axios";
+import { useUser } from "@clerk/nextjs";
 
 const Question = () => {
   const {
@@ -13,7 +12,7 @@ const Question = () => {
     push,
   } = useRouter();
 
-  const { getToken } = useAuth();
+  const { user } = useUser();
 
   const { test, setTest, solutions, questions, setQuestions, touchSolution } =
     globalState();
@@ -25,7 +24,7 @@ const Question = () => {
 
   useEffect(() => {
     async function set(testid: string) {
-      await setTest(testid, await getToken());
+      await setTest(testid, user?.id ?? "");
     }
     void set(testid as string);
     void setQuestions();

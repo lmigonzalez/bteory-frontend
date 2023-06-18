@@ -1,7 +1,5 @@
-import React, { ReactNode } from "react";
+import React, { type ReactNode } from "react";
 import Navbar from "./Navbar";
-import Footer from "./Footer";
-import { headers } from "next/dist/client/components/headers";
 import Head from "next/head";
 
 interface LayoutProps {

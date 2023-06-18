@@ -71,21 +71,23 @@ export const getAllQuestions = async () => {
   return res.data;
 };
 
-export const postQuestion = async (data: FormData, auth: AxiosHeaderValue) => {
+export const postQuestion = async (data: FormData, userId: string) => {
   const res = await instance.post<QuestionType>("create-question", data, {
-    headers: { Authorization: auth },
+    headers: { Authorization: `Bearer ${userId}` },
   });
   return res;
 };
 
-export const deleteQuestion = async (id: string) => {
-  // const res = await instance.delete(,id)
+export const deleteQuestion = async (id: string, userId: string) => {
+  try {
+    const res = await instance.delete("/");
+  } catch (error) {}
 };
 
-export const postTest = async (data: FormData, auth: AxiosHeaderValue) => {
+export const postTest = async (data: FormData, userId: string) => {
   try {
     const res = await instance.post("create-test", data, {
-      headers: { Authorization: auth },
+      headers: { Authorization: `Bearer ${userId}` },
     });
     return res;
   } catch (e) {
@@ -93,10 +95,10 @@ export const postTest = async (data: FormData, auth: AxiosHeaderValue) => {
   }
 };
 
-export const getTest = async (id: string, auth: AxiosHeaderValue) => {
+export const getTest = async (id: string, userId: string) => {
   try {
     const res = await instance.get<TestType>(`get-test/${id}`, {
-      headers: { Authorization: auth },
+      headers: { Authorization: `Bearer ${userId}` },
     });
     return res.data;
   } catch (e) {
@@ -113,10 +115,10 @@ export const getAllTest = async () => {
   }
 };
 
-export const deleteTestById = async (id: string, auth: AxiosHeaderValue) => {
+export const deleteTestById = async (id: string, userId: string) => {
   try {
     const res = await instance.delete<TestType>(`delete/test/${id}`, {
-      headers: { Authorization: auth },
+      headers: { Authorization: `Bearer ${userId}` },
     });
     return res.data;
   } catch (e) {
@@ -126,11 +128,11 @@ export const deleteTestById = async (id: string, auth: AxiosHeaderValue) => {
 
 export const postTestSolution = async (
   data: { testId: string; answers: string[] },
-  auth: AxiosHeaderValue
+  userId: string
 ) => {
   try {
     const res = await instance.post<TestResult>("/create-test-result", data, {
-      headers: { Authorization: auth },
+      headers: { Authorization: `Bearer ${userId}` },
     });
     return res.data;
   } catch (e) {

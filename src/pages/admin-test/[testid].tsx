@@ -10,12 +10,12 @@ import {
   type TestType,
 } from "../../axios";
 import { globalState } from "../../Store";
-import { useAuth, useUser } from "@clerk/nextjs";
+import { useUser } from "@clerk/nextjs";
 
 const Question = () => {
   const router = useRouter();
   const { id } = router.query;
-  const { getToken } = useAuth();
+  const { user } = useUser();
   const { questions, setQuestions } = globalState();
   const [showNewQuestion, setShowNewQuestion] = useState(false);
   const [selectedTest, setSelectedTest] = useState<TestType>();
@@ -25,7 +25,7 @@ const Question = () => {
 
   const deleteTest = useCallback(async () => {
     try {
-      await deleteTestById(id as string, await getToken());
+      await deleteTestById(id as string, user?.id ?? "");
       void router.push("/dashboard");
     } catch (err) {
       console.log(err);
@@ -49,7 +49,7 @@ const Question = () => {
 
   async function getTestById() {
     try {
-      const response = await getTest(id as string, await getToken());
+      const response = await getTest(id as string, user?.id ?? "");
       setSelectedTest(response);
     } catch (err) {
       console.log(err);

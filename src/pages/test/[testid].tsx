@@ -1,11 +1,9 @@
 import { useRouter } from "next/router";
-import { AiOutlineLoading } from "react-icons/ai";
 import React, { useEffect, useState } from "react";
 import { globalState } from "~/Store";
 import TestExplanation from "~/components/TestExplanation";
 import Layout from "~/components/Layout";
-import { useAuth, useUser } from "@clerk/nextjs";
-import { AxiosHeaders } from "axios";
+import { useUser } from "@clerk/nextjs";
 
 const Test = () => {
   const {
@@ -13,7 +11,7 @@ const Test = () => {
     push,
   } = useRouter();
 
-  const { getToken } = useAuth();
+  const { user } = useUser();
 
   const { test, setTest, questions, setQuestions } = globalState();
 
@@ -21,7 +19,7 @@ const Test = () => {
 
   useEffect(() => {
     async function set(testid: string) {
-      await setTest(testid, await getToken());
+      await setTest(testid, user?.id ?? "");
     }
     void set(testid as string);
     void setQuestions();

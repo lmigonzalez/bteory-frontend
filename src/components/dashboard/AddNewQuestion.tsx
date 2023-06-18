@@ -4,10 +4,9 @@ import {
   AiOutlineCloseSquare,
   AiOutlineMinus,
 } from "react-icons/ai";
-
-import axios, { AxiosHeaders } from "axios";
 import { postQuestion } from "../../axios";
 import { useUser } from "@clerk/nextjs";
+
 interface Field {
   type: string;
   value: string | File;
@@ -136,15 +135,9 @@ const AddNewQuestion: React.FC<QuestionProps> = ({ closeNewQuestionForm }) => {
     // for (const pair of formData.entries()) {
     //   console.log(pair[0], pair[1]);
     // }
-    const headers = {
-      userId: user?.id ?? "",
-      email: user?.primaryEmailAddress?.emailAddress ?? "",
-      firstName: user?.firstName ?? "",
-      lastName: user?.lastName ?? "",
-    };
 
     try {
-      const response = await postQuestion(formData, new AxiosHeaders(headers));
+      const response = await postQuestion(formData, user?.id ?? "");
 
       console.log(response);
     } catch (err) {

@@ -8,23 +8,25 @@ import {
   type TestResult,
   deleteQuestion,
 } from "./axios";
-import { type AxiosHeaderValue, AxiosHeaders } from "axios";
 
 type state = {
   questions: QuestionType[];
   setQuestions: () => Promise<void>;
-  deleteQuestion: (id: string) => Promise<void>;
+  deleteQuestion: (id: string, userId: string) => Promise<void>;
   test: TestType;
-  setTest: (testId: string, auth: AxiosHeaderValue) => Promise<void>;
+  setTest: (testId: string, userId: string) => Promise<void>;
   solutions: Set<string>;
   touchSolution: (questionId_i: string) => void;
   flags: Set<string>;
   touchFlag: (questionId: string) => void;
   evaluation: TestResult;
-  sendSolution: (data: {
-    testId: string;
-    solutions: Set<string>;
-  }) => Promise<void>;
+  sendSolution: (
+    data: {
+      testId: string;
+      solutions: Set<string>;
+    },
+    userId: string
+  ) => Promise<void>;
 };
 
 export const globalState = create<state>()((set) => ({
@@ -38,9 +40,9 @@ export const globalState = create<state>()((set) => ({
       console.log(err);
     }
   },
-  deleteQuestion: async (id) => {
+  deleteQuestion: async (id, userId) => {
     try {
-      const res = await deleteQuestion(id);
+      const res = await deleteQuestion(id, userId);
     } catch (error) {}
   },
 
@@ -48,14 +50,14 @@ export const globalState = create<state>()((set) => ({
   test: {
     _id: "",
     questionsId: [],
-    explanation: [{ type: "text", explanation:"No Explanation"}],
+    explanation: [{ type: "text", explanation: "No Explanation" }],
     category: "practice",
     complexity: "easy",
     testName: "",
   },
-  setTest: async (testId: string, ctx: AxiosHeaderValue) => {
+  setTest: async (testId: string, userId: string) => {
     try {
-      const res = await getTest(testId, ctx);
+      const res = await getTest(testId, userId);
       set({ test: res });
     } catch (err) {
       console.log(err);
@@ -100,12 +102,12 @@ export const globalState = create<state>()((set) => ({
 
   evaluation: [],
 
-  sendSolution: async (data) => {
+  sendSolution: async (data, userId) => {
     const settedData: string[] = [];
     data.solutions.forEach((item) => settedData.push(item));
     const createData = { testId: data.testId, answers: settedData };
     try {
-      const res = await postTestSolution(createData, new AxiosHeaders());
+      const res = await postTestSolution(createData, userId);
       set({ evaluation: res });
     } catch (err) {
       console.log(err);
