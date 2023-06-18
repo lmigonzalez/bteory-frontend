@@ -16,7 +16,7 @@ const FinalResult = () => {
   return (
     <Layout name="Test Evaluation">
       <h1 className="mb-4 text-center text-2xl md:text-5xl">Final Result</h1>
-      <div className="relative my-4 md:my-8 flex justify-end gap-4">
+      <div className="relative my-4 flex justify-end gap-4 md:my-8">
         <div className="flex h-10 w-fit items-center justify-center rounded bg-my_black px-6 py-1 text-white">
           {evaluation.reduce(
             (prev, curr) => prev + (curr.isCorrect ? 1 : 0),
@@ -39,23 +39,23 @@ const FinalResult = () => {
           <AiFillExclamationCircle className="absolute right-0 top-0" />
         </div>
         {isHovered && (
-          <div className="absolute -top-16 w-52 rounded border-[1px] border-my_grey px-4 text-center bg-white z-30">
+          <div className="absolute -top-16 z-30 w-52 rounded border-[1px] border-my_grey bg-white px-4 text-center">
             <p>You need a minimum of 85% to pass the exam</p>
           </div>
         )}
       </div>
-      <div className="flex min-h-10 flex-col items-center justify-between border-b-2 border-my_black pb-3">
+      <div className="min-h-10 flex flex-col items-center justify-between border-b-2 border-my_black pb-3">
         <div className="flex w-full justify-between gap-4 md:gap-8">
           <div className="flex items-center justify-between gap-2">
-            <div className="h-4 w-4 md:w-8 rounded-sm bg-my_grey"></div>
+            <div className="h-4 w-4 rounded-sm bg-my_grey md:w-8"></div>
             <p>Unanswered</p>
           </div>
           <div className="flex items-center justify-between gap-2">
-            <div className="h-4 w-4 md:w-8 rounded-sm bg-my_green"></div>
+            <div className="h-4 w-4 rounded-sm bg-my_green md:w-8"></div>
             <p>Correct</p>
           </div>
           <div className="flex items-center justify-between gap-2">
-            <div className="h-4 w-4 md:w-8 rounded-sm bg-my_red"></div>
+            <div className="h-4 w-4 rounded-sm bg-my_red md:w-8"></div>
             <p>Incorrect</p>
           </div>
         </div>

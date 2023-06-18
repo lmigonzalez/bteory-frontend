@@ -21,9 +21,8 @@ const UserTable = () => {
       <div className="">
         <div className="my-10 flex items-center justify-end gap-2">
           <select className="h-10 w-40 border-[1px] border-my_black bg-white px-2">
-            <option>Who shot first?</option>
-            <option>Han Solo</option>
-            <option>Greedo</option>
+            <option value="lastName">Last Name</option>
+            <option value="email">Email</option>
           </select>
           <input
             type="text"
@@ -46,9 +45,7 @@ const UserTable = () => {
               <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
                 Email
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
-                Due Date
-              </th>
+
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-200 bg-white">
