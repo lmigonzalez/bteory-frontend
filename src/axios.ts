@@ -186,3 +186,12 @@ export const deleteAdmin = async (_id: string) => {
     console.log(e);
   }
 };
+
+export const getAllUsers = async () => {
+  try {
+    const res = await instance.get<User[]>("/get-all-users");
+    return res.data;
+  } catch (e) {
+    return false;
+  }
+};
