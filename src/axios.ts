@@ -142,13 +142,28 @@ export const postTestSolution = async (
 
 // Admins
 
-export const getAllAdmins = async () => {
+export const checkIfAdmin = async () => {
   try {
-    const res = await instance.get<User[]>("get-admins");
-
+    const res = await instance.get("check-if-admin");
+    console.log(res.data);
     return res.data;
   } catch (e) {
-    console.log(e);
+    // console.log(e);
+    return false;
+  }
+};
+
+export const getAllAdmins = async () => {
+  try {
+<<<<<<< Updated upstream
+    const res = await instance.get<User[]>("get-admins");
+
+=======
+    const res = await instance.get("get-admins");
+>>>>>>> Stashed changes
+    return res.data;
+  } catch (e) {
+    return false;
   }
 };
 

@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import { UserButton } from "@clerk/nextjs";
 import { globalState } from "~/Store";
 import TestExplanation from "./TestExplanation";
+import { checkIfAdmin } from "../axios";
 const Navbar = () => {
   const {
     query: { testid, questionid },
@@ -14,7 +15,8 @@ const Navbar = () => {
   const [isTimer, setIsTimer] = useState(false);
   const [countdown, setCountdown] = useState(30);
   const [showExplanation, setShowExplanation] = useState(false);
-
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [urlInArray, setUrlInArray] = useState(false);
   const { flags, touchFlag, questions, test } = globalState();
 
   useEffect(() => {
@@ -66,6 +68,43 @@ const Navbar = () => {
     setCountdown(30);
   }, [isTimer]);
 
+  useEffect(() => {
+    checkIdUserIsAdmin();
+    setUrlInArray(arrayContainsSubstring);
+    protectRouters();
+  }, []);
+
+  async function checkIdUserIsAdmin() {
+    try {
+      const res = await checkIfAdmin();
+      setIsAdmin(res);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  const adminUrls = [
+    "/dashboard",
+    "/questions",
+    "/admin-question",
+    "/create-test",
+    "/admin-test",
+  ];
+
+  function arrayContainsSubstring() {
+    return adminUrls.some((item) =>
+      item.includes(asPath.split("/")[1]?.trim() ?? "")
+    );
+  }
+
+  async function protectRouters() {
+    const test = await checkIfAdmin();
+    if (arrayContainsSubstring() && !test) {
+      console.log("here!!!!!!!!");
+      push("/home");
+    }
+  }
+
   return (
     <>
       <nav className="absolute left-0 top-0 flex h-14 w-full justify-center bg-my_black text-white">
@@ -77,6 +116,11 @@ const Navbar = () => {
               <li>
                 <Link href={"/home"}>Home</Link>{" "}
               </li>
+              {isAdmin && (
+                <li>
+                  <Link href={"/dashboard"}>Dashboard</Link>
+                </li>
+              )}
               <li>
                 <UserButton afterSignOutUrl="/" />
               </li>
@@ -154,6 +198,30 @@ const Navbar = () => {
               </button>
               <Link href={`/test/${testid as string}/result`}>Results</Link>
             </div>
+          </div>
+        )}
+        {/* /* for admin */}
+        {arrayContainsSubstring() && (
+          <div className="flex h-full w-[1200px] max-w-full items-center justify-between px-4 text-xl">
+            <Link href={"/home"}>B-Teori</Link>
+
+            <ul className="flex items-center justify-between gap-6">
+              <li>
+                <Link href={"/home"}>Home</Link>{" "}
+              </li>
+              <li>
+                <Link href={"/dashboard"}>Dashboard</Link>{" "}
+              </li>
+              <li>
+                <Link href={"/questions"}>Questions</Link>{" "}
+              </li>
+              <li>
+                <Link href={"/create-test"}>New Test</Link>{" "}
+              </li>
+              <li>
+                <UserButton afterSignOutUrl="/" />
+              </li>
+            </ul>
           </div>
         )}
       </nav>
