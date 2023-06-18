@@ -1,6 +1,21 @@
-import React from "react";
-import { data } from "../../data/userData";
+import React, { useEffect, useState } from "react";
+import { type User, getAllUsers } from "~/axios";
+
 const UserTable = () => {
+  const [users, setUsers] = useState<User[]>([]);
+
+  useEffect(() => {
+    void getAdmins();
+  }, []);
+
+  async function getAdmins() {
+    try {
+      const res = await getAllUsers();
+      setUsers(res || []);
+    } catch (err) {
+      console.log(err);
+    }
+  }
   return (
     <div>
       <div className="">
@@ -37,15 +52,14 @@ const UserTable = () => {
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-200 bg-white">
-            {data.map((row, index) => (
+            {users.map((row, index) => (
               <tr
-                key={row.id}
+                key={row._id}
                 className={`${index % 2 === 0 ? "bg-white" : "bg-gray-200"}`}
               >
                 <td className="whitespace-nowrap px-6 py-4">{row.firstName}</td>
                 <td className="whitespace-nowrap px-6 py-4">{row.lastName}</td>
                 <td className="whitespace-nowrap px-6 py-4">{row.email}</td>
-                <td className="whitespace-nowrap px-6 py-4">{row.dueDate}</td>
               </tr>
             ))}
           </tbody>

@@ -132,28 +132,28 @@ const Navbar = () => {
           </div>
         )}
 
-        {asPath === "/result" ||
-          (asPath === "/final-result" && (
-            <div className="flex h-full w-[1200px] max-w-full items-center justify-between px-4 text-xl">
-              <Link href={"/home"}>B-Teori</Link>
-              <ul className="flex items-center justify-between gap-6">
-                <li>
-                  <Link href={"/home"}>Home</Link>{" "}
-                </li>
-                <li>
-                  <UserButton afterSignOutUrl="/" />
-                </li>
-                <li>
-                  <Link href={"/"}>Retake</Link>
-                </li>
-                <li>
-                  <Link href={"/"}>
-                    <AiOutlineLogin />
-                  </Link>
-                </li>
-              </ul>
-            </div>
-          ))}
+        {(asPath === `/test/${testid as string}/result` ||
+          asPath === `/test/${testid as string}/final-result`) && (
+          <div className="flex h-full w-[1200px] max-w-full items-center justify-between px-4 text-xl">
+            <Link href={"/home"}>B-Teori</Link>
+            <ul className="flex items-center justify-between gap-6">
+              <li>
+                <Link href={"/home"}>Home</Link>{" "}
+              </li>
+              <li>
+                <UserButton afterSignOutUrl="/" />
+              </li>
+              <li>
+                <Link href={"/"}>Retake</Link>
+              </li>
+              <li>
+                <Link href={"/"}>
+                  <AiOutlineLogin />
+                </Link>
+              </li>
+            </ul>
+          </div>
+        )}
 
         {asPath ===
           `/test/${testid as string}/question/${questionid as string}` && (
