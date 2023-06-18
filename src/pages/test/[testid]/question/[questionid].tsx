@@ -45,7 +45,7 @@ const Question = () => {
           height={500}
           className="mt-8 h-auto w-[300px]"
         />
-        <p className="mt-8 text-lg font-bold">{question?.question}</p>
+        <p className="mt-8 text-lg font-bold text-center">{question?.question}</p>
         <ul className="m-auto my-8  w-[700px] max-w-full space-y-4  ">
           {question?.options.map((item, index) => {
             return (

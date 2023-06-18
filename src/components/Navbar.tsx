@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { AiOutlineLogin, AiFillFlag } from "react-icons/ai";
+import { AiOutlineLogin, AiFillFlag, AiOutlineMenu } from "react-icons/ai";
 import { useRouter } from "next/router";
 import { UserButton } from "@clerk/nextjs";
 import { globalState } from "~/Store";
@@ -18,6 +18,7 @@ const Navbar = () => {
   const [isAdmin, setIsAdmin] = useState(false);
   const [urlInArray, setUrlInArray] = useState(false);
   const { flags, touchFlag, questions, test } = globalState();
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     if (
@@ -33,6 +34,7 @@ const Navbar = () => {
           (q_id) => q_id == (questionid as string)
         );
 
+        console.log(questionIndex);
         if (questionIndex === test.questionsId.length - 1) {
           void push({
             pathname: "/test/[testid]/result",
@@ -61,16 +63,16 @@ const Navbar = () => {
         clearInterval(timer);
       };
     }
-  }, [countdown, isTimer]);
+  }, [countdown]);
 
   useEffect(() => {
     setCountdown(30);
   }, [isTimer]);
 
   useEffect(() => {
-    void checkIdUserIsAdmin();
+    checkIdUserIsAdmin();
     setUrlInArray(arrayContainsSubstring);
-    void protectRouters();
+    protectRouters();
   }, []);
 
   async function checkIdUserIsAdmin() {
@@ -98,7 +100,7 @@ const Navbar = () => {
     const test = await checkIfAdmin();
     if (arrayContainsSubstring() && !test) {
       console.log("here!!!!!!!!");
-      void push("/home");
+      push("/home");
     }
   }
 
@@ -155,16 +157,18 @@ const Navbar = () => {
 
         {asPath ===
           `/test/${testid as string}/question/${questionid as string}` && (
-          <div className="flex h-full w-[1200px] max-w-full items-center justify-between px-4 text-xl">
-            <div className="flex items-center justify-center gap-12">
-              <div className="form-control w-32 ">
+          <div className="relative flex h-full w-[1200px] max-w-full items-center justify-between px-4 text-xl">
+            <div className="gap:0 flex items-center justify-center md:gap-6">
+              <div className="form-control w-20 md:w-32 ">
                 <label className="label cursor-pointer">
-                  <span className="label-text text-lg text-white">Timer</span>
+                  <span className="label-text hidden text-lg text-white md:block">
+                    Timer
+                  </span>
                   <input
                     type="checkbox"
                     className="toggle-accent toggle"
-                    onChange={() => setIsTimer(!isTimer)}
                     checked={isTimer}
+                    onChange={() => setIsTimer(!isTimer)}
                   />
                 </label>
               </div>
@@ -188,13 +192,31 @@ const Navbar = () => {
                 />
               </button>
             </div>
-            <div className="flex gap-6">
+            <div className="flex md:hidden">
+              <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
+                <AiOutlineMenu />
+              </button>
+            </div>
+            <div className="hidden gap-6 md:flex">
               {/* <button>See answer</button> this here, really? */}
               <button onClick={() => setShowExplanation(true)}>
                 Explanation
               </button>
               <Link href={`/test/${testid as string}/result`}>Results</Link>
             </div>
+
+            {/* Mobile Menu */}
+            {mobileMenuOpen && (
+              <div className="absolute right-0 top-full w-1/2 bg-my_black">
+                <div className="flex flex-col items-center justify-center gap-4 p-4 md:hidden">
+                  {/* <button>See answer</button> this here, really? */}
+                  <button onClick={() => setShowExplanation(true)}>
+                    Explanation
+                  </button>
+                  <Link href={`/test/${testid as string}/result`}>Results</Link>
+                </div>
+              </div>
+            )}
           </div>
         )}
         {/* /* for admin */}
