@@ -1,11 +1,11 @@
 import axios, { type AxiosHeaderValue, type AxiosRequestConfig } from "axios";
 
-const config: AxiosRequestConfig = {
-  baseURL: "http://localhost:8100/api/",
-};
 // const config: AxiosRequestConfig = {
-//   baseURL: "https://bteory-backend-production.up.railway.app/api/",
+//   baseURL: "http://localhost:8100/api/",
 // };
+const config: AxiosRequestConfig = {
+  baseURL: "https://bteory-backend-production.up.railway.app/api/",
+};
 const instance = axios.create(config);
 
 export type Category = "practice" | "general" | "final";
