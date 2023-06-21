@@ -15,9 +15,6 @@ const Layout: React.FC<LayoutProps> = ({ children, name }) => {
         <title>{name}</title>
         <meta name="description" content="Created by Luis Miguel" />
         <link rel="icon" href="/favicon.ico" />
-        <noscript>
-          <img src="https://www.facebook.com/tr?id=1511688792976987&ev=PageView&noscript=1" />
-        </noscript>
       </Head>
       <div className="relative flex min-h-screen w-full flex-col items-center justify-center  pt-16">
         <Navbar />
