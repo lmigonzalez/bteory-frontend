@@ -12,40 +12,37 @@ const Home: NextPage = () => {
         <meta name="description" content="Luis Miguel" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className="m-auto min-h-screen max-w-6xl">
+      <header className=" flex w-full items-center justify-between border-b-2 border-my_grey px-2 pb-3 pt-3">
+        <h1 className="ml-4 inline-block text-xl md:text-3xl">Quiz</h1>
+        <div className="flex items-center gap-4 text-sm  md:gap-7 md:text-base">
+          <Link href={"/home"}>Home</Link>
+          <Link href={""} className=" hidden text-black opacity-50 md:block">
+            {" "}
+            Purchase Subscription
+          </Link>
+          <select
+            name="lang"
+            id="lang"
+            className="rounded-sm bg-my_grey p-1 px-2 text-white"
+          >
+            <option value="english">English</option>
+          </select>
+          <SignedIn>
+            {/* Mount the UserButton component */}
+            <UserButton afterSignOutUrl="/" />
+          </SignedIn>
+          <SignedOut>
+            {/* Signed out users get sign in button */}
+            <SignInButton afterSignInUrl="/home">
+              <span className=" cursor-pointer rounded-sm bg-my_green p-1 px-4 text-white">
+                Login
+              </span>
+            </SignInButton>
+          </SignedOut>
+        </div>
+      </header>
+      <main className="m-auto max-w-6xl">
         <div className="flex flex-col items-center justify-center px-4">
-          <header className=" flex w-full items-center justify-between border-b-2 border-my_grey px-2 pb-3 pt-3">
-            <h1 className="ml-4 inline-block text-xl md:text-3xl">Quiz</h1>
-            <div className="flex items-center gap-4 text-sm  md:gap-7 md:text-base">
-              <Link href={"/home"}>Home</Link>
-              <Link
-                href={""}
-                className=" hidden text-black opacity-50 md:block"
-              >
-                {" "}
-                Purchase Subscription
-              </Link>
-              <select
-                name="lang"
-                id="lang"
-                className="rounded-sm bg-my_grey p-1 px-2 text-white"
-              >
-                <option value="english">English</option>
-              </select>
-              <SignedIn>
-                {/* Mount the UserButton component */}
-                <UserButton afterSignOutUrl="/" />
-              </SignedIn>
-              <SignedOut>
-                {/* Signed out users get sign in button */}
-                <SignInButton afterSignInUrl="/home">
-                  <span className=" cursor-pointer rounded-sm bg-my_green p-1 px-4 text-white">
-                    Login
-                  </span>
-                </SignInButton>
-              </SignedOut>
-            </div>
-          </header>
           <div className="flex flex-col items-center justify-between gap-14 pr-4 pt-4 sm:flex-row md:items-start">
             <div className="flex flex-col text-xs md:text-base">
               <h1 className="ml-6 self-start text-3xl font-bold text-[#146C94DE] md:text-5xl">
@@ -90,14 +87,14 @@ const Home: NextPage = () => {
               className="w-2/3 rounded-md sm:w-1/3"
             />
           </div>
-          <footer className="mt-16 rounded-md bg-[#9BA4B5] p-3 text-sm text-white shadow-xl shadow-slate-300">
-            © 2023 DriveSmart. All rights reserved. |{" "}
-            <Link href={""}>Privacy Policy</Link> |{" "}
-            <Link href={""}>Terms of Service</Link>|{" "}
-            <Link href={""}>Contact Us</Link>
-          </footer>
         </div>
       </main>
+      <footer className="mt-16 rounded-md bg-[#9BA4B5] p-3 text-sm text-white shadow-xl shadow-slate-300">
+        © 2023 DriveSmart. All rights reserved. |{" "}
+        <Link href={""}>Privacy Policy</Link> |{" "}
+        <Link href={""}>Terms of Service</Link>|{" "}
+        <Link href={""}>Contact Us</Link>
+      </footer>
     </>
   );
 };
