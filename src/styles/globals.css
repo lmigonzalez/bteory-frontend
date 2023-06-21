@@ -3,8 +3,14 @@
 @tailwind utilities;
 
 @layer base {
+  html {
+    @apply h-full overflow-x-hidden scroll-auto;
+  }
   body {
-    @apply min-h-screen overflow-x-hidden bg-white text-my_black;
+    @apply h-full min-h-screen overflow-x-hidden bg-white text-my_black;
+  }
+  #__next {
+    @apply flex min-h-screen flex-col items-center;
   }
 }
 

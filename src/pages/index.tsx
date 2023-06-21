@@ -41,7 +41,8 @@ const Home: NextPage = () => {
           </SignedOut>
         </div>
       </header>
-      <main className="m-auto max-w-6xl">
+      <main className="max-w-6xl min-h-full">
+        
         <div className="flex flex-col items-center justify-center px-4">
           <div className="flex flex-col items-center justify-between gap-14 pr-4 pt-4 sm:flex-row md:items-start">
             <div className="flex flex-col text-xs md:text-base">
@@ -89,10 +90,10 @@ const Home: NextPage = () => {
           </div>
         </div>
       </main>
-      <footer className="mt-16 rounded-md bg-[#9BA4B5] p-3 text-sm text-white shadow-xl shadow-slate-300">
-        © 2023 DriveSmart. All rights reserved. |{" "}
-        <Link href={""}>Privacy Policy</Link> |{" "}
-        <Link href={""}>Terms of Service</Link>|{" "}
+      <footer className=" w-full flex justify-center items-center gap-2 bg-my_black px-4 py-8 text-sm text-white  mt-auto">
+        © 2023 BTeori. All rights reserved. |
+        <Link href={""}>Privacy Policy</Link> |
+        <Link href={""}>Terms of Service</Link>|
         <Link href={""}>Contact Us</Link>
       </footer>
     </>
