@@ -20,12 +20,12 @@ const Test = () => {
   return (
     <div>
       <div className="my-10 flex items-center justify-end gap-4">
-        <Link
+        {/* <Link
           href="/questions"
           className="border-[1px] border-my_green px-6 py-1 text-my_green"
         >
           Questions
-        </Link>
+        </Link> */}
         <Link
           href="/create-test"
           className="border-[1px] border-my_green bg-my_green px-6 py-1 text-white"

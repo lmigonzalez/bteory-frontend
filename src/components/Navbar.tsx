@@ -222,9 +222,6 @@ const Navbar = () => {
                 <Link href={"/dashboard"}>Dashboard</Link>{" "}
               </li>
               <li>
-                <Link href={"/questions"}>Questions</Link>{" "}
-              </li>
-              <li>
                 <Link href={"/create-test"}>New Test</Link>{" "}
               </li>
               <li>

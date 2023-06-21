@@ -2,7 +2,9 @@ import React, { useState } from "react";
 import Layout from "~/components/Layout";
 
 import UserTable from "~/components/dashboard/UserTable";
+
 import Test from "~/components/dashboard/Test";
+import Questions from "../components/dashboard/Questions";
 import Admins from "~/components/dashboard/Admins";
 const Dashboard = () => {
   const [currentTab, setCurrentTab] = useState("users");
@@ -17,6 +19,14 @@ const Dashboard = () => {
           } h-full w-full  text-white`}
         >
           Users
+        </button>
+        <button
+          onClick={() => setCurrentTab("tests")}
+          className={`${
+            currentTab === "tests" ? "bg-my_green" : "bg-my_black"
+          } h-full w-full  text-white`}
+        >
+          Tests
         </button>
         <button
           onClick={() => setCurrentTab("questions")}
@@ -36,7 +46,8 @@ const Dashboard = () => {
         </button>
       </div>
       {currentTab === "users" && <UserTable />}
-      {currentTab === "questions" && <Test />}
+      {currentTab === "tests" && <Test />}
+      {currentTab === "questions" && <Questions />}
       {currentTab === "admins" && <Admins />}
     </Layout>
   );

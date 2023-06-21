@@ -1,11 +1,11 @@
 import axios, { type AxiosHeaderValue, type AxiosRequestConfig } from "axios";
 
-// const config: AxiosRequestConfig = {
-//   baseURL: "http://localhost:8100/api/",
-// };
 const config: AxiosRequestConfig = {
-  baseURL: "https://bteory-backend-production.up.railway.app/api/",
+  baseURL: "http://localhost:8100/api/",
 };
+// const config: AxiosRequestConfig = {
+//   baseURL: "https://bteory-backend-production.up.railway.app/api/",
+// };
 const instance = axios.create(config);
 
 export type Category = "practice" | "general" | "final";
@@ -190,6 +190,7 @@ export const deleteAdmin = async (_id: string) => {
 export const getAllUsers = async () => {
   try {
     const res = await instance.get<User[]>("/get-all-users");
+    console.log(res);
     return res.data;
   } catch (e) {
     return false;
