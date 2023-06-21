@@ -11,6 +11,9 @@ const Home: NextPage = () => {
         <title>Bteory</title>
         <meta name="description" content="Luis Miguel" />
         <link rel="icon" href="/favicon.ico" />
+        <noscript>
+          <img src="https://www.facebook.com/tr?id=1511688792976987&ev=PageView&noscript=1" />
+        </noscript>
       </Head>
       <header className=" flex w-full items-center justify-between border-b-2 border-my_grey px-2 pb-3 pt-3">
         <h1 className="ml-4 inline-block text-xl md:text-3xl">Quiz</h1>
@@ -41,8 +44,7 @@ const Home: NextPage = () => {
           </SignedOut>
         </div>
       </header>
-      <main className="max-w-6xl min-h-full">
-        
+      <main className="min-h-full max-w-6xl">
         <div className="flex flex-col items-center justify-center px-4">
           <div className="flex flex-col items-center justify-between gap-14 pr-4 pt-4 sm:flex-row md:items-start">
             <div className="flex flex-col text-xs md:text-base">
@@ -90,7 +92,7 @@ const Home: NextPage = () => {
           </div>
         </div>
       </main>
-      <footer className=" w-full flex justify-center items-center gap-2 bg-my_black px-4 py-8 text-sm text-white  mt-auto">
+      <footer className=" mt-auto flex w-full items-center justify-center gap-2 bg-my_black px-4 py-8 text-sm  text-white">
         © 2023 BTeori. All rights reserved. |
         <Link href={""}>Privacy Policy</Link> |
         <Link href={""}>Terms of Service</Link>|
